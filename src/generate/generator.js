@@ -77,13 +77,14 @@ async function generateHTML() {
                         <small style="font-size: 0.9rem; color: var(--text-sub); font-weight: 300;">(${items.length} 筆資料)</small>
                     </h2>
                     <div class="news-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
-                        ${items.map(item => `
+                        ${items.slice(0, 3).map(item => `
                             <a href="${item.url || '#'}" target="_blank" class="news-card">
                                 <span class="news-source">${item.source}</span>
                                 <h3 class="news-title">${item.title}</h3>
-                                <p class="news-desc">${item.summary || '點擊查看詳細內容'}</p>
+                                <p class="news-desc" style="-webkit-line-clamp: 2;">${item.summary || '點擊查看詳細內容'}</p>
                             </a>
                         `).join('')}
+                        ${items.length > 3 ? `<p style="text-align: right; color: var(--text-sub); font-size: 0.85rem; margin-top: 10px; width: 100%; grid-column: 1 / -1;">...+ 還有 ${items.length - 3} 筆熱門討論</p>` : ''}
                     </div>
                 </div>
             `;
@@ -341,9 +342,14 @@ async function generateHTML() {
     <header>
         <div class="header-bg"></div>
         <div class="header-content">
-            <div class="date-badge">DATE: ${dateStr}</div>
-            <h1>Kevin Tsai 聲量儀表板</h1>
-            <p style="color: var(--text-sub); margin-top: 1rem;">由 AI 自動搜集、分析與產生的每日輿情簡報，資料筆數：${reportData.source_data_count} 筆。</p>
+            <div class="date-badge">TREND REPORT: 2026.02 - 至今</div>
+            <h1>Kevin Tsai 輿情精粹</h1>
+            <p style="color: #38bdf8; font-size: 1.1rem; margin-top: 1.5rem; font-weight: 500;">
+                重點收編：「書籍作品」、「主持節目」、「個人聲量」與「新聞評論」
+            </p>
+            <p style="color: var(--text-sub); margin-top: 0.5rem; font-size: 0.95rem;">
+                由 AI 從 ${reportData.source_data_count} 筆近期熱門討論中為您萃取的輕量化大數據摘要。
+            </p>
         </div>
     </header>
 

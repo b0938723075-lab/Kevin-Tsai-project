@@ -64,9 +64,9 @@ async function analyzeData() {
             const topTitles = testData.slice(0, 3).map(it => `・${it.title}`).join('\n');
             reportResult = {
                 date: dateStr,
-                positive_summary: `[今日熱門內容]：\n${topTitles}\n(目前為模擬分析，詳細解讀需串接 OpenAI API)`,
-                negative_summary: "部分網路討論提及對其書籍觀點的理想化，或是對過去節目內容的懷舊與檢視。",
-                overall_trend: `系統於 PTT, Dcard, FB 等平台共偵測到 ${testData.length} 筆最新討論。`,
+                positive_summary: `[2026.02 - 至今 精華]：\n${topTitles}\n(註：目前為輕量模擬分析，詳細長篇解讀需串接 OpenAI API)`,
+                negative_summary: "近一個月的網路討論中，主要集中於對其新書觀點的不同見解，以及康熙片段的回顧。",
+                overall_trend: `系統於 PTT, Dcard, FB 等平台篩選出近期 ${testData.length} 筆關鍵點評。`,
                 score: 85,
                 source_data_count: testData.length
             };

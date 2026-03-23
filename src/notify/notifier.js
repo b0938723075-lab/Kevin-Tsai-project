@@ -70,15 +70,15 @@ async function notifyAll() {
 
     // 排版要發送到手機的微縮板精華報告
     const msg = `
-【蔡康永 - AI 每日輿情簡報】
-📆 ${dateStr}
+【蔡康永 - 近期輿情精粹】
+📆 觀測區間：2026.02 - 至今
 
 ${icon} 綜合情緒分數：${reportData.score}/100 ${statusText}
 ---------------------
-👍 正面好評：
+👍 正面聲量與好評：
 ${reportData.positive_summary}
 
-👎 警示事件：
+👎 危機預警與爭議：
 ${reportData.negative_summary}
 
 🔗 點擊查看華麗版深度分析網頁：

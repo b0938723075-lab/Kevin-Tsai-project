@@ -23,7 +23,7 @@ async function collectData() {
     keywords.push("蔡康永 site:threads.net");
     keywords.push("蔡康永 site:facebook.com");
     
-    const searchQuery = primaryKeywords.join(' ');
+    const searchQuery = primaryKeywords.join(' ') + " after:2026-02-01";
     let results = [];
 
     // ==========================================
@@ -76,7 +76,7 @@ async function collectData() {
                     console.log(`  🔍 [Apify] 搜尋關鍵字: ${keyword}`);
                     try {
                         const run = await client.actor('apify/rag-web-browser').call({
-                            query: `${keyword} 最新新聞 2026`,
+                            query: `${keyword} after:2026-02-01`,
                             maxResults: 3,
                             outputFormats: ['text'],
                             requestTimeoutSecs: 30
