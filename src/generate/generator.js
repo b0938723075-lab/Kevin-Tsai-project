@@ -39,14 +39,57 @@ async function generateHTML() {
         scoreText = "反應兩極";
     }
 
-    // 產生新聞清單的 HTML
-    const newsHTML = rawData.length > 0 ? rawData.map(item => `
-        <a href="${item.url || '#'}" target="_blank" class="news-card">
-            <span class="news-source">${item.source}</span>
-            <h3 class="news-title">${item.title}</h3>
-            <p class="news-desc">${item.summary || '點擊查看詳細內容'}</p>
-        </a>
-    `).join('') : '<p style="color: rgba(255,255,255,0.5);">今日暫無原始新聞資料可顯示</p>';
+    // --- 🏷️ 多維度智能分類邏輯 ---
+    const categories = {
+        "📚 作品與書籍": [],
+        "📺 節目與主持": [],
+        "💎 個人聲量與社群": [],
+        "📰 最新新聞": []
+    };
+
+    rawData.forEach(item => {
+        const text = (item.title + (item.summary || "")).toLowerCase();
+        // 判斷是否屬於書籍
+        if (text.includes("書") || text.includes("說話之道") || text.includes("情商課") || text.includes("閱讀") || text.includes("作品")) {
+            categories["📚 作品與書籍"].push(item);
+        } 
+        // 判斷是否屬於節目
+        else if (text.includes("節目") || text.includes("康熙來了") || text.includes("主持") || text.includes("專訪") || text.includes("電視")) {
+            categories["📺 節目與主持"].push(item);
+        } 
+        // 判斷是否為社群討論/個人聲量
+        else if (["PTT", "Dcard", "Threads", "Facebook", "Instagram"].includes(item.source) || text.includes("網友") || text.includes("社群") || text.includes("輿論")) {
+            categories["💎 個人聲量與社群"].push(item);
+        } 
+        // 其餘歸類為新聞
+        else {
+            categories["📰 最新新聞"].push(item);
+        }
+    });
+
+    let newsSectionsHTML = "";
+    for (const [catName, items] of Object.entries(categories)) {
+        if (items.length > 0) {
+            newsSectionsHTML += `
+                <div class="news-category-block" style="margin-top: 3rem; animation: fadeInUp 0.8s ease-out;">
+                    <h2 class="news-category-title" style="font-size: 1.5rem; margin-bottom: 1.5rem; color: #38bdf8; display: flex; align-items: center; gap: 10px;">
+                        <span style="background: rgba(56, 189, 248, 0.1); padding: 5px 12px; border-radius: 8px;">${catName}</span>
+                        <small style="font-size: 0.9rem; color: var(--text-sub); font-weight: 300;">(${items.length} 筆資料)</small>
+                    </h2>
+                    <div class="news-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+                        ${items.map(item => `
+                            <a href="${item.url || '#'}" target="_blank" class="news-card">
+                                <span class="news-source">${item.source}</span>
+                                <h3 class="news-title">${item.title}</h3>
+                                <p class="news-desc">${item.summary || '點擊查看詳細內容'}</p>
+                            </a>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+    }
+    const newsHTML = newsSectionsHTML || '<p style="color: rgba(255,255,255,0.5);">今日暫無原始搜集資料可顯示</p>';
 
     // 建構充滿玻璃擬態 (Glassmorphism) 與高級動畫的網頁
     const htmlContent = `
@@ -301,12 +344,9 @@ async function generateHTML() {
         </div>
     </div>
 
-    <!-- 原始新聞資料列表 -->
+    <!-- 🗞 原始資料分類庫 (智能整合版) -->
     <div class="news-section">
-        <h2 class="news-section-title">🗞 今日搜集來源檔</h2>
-        <div class="news-grid">
-            ${newsHTML}
-        </div>
+        ${newsHTML}
     </div>
 </div>
 

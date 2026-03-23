@@ -65,6 +65,9 @@ async function notifyAll() {
     if (reportData.score < 40) { icon = "🔴"; statusText = "【危機預警！】"; }
     else if (reportData.score < 70) { icon = "🟡"; statusText = "【反應兩極】"; }
 
+    // 生成雲端預覽連結 (GitHub Preview)
+    const reportURL = `https://htmlpreview.github.io/?https://github.com/b0938723075-lab/Kevin-Tsai-project/blob/main/data/articles/${dateStr}.html`;
+
     // 排版要發送到手機的微縮板精華報告
     const msg = `
 【蔡康永 - AI 每日輿情簡報】
@@ -78,8 +81,9 @@ ${reportData.positive_summary}
 👎 警示事件：
 ${reportData.negative_summary}
 
-🔗 詳細且精美的獨立網頁版報告，已經儲存於您的伺服器，請透過您的網站管理中心查看。
-    `;
+🔗 點擊查看華麗版深度分析網頁：
+${reportURL}
+`;
 
     console.log(`📡 [準備中] 即將發送的推播內容摘要：\n\n${msg.trim()}\n`);
     
