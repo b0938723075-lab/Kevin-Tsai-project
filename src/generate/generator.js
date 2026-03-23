@@ -28,14 +28,14 @@ async function generateHTML() {
 
     console.log(`📂 [讀取] 準備將 ${reportData.source_data_count} 筆分析資料寫入網頁...`);
 
-    // 根據分數決定主題光環顏色 (心理諮商室-溫和和煦色系)
-    let glowColor = "rgba(154, 171, 150, 0.5)"; // 寧靜鼠尾草綠 (平靜和緩)
+    // 根據分數決定主題光環顏色 (心理諮商室-植物與暖木質色系)
+    let glowColor = "rgba(102, 128, 77, 0.4)"; // 植栽綠意 (平靜和緩)
     let scoreText = "平穩安定";
     if (reportData.score < 40) {
-        glowColor = "rgba(209, 158, 152, 0.4)"; // 柔和乾燥玫瑰紅 (需要關注)
+        glowColor = "rgba(189, 115, 87, 0.4)"; // 陶盆磚紅 (需要關注)
         scoreText = "情緒起伏";
     } else if (reportData.score < 70) {
-        glowColor = "rgba(214, 196, 172, 0.4)"; // 溫暖燕麥沙色 (適度波動)
+        glowColor = "rgba(224, 185, 133, 0.5)"; // 木質暖光 (適度波動)
         scoreText = "和緩漸進";
     }
 
@@ -124,21 +124,22 @@ async function generateHTML() {
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #F7F5F0;
-            --card-bg: rgba(255, 255, 255, 0.7);
-            --card-border: rgba(255, 255, 255, 0.9);
-            --text-main: #3D4035;
-            --text-sub: #8B8C82;
+            --bg-color: #E6D0BA; /* Warm milky tea / tan wall color */
+            --card-bg: rgba(253, 248, 235, 0.6); /* Warm white frosted glass */
+            --card-border: rgba(255, 255, 255, 0.85);
+            --text-main: #4A3E33; /* Deep soft warm brownish charcoal */
+            --text-sub: #8B7A66; /* Warm taupe for text */
             --accent-glow: ${glowColor};
-            --accent-blue: #789086;
+            --accent-blue: #66804D; /* Plant green */
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Outfit', 'Noto Sans TC', sans-serif;
             background-color: var(--bg-color);
             background-image: 
-                radial-gradient(circle at 15% 50%, rgba(120, 144, 134, 0.08), transparent 35%),
-                radial-gradient(circle at 85% 30%, var(--accent-glow), transparent 35%);
+                radial-gradient(circle at 100% 0%, #FFF3DE 0%, transparent 40%),
+                radial-gradient(circle at 0% 100%, #C9A98C 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, var(--accent-glow), transparent 60%);
             color: var(--text-main);
             min-height: 100vh;
             line-height: 1.6;
@@ -168,18 +169,18 @@ async function generateHTML() {
             background-size: cover;
             background-position: center 20%;
             z-index: 0;
-            opacity: 0.15;
+            opacity: 0.3;
             transition: opacity 0.5s ease;
-            mix-blend-mode: multiply;
+            mix-blend-mode: overlay;
         }
         .header-bg:hover {
-            opacity: 0.25;
+            opacity: 0.45;
         }
         header::after {
             content: '';
             position: absolute;
-            bottom: 0; left: 0; right: 0; height: 75%;
-            background: linear-gradient(to top, var(--bg-color) 5%, rgba(247,245,240,0.6) 60%, transparent);
+            bottom: 0; left: 0; right: 0; height: 80%;
+            background: linear-gradient(to top, var(--bg-color) 10%, rgba(230, 208, 186, 0.7) 60%, transparent);
             z-index: 0;
         }
         .header-content {
