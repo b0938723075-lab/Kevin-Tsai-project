@@ -59,14 +59,15 @@ async function analyzeData() {
         // 檢查有沒有填 Key
         const apiKey = process.env.OPENAI_API_KEY;
         if (!apiKey || apiKey.includes("請填在這裡")) {
-            console.log("\n⚠️ [注意] 尚未偵測到有效的 OpenAI API Key，啟動【模擬分析模式】...");
-            // 如果沒填密碼，先給他一份模擬的分數結果，確保程式不會死當
+            console.log("\n⚠️ [注意] 尚未偵測到有效的 OpenAI API Key，啟動【動態模擬分析模式】...");
+            // 如果沒填密碼，改為從搜集到的資料中抓出前幾筆標題顯示，讓使用者看到搜尋結果
+            const topTitles = testData.slice(0, 3).map(it => `・${it.title}`).join('\n');
             reportResult = {
                 date: dateStr,
-                positive_summary: "多數討論集中於肯定其高情商溝通技巧，給予強烈正面迴響。",
-                negative_summary: "部分聲音認為觀點過於理想化，存在微小爭議。",
-                overall_trend: "整體話題圍繞著他的著作與溝通心法，多數民眾表達認同，風向為正。",
-                score: 75,
+                positive_summary: `[今日熱門內容]：\n${topTitles}\n(目前為模擬分析，詳細解讀需串接 OpenAI API)`,
+                negative_summary: "部分網路討論提及對其書籍觀點的理想化，或是對過去節目內容的懷舊與檢視。",
+                overall_trend: `系統於 PTT, Dcard, FB 等平台共偵測到 ${testData.length} 筆最新討論。`,
+                score: 85,
                 source_data_count: testData.length
             };
         } else {

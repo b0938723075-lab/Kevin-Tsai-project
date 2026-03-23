@@ -6,19 +6,24 @@
   "keywords": {
     "primary": [
       "蔡康永",
-      "Kevin Tsai"
+      "Kevin Tsai",
+      "康熙來了",
+      "蔡康永 說話之道",
+      "蔡康永 情商課",
+      "蔡康永 節目",
+      "蔡康永 新書"
     ],
     "exclude": [
       "同名不相關"
     ]
   },
   "sources": {
-    "google_news_enabled": false,
+    "google_news_enabled": true,
     "tavily_enabled": true,
     "duckduckgo_enabled": true,
     "apify_enabled": true,
-    "ptt_enabled": false,
-    "dcard_enabled": false
+    "ptt_enabled": true,
+    "dcard_enabled": true
   },
   "analysis": {
     "language": "zh-TW",

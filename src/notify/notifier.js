@@ -3,20 +3,28 @@ const path = require('path');
 const axios = require('axios');
 require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 
-async function sendLineNotify(message) {
-    const token = process.env.LINE_NOTIFY_TOKEN;
-    if (!token || token.includes("請填在這裡")) {
-        console.log("⚠️ 尚未設定 LINE Notify Token，跳過 LINE 通知測試。");
+async function sendLinePush(message) {
+    const token = process.env.LINE_CHANNEL_ACCESS_TOKEN;
+    const userId = process.env.LINE_USER_ID;
+    
+    if (!token || token.includes("請填在這裡") || !userId || userId.includes("請填在這裡")) {
+        console.log("⚠️ 尚未設定 LINE Messaging API (替代 Notify)，跳過 LINE 通知。");
         return;
     }
+
     try {
-        await axios.post('https://notify-api.line.me/api/notify', 
-            new URLSearchParams({ message: message }), 
-            { headers: { 'Authorization': `Bearer ${token}` } }
-        );
+        await axios.post('https://api.line.me/v2/bot/message/push', {
+            to: userId,
+            messages: [{ type: "text", text: message }]
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
         console.log("✅ [LINE] 成功將報告推播到你的手機！");
     } catch (err) {
-        console.error("❌ [LINE] 發送失敗:", err.message);
+        console.error("❌ [LINE] 發送失敗:", err.response ? err.response.data : err.message);
     }
 }
 
@@ -76,7 +84,7 @@ ${reportData.negative_summary}
     console.log(`📡 [準備中] 即將發送的推播內容摘要：\n\n${msg.trim()}\n`);
     
     // 平行發送給所有你設定的人員
-    await sendLineNotify(msg.trim());
+    await sendLinePush(msg.trim());
     await sendTelegram(msg.trim());
     
     console.log(`\n✅ [通知模組完工] 所有報告發送程序已跑完！`);

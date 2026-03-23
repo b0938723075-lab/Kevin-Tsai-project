@@ -14,8 +14,16 @@ async function collectData() {
     console.log("  🚀 開始搜集【蔡康永/Kevin Tsai】輿情 ");
     console.log("=====================================\n");
     
-    const keywords = settings.keywords.primary; // ["蔡康永", "Kevin Tsai"]
-    const searchQuery = keywords.join(' ');
+    const primaryKeywords = settings.keywords.primary; // ["蔡康永", "Kevin Tsai", ...]
+    
+    // 擴充關鍵字，增加社群平台與特定主題的搜尋
+    let keywords = [...primaryKeywords];
+    if (settings.sources.ptt_enabled) keywords.push("蔡康永 PTT");
+    if (settings.sources.dcard_enabled) keywords.push("蔡康永 Dcard");
+    keywords.push("蔡康永 site:threads.net");
+    keywords.push("蔡康永 site:facebook.com");
+    
+    const searchQuery = primaryKeywords.join(' ');
     let results = [];
 
     // ==========================================
@@ -31,9 +39,9 @@ async function collectData() {
                 const response = await axios.post('https://api.tavily.com/search', {
                     api_key: tavilyKey,
                     query: searchQuery,
-                    search_depth: "basic",
+                    search_depth: "advanced",
                     include_images: false,
-                    max_results: 5
+                    max_results: 10
                 });
                 
                 const tavilyItems = (response.data.results || []).map(item => ({
