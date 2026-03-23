@@ -65,8 +65,8 @@ async function notifyAll() {
     if (reportData.score < 40) { icon = "🔴"; statusText = "【危機預警！】"; }
     else if (reportData.score < 70) { icon = "🟡"; statusText = "【反應兩極】"; }
 
-    // 生成雲端預覽連結 (GitHub Preview)
-    const reportURL = `https://htmlpreview.github.io/?https://github.com/b0938723075-lab/Kevin-Tsai-project/blob/main/data/articles/${dateStr}.html`;
+    // 生成雲端預估入口連結 (GitHub Pages 首頁)
+    const reportURL = `https://b0938723075-lab.github.io/Kevin-Tsai-project/`;
 
     // 排版要發送到手機的微縮板精華報告
     const msg = `

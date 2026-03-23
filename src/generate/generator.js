@@ -354,12 +354,22 @@ async function generateHTML() {
 </html>
     `;
 
-    // 4. 寫入 HTML 檔案
+    // 4. 寫入 HTML 檔案 (按日期存檔)
     const outputPath = path.join(articlesDir, `${dateStr}.html`);
     fs.writeFileSync(outputPath, htmlContent.trim());
 
+    // 5. 將最新報告複製一份到「首頁」 (根目錄 index.html)，解決 GitHub Pages 404 問題
+    const rootIndexPath = path.join(__dirname, '../../index.html');
+    fs.writeFileSync(rootIndexPath, htmlContent.trim());
+
+    // 6. 同步更新「⭐最新報告請點我」資料夾
+    const shortcutDir = path.join(__dirname, '../../⭐最新報告請點我');
+    if (!fs.existsSync(shortcutDir)) fs.mkdirSync(shortcutDir, { recursive: true });
+    fs.writeFileSync(path.join(shortcutDir, '網頁版精美報告.html'), htmlContent.trim());
+
     console.log(`✅ [完成] 華麗的網頁報告已成功產出！`);
     console.log(`🔗 檔案位置：data/articles/${dateStr}.html`);
+    console.log(`🌐 首頁已同步：index.html (GitHub Pages 專用)`);
     return outputPath;
 }
 
