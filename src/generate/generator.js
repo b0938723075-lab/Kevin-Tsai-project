@@ -28,15 +28,15 @@ async function generateHTML() {
 
     console.log(`📂 [讀取] 準備將 ${reportData.source_data_count} 筆分析資料寫入網頁...`);
 
-    // 根據分數決定主題光環顏色
-    let glowColor = "rgba(16, 185, 129, 0.4)"; // 預設綠色 (高分)
-    let scoreText = "好評如潮";
+    // 根據分數決定主題光環顏色 (心理諮商室-溫和和煦色系)
+    let glowColor = "rgba(154, 171, 150, 0.5)"; // 寧靜鼠尾草綠 (平靜和緩)
+    let scoreText = "平穩安定";
     if (reportData.score < 40) {
-        glowColor = "rgba(239, 68, 68, 0.4)"; // 紅色 (低分)
-        scoreText = "危機預警";
+        glowColor = "rgba(209, 158, 152, 0.4)"; // 柔和乾燥玫瑰紅 (需要關注)
+        scoreText = "情緒起伏";
     } else if (reportData.score < 70) {
-        glowColor = "rgba(245, 158, 11, 0.4)"; // 橘色 (中等)
-        scoreText = "反應兩極";
+        glowColor = "rgba(214, 196, 172, 0.4)"; // 溫暖燕麥沙色 (適度波動)
+        scoreText = "和緩漸進";
     }
 
     // --- 🏷️ 多維度智能分類邏輯 (嚴格過濾版) ---
@@ -91,8 +91,8 @@ async function generateHTML() {
         if (items.length > 0) {
             newsSectionsHTML += `
                 <div class="news-category-block" style="margin-top: 3rem; animation: fadeInUp 0.8s ease-out;">
-                    <h2 class="news-category-title" style="font-size: 1.5rem; margin-bottom: 1.5rem; color: #38bdf8; display: flex; align-items: center; gap: 10px;">
-                        <span style="background: rgba(56, 189, 248, 0.1); padding: 5px 12px; border-radius: 8px;">${catName}</span>
+                    <h2 class="news-category-title" style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--accent-blue); display: flex; align-items: center; gap: 10px;">
+                        <span style="background: rgba(120, 144, 134, 0.15); padding: 5px 12px; border-radius: 8px;">${catName}</span>
                         <small style="font-size: 0.9rem; color: var(--text-sub); font-weight: 300;">(${items.length} 筆資料)</small>
                     </h2>
                     <div class="news-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
@@ -109,7 +109,7 @@ async function generateHTML() {
             `;
         }
     }
-    const newsHTML = newsSectionsHTML || '<p style="color: rgba(255,255,255,0.5);">今日暫無原始搜集資料可顯示</p>';
+    const newsHTML = newsSectionsHTML || '<p style="color: rgba(61, 64, 53, 0.5);">近期暫無相關動態可供顯示</p>';
 
     // 建構充滿玻璃擬態 (Glassmorphism) 與高級動畫的網頁
     const htmlContent = `
@@ -124,23 +124,25 @@ async function generateHTML() {
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f111a;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
+            --bg-color: #F7F5F0;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --card-border: rgba(255, 255, 255, 0.9);
+            --text-main: #3D4035;
+            --text-sub: #8B8C82;
             --accent-glow: ${glowColor};
+            --accent-blue: #789086;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Outfit', 'Noto Sans TC', sans-serif;
             background-color: var(--bg-color);
             background-image: 
-                radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.05), transparent 25%),
-                radial-gradient(circle at 85% 30%, var(--accent-glow), transparent 25%);
+                radial-gradient(circle at 15% 50%, rgba(120, 144, 134, 0.08), transparent 35%),
+                radial-gradient(circle at 85% 30%, var(--accent-glow), transparent 35%);
             color: var(--text-main);
             min-height: 100vh;
             line-height: 1.6;
+            margin: 0;
         }
         .container {
             max-width: 1200px;
@@ -166,17 +168,18 @@ async function generateHTML() {
             background-size: cover;
             background-position: center 20%;
             z-index: 0;
-            opacity: 0.4;
+            opacity: 0.15;
             transition: opacity 0.5s ease;
+            mix-blend-mode: multiply;
         }
         .header-bg:hover {
-            opacity: 0.5;
+            opacity: 0.25;
         }
         header::after {
             content: '';
             position: absolute;
-            bottom: 0; left: 0; right: 0; height: 60%;
-            background: linear-gradient(to top, var(--bg-color), transparent);
+            bottom: 0; left: 0; right: 0; height: 75%;
+            background: linear-gradient(to top, var(--bg-color) 5%, rgba(247,245,240,0.6) 60%, transparent);
             z-index: 0;
         }
         .header-content {
@@ -186,22 +189,22 @@ async function generateHTML() {
         h1 {
             font-size: 3.5rem;
             font-weight: 800;
-            background: linear-gradient(to right, #ffffff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-main);
             margin-bottom: 0.5rem;
             letter-spacing: -1px;
+            text-shadow: 0 4px 15px rgba(255,255,255,0.6);
         }
         .date-badge {
             display: inline-block;
             padding: 0.5rem 1.5rem;
             border-radius: 50px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(10px);
             font-size: 0.875rem;
             letter-spacing: 2px;
             color: var(--text-sub);
             border: 1px solid var(--card-border);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
         }
         
         /* 玻璃擬態卡片列 */
@@ -216,22 +219,23 @@ async function generateHTML() {
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--card-border);
-            border-radius: 24px;
+            border-radius: 32px;
             padding: 2.5rem;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             animation: fadeInUp 0.8s ease-out backwards;
+            box-shadow: 0 10px 40px -10px rgba(139, 140, 130, 0.12);
         }
         .glass-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
-            border-color: rgba(255,255,255,0.15);
+            box-shadow: 0 15px 50px -15px rgba(139, 140, 130, 0.2);
+            border-color: rgba(255,255,255,1);
         }
         
         /* 記分板特效 */
         .score-card {
             text-align: center;
             grid-column: 1 / -1;
-            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            background: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.4) 100%);
             position: relative;
             overflow: hidden;
         }
@@ -240,16 +244,16 @@ async function generateHTML() {
             position: absolute;
             top: -50%; left: -50%; width: 200%; height: 200%;
             background: conic-gradient(transparent, transparent, transparent, var(--accent-glow));
-            animation: rotate 10s linear infinite;
+            animation: rotate 15s linear infinite;
             z-index: 0;
-            opacity: 0.5;
+            opacity: 0.3;
         }
         .score-card::after {
             content: '';
             position: absolute;
             inset: 3px;
-            background: var(--bg-color);
-            border-radius: 22px;
+            background: rgba(247, 245, 240, 0.95);
+            border-radius: 30px;
             z-index: 1;
         }
         .score-content { position: relative; z-index: 2; }
@@ -269,7 +273,7 @@ async function generateHTML() {
 
         /* 分析清單 */
         .card-icon {
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
             display: inline-block;
         }
@@ -277,12 +281,13 @@ async function generateHTML() {
             font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: #fff;
+            color: var(--text-main);
         }
         .card-text {
             color: var(--text-sub);
             font-size: 1rem;
             line-height: 1.8;
+            font-weight: 400;
         }
 
         /* 原始新聞區塊 */
@@ -294,6 +299,7 @@ async function generateHTML() {
             font-size: 2rem;
             margin-bottom: 2rem;
             font-weight: 700;
+            color: var(--text-main);
         }
         .news-grid {
             display: grid;
@@ -303,29 +309,32 @@ async function generateHTML() {
         .news-card {
             display: block;
             text-decoration: none;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 15px rgba(139, 140, 130, 0.05);
             padding: 1.5rem;
-            border-radius: 16px;
-            transition: all 0.2s ease;
+            border-radius: 20px;
+            transition: all 0.3s ease;
         }
         .news-card:hover {
-            background: rgba(255,255,255,0.06);
-            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 140, 130, 0.1);
         }
         .news-source {
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #38bdf8;
+            color: var(--accent-blue);
             margin-bottom: 0.5rem;
             display: block;
+            font-weight: 600;
         }
         .news-title {
-            color: #fff;
+            color: var(--text-main);
             font-size: 1.1rem;
             margin-bottom: 0.75rem;
-            font-weight: 500;
+            font-weight: 600;
         }
         .news-desc {
             color: var(--text-sub);
@@ -363,7 +372,7 @@ async function generateHTML() {
         <div class="header-content">
             <div class="date-badge">TREND REPORT: 2026.02 - 至今</div>
             <h1>Kevin Tsai 輿情精粹</h1>
-            <p style="color: #38bdf8; font-size: 1.1rem; margin-top: 1.5rem; font-weight: 500;">
+            <p style="color: var(--accent-blue); font-size: 1.1rem; margin-top: 1.5rem; font-weight: 500;">
                 重點收編：「書籍作品」、「主持節目」、「個人聲量」與「新聞評論」
             </p>
             <p style="color: var(--text-sub); margin-top: 0.5rem; font-size: 0.95rem;">
@@ -383,14 +392,14 @@ async function generateHTML() {
 
         <!-- 正面評價卡片 -->
         <div class="glass-card" style="animation-delay: 0.2s;">
-            <div class="card-icon">✨</div>
+            <div class="card-icon">🌱</div>
             <h2 class="card-title">正面聲量與好評</h2>
             <p class="card-text">${reportData.positive_summary}</p>
         </div>
 
         <!-- 負面預警卡片 -->
-        <div class="glass-card" style="animation-delay: 0.3s; border-top: 2px solid rgba(239, 68, 68, 0.4);">
-            <div class="card-icon">⚡</div>
+        <div class="glass-card" style="animation-delay: 0.3s; border-top: 2px solid rgba(209, 158, 152, 0.6);">
+            <div class="card-icon">🍂</div>
             <h2 class="card-title">危機預警與爭議</h2>
             <p class="card-text">${reportData.negative_summary}</p>
         </div>
