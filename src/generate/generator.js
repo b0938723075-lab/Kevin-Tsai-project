@@ -39,32 +39,51 @@ async function generateHTML() {
         scoreText = "反應兩極";
     }
 
-    // --- 🏷️ 多維度智能分類邏輯 ---
+    // --- 🏷️ 多維度智能分類邏輯 (嚴格過濾版) ---
     const categories = {
-        "📚 作品與書籍": [],
-        "📺 節目與主持": [],
-        "💎 個人聲量與社群": [],
-        "📰 最新新聞": []
+        "💎 蔡康永個人社群動態": [],
+        "📚 書籍作品與分享": [],
+        "📺 主持節目及錄影": [],
+        "📰 相關新聞與報導": []
     };
 
     rawData.forEach(item => {
-        const text = (item.title + (item.summary || "")).toLowerCase();
-        // 判斷是否屬於書籍
-        if (text.includes("書") || text.includes("說話之道") || text.includes("情商課") || text.includes("閱讀") || text.includes("作品")) {
-            categories["📚 作品與書籍"].push(item);
-        } 
-        // 判斷是否屬於節目
-        else if (text.includes("節目") || text.includes("康熙來了") || text.includes("主持") || text.includes("專訪") || text.includes("電視")) {
-            categories["📺 節目與主持"].push(item);
-        } 
-        // 判斷是否為社群討論/個人聲量
-        else if (["PTT", "Dcard", "Threads", "Facebook", "Instagram"].includes(item.source) || text.includes("網友") || text.includes("社群") || text.includes("輿論")) {
-            categories["💎 個人聲量與社群"].push(item);
-        } 
-        // 其餘歸類為新聞
-        else {
-            categories["📰 最新新聞"].push(item);
+        const text = (item.title + " " + (item.summary || "")).toLowerCase();
+        const url = (item.url || "").toLowerCase();
+        const source = (item.source || "").toLowerCase();
+
+        // 1. 社群動態：必須是個人社群發文或相關的本人動態
+        const isOfficialAccount = url.includes('kangyong');
+        const isSocialPlatform = url.includes('facebook') || url.includes('instagram') || url.includes('threads') || url.includes('weibo');
+        const isSocialPost = text.includes('發文') || text.includes('po文') || text.includes('粉專') || text.includes('個人動態');
+        if (isOfficialAccount || (isSocialPlatform && isSocialPost)) {
+            categories["💎 蔡康永個人社群動態"].push(item);
+            return; // 命中後跳出
         }
+
+        // 2. 書籍作品：必須明確提到知名著作、新書、書評或讀書心得
+        const bookKeywords = ["說話之道", "说话之道", "情商課", "情商课", "因為這是你的人生", "男孩看見血地向前飛", "新書分享", "書評", "讀後感", "微信讀書"];
+        if (bookKeywords.some(kw => text.includes(kw.toLowerCase()))) {
+            categories["📚 書籍作品與分享"].push(item);
+            return;
+        }
+
+        // 3. 主持節目：必須是特定他主持的節目名稱
+        const showKeywords = ["康熙來了", "奇葩說", "真情指數", "兩代電力公司", "眾聲", "小姐不熙娣", "錄影", "主持崗位"];
+        if (showKeywords.some(kw => text.includes(kw.toLowerCase()))) {
+            categories["📺 主持節目及錄影"].push(item);
+            return;
+        }
+
+        // 4. 新聞報導：過濾掉維基百科等雜訊，只留下明確的新聞媒體與新聞內容
+        const isWiki = url.includes('wikipedia.org') || url.includes('wikiwand.com') || url.includes('scribd');
+        const newsKeywords = ["新聞", "news", "報導", "記者", "yahoo", "tvbs", "ebc", "ettoday", "ltn", "udn", "setn", "chinatimes", "nownews", "鏡週刊", "三立", "東森", "自由", "中時", "壹蘋"];
+        if (!isWiki && newsKeywords.some(kw => source.includes(kw) || url.includes(kw) || text.includes(kw))) {
+            categories["📰 相關新聞與報導"].push(item);
+            return;
+        }
+        
+        // 如果上面都不符合 (例如：百科全書、不相關的購物網站等)，就會直接被拋棄，不顯示在報表中。
     });
 
     let newsSectionsHTML = "";
