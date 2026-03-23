@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kevin Tsai 蔡康永 - 每日聲量與輿情控制台</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f111a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --accent-glow: rgba(16, 185, 129, 0.4);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Outfit', 'Noto Sans TC', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, var(--accent-glow), transparent 25%);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInDown 1s ease-out;
+        }
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+        .date-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            font-size: 0.875rem;
+            letter-spacing: 2px;
+            color: var(--text-sub);
+            border: 1px solid var(--card-border);
+        }
+        
+        /* 玻璃擬態卡片列 */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+            border-color: rgba(255,255,255,0.15);
+        }
+        
+        /* 記分板特效 */
+        .score-card {
+            text-align: center;
+            grid-column: 1 / -1;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .score-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(transparent, transparent, transparent, var(--accent-glow));
+            animation: rotate 10s linear infinite;
+            z-index: 0;
+            opacity: 0.5;
+        }
+        .score-card::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: var(--bg-color);
+            border-radius: 22px;
+            z-index: 1;
+        }
+        .score-content { position: relative; z-index: 2; }
+        .score-number {
+            font-size: 6rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+        .score-label {
+            font-size: 1.25rem;
+            color: var(--text-sub);
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        /* 分析清單 */
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+        .card-text {
+            color: var(--text-sub);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        /* 原始新聞區塊 */
+        .news-section {
+            margin-top: 4rem;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+        }
+        .news-section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .news-card {
+            display: block;
+            text-decoration: none;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+        }
+        .news-card:hover {
+            background: rgba(255,255,255,0.06);
+            transform: scale(1.02);
+        }
+        .news-source {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #38bdf8;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .news-title {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+        .news-desc {
+            color: var(--text-sub);
+            font-size: 0.875rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* 動畫設定 */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .score-number { font-size: 4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="date-badge">DATE: 2026-03-19</div>
+        <h1>Kevin Tsai 聲量儀表板</h1>
+        <p style="color: var(--text-sub); margin-top: 1rem;">由 AI 自動搜集、分析與產生的每日輿情簡報，資料筆數：11 筆。</p>
+    </header>
+
+    <div class="dashboard-grid">
+        <!-- 分數卡片 -->
+        <div class="glass-card score-card" style="animation-delay: 0.1s;">
+            <div class="score-content">
+                <div class="score-number">75</div>
+                <div class="score-label">AI 綜合情緒評分 (好評如潮)</div>
+            </div>
+        </div>
+
+        <!-- 正面評價卡片 -->
+        <div class="glass-card" style="animation-delay: 0.2s;">
+            <div class="card-icon">✨</div>
+            <h2 class="card-title">正面聲量與好評</h2>
+            <p class="card-text">多數討論集中於肯定其高情商溝通技巧，給予強烈正面迴響。</p>
+        </div>
+
+        <!-- 負面預警卡片 -->
+        <div class="glass-card" style="animation-delay: 0.3s; border-top: 2px solid rgba(239, 68, 68, 0.4);">
+            <div class="card-icon">⚡</div>
+            <h2 class="card-title">危機預警與爭議</h2>
+            <p class="card-text">部分聲音認為觀點過於理想化，存在微小爭議。</p>
+        </div>
+
+        <!-- 趨勢風向卡片 -->
+        <div class="glass-card" style="animation-delay: 0.4s; grid-column: auto / span 2;">
+            <div class="card-icon">🧭</div>
+            <h2 class="card-title">全網趨勢與風向</h2>
+            <p class="card-text">整體話題圍繞著他的著作與溝通心法，多數民眾表達認同，風向為正。</p>
+        </div>
+    </div>
+
+    <!-- 原始新聞資料列表 -->
+    <div class="news-section">
+        <h2 class="news-section-title">🗞 今日搜集來源檔</h2>
+        <div class="news-grid">
+            
+        <a href="https://en.wikipedia.org/wiki/Kevin_Tsai" target="_blank" class="news-card">
+            <span class="news-source">Tavily</span>
+            <h3 class="news-title">Kevin Tsai</h3>
+            <p class="news-desc">Kevin Tsai (Chinese: 蔡康永; pinyin: Cài Kāngyǒng; Pe̍h-ōe-jī: Chhòa Khong-éng; born 1 March 1962) is a Taiwanese television host and writer.</p>
+        </a>
+    
+        <a href="https://zh.wikipedia.org/wiki/%E8%94%A1%E5%BA%B7%E6%B0%B8" target="_blank" class="news-card">
+            <span class="news-source">Tavily</span>
+            <h3 class="news-title">蔡康永- 維基百科，自由的百科全書</h3>
+            <p class="news-desc">蔡康永（英語：Kevin Tsai，1962年3月1日—），臺灣男主持人、作家和導演。 ... 蔡康永早年是影評人和編劇，編劇的電影包括《阿嬰》(1990)，《方世玉》(1993)，後成為作家和主持人。</p>
+        </a>
+    
+        <a href="https://m.douban.com/book/author/544414/" target="_blank" class="news-card">
+            <span class="news-source">Tavily</span>
+            <h3 class="news-title">蔡康永Kevin Tsai</h3>
+            <p class="news-desc">蔡康永简介：1986年凭着父亲的朋友——国际大导演胡金铨的推荐信到美国加州大学洛杉矶分校（UCLA）念电影电视研究所，1990年获得编导制作硕士学位。 1990年毕业后在世新大学</p>
+        </a>
+    
+        <a href="https://weread.qq.com/web/search/books?author=%E8%94%A1%E5%BA%B7%E6%B0%B8&ii=41432c20811e2984fg010ce9" target="_blank" class="news-card">
+            <span class="news-source">Tavily</span>
+            <h3 class="news-title">蔡康永-全部作品在线阅读</h3>
+            <p class="news-desc">蔡康永（Kevin Tsai，1962年3月1日-），出生于中国台湾台北市，毕业于加州大学洛杉矶分校，中国台湾男主持人、作家、设计师、演员、编剧、导演。 1990年，签入香港的邵氏电影公司，</p>
+        </a>
+    
+        <a href="https://www.tatlerasia.com/people/kevin-tsai-zh-hant" target="_blank" class="news-card">
+            <span class="news-source">Tavily</span>
+            <h3 class="news-title">蔡康永Kevin Tsai</h3>
+            <p class="news-desc">蔡康永（Kevin Tsai）是知名的主持人、作家、導演。他早年從事影評和編劇工作，曾參與電影《阿嬰》（1990年）和《方世玉》（1993年）的編劇。1996 年，蔡康永開始主持電視</p>
+        </a>
+    
+        <a href="https://www.chinatimes.com/realtimenews/20260318003221-260404?ctrack=mo_star_headl_p02" target="_blank" class="news-card">
+            <span class="news-source">Apify</span>
+            <h3 class="news-title">小甜甜PO《康熙來了》同框合照 點名蔡康永、小S吐心聲 - 娛樂 - 中時新聞網</h3>
+            <p class="news-desc">中時新聞網
+小甜甜PO《康熙來了》同框合照 點名蔡康永、小S吐心聲
+15:452026/03/18 
+中時新聞網
+蘇士亨 
+Facebook
+Line
+Threads
+複製連結
+小甜甜感謝蔡康永及小S多年來的照顧。（圖／小甜甜 張可昀 臉書） 
+Facebook
+Line
+Threads
+複製連結
+字級設定：小中大特 
+藝人小甜甜（張可昀）2023年3月結束與前夫宋晉賢的兩年婚姻後，遠赴廈門定居，挑戰直播帶貨事業，未料發展不如預期，不到一年便選擇回台重新出發，常在社群分享日常的她，突然發文點名蔡康永以及小S，引起網友熱議。
+小甜甜表示當逐漸長大後，對於所愛以及在乎的人，表達方式都變的內斂，主要...</p>
+        </a>
+    
+        <a href="https://tw.news.yahoo.com/%E5%B0%8F%E7%94%9C%E7%94%9C%E7%BD%95%E5%90%90%E9%95%B7%E6%96%87-%E6%9A%96%E8%AC%9D%E5%B0%8Fs-%E8%94%A1%E5%BA%B7%E6%B0%B8-%E4%BF%9D%E8%AD%B7%E4%BB%96-%E6%88%91%E7%9C%9F%E7%9A%84%E7%9C%9F%E7%9A%84%E5%BE%88%E6%84%9B%E4%BD%A0%E5%80%91-072800297.html" target="_blank" class="news-card">
+            <span class="news-source">Apify</span>
+            <h3 class="news-title">小甜甜罕吐長文！暖謝小S、蔡康永「保護他」：我真的真的很愛你們</h3>
+            <p class="news-desc">Yahoo新聞
+搜尋
+登入
+熱搜
+土地公生日
+繁星放榜
+西班牙旅遊
+美光財報
+磁磚隆起
+蜘蛛人重生日
+日本機票
+委內瑞拉首座冠軍
+蜘蛛人重生日
+方志友傳婚變
+打開App
+廣告 
+問卷
+Yahoo新聞AI功能使用意見調查，填問卷抽好禮！
+小甜甜罕吐長文！暖謝小S、蔡康永「保護他」：我真的真的很愛你們
+三立新聞網
+2026年3月18日 週三 上午12:28
+娛樂中心／綜合報導
+「小甜甜」張可昀曬出她過去與小S以及蔡康永時錄影花絮。（圖／翻攝張可昀臉書）
+女藝人「小甜甜」張可昀今（18）日上午在社群臉書罕見寫下長文，她提到，隨著年紀漸長，對在乎的人、愛的人反而更內斂，不再需要頻繁強調「我們有多好」，...</p>
+        </a>
+    
+        <a href="https://www.facebook.com/eslite/posts/%E7%9B%B4%E6%93%8A%E8%94%A1%E5%BA%B7%E6%B0%B8%E5%87%BA%E6%B2%92%E8%AA%A0%E5%93%81%E6%9B%B8%E5%BA%972026%E5%B9%B4%E8%AA%A0%E5%93%81%E6%9B%B8%E5%BA%97%E5%B1%95%E9%96%8B%E5%85%A8%E6%96%B0%E4%BC%81%E5%8A%83%E7%82%BA%E8%AE%80%E6%9B%B8%E4%BA%BA%E5%80%91%E7%B2%BE%E5%BF%83%E8%A8%AD%E8%A8%88%E4%BA%86%E7%B3%BB%E5%88%97%E6%B4%BB%E5%8B%953%E6%9C%88%E4%BB%BD%E6%88%91%E5%80%91%E8%BF%8E%E4%BE%86%E9%87%8D%E9%87%8F%E7%B4%9A%E5%98%89%E8%B3%93%E7%94%B1%E8%94%A1%E5%BA%B7%E6%B0%B8%E5%88%86%E4%BA%AB%E6%9B%B8%E5%BA%97%E5%A6%82%E4%BD%95%E4%BD%9C%E7%82%BA%E4%B8%80%E5%BA%A7%E9%9D%88%E9%AD%82%E7%9A%84%E9%81%8A%E6%A8%82%E5%9C%92%E9%82%84%E6%B2%92%E4%B8%8A%E8%BB%8A%E7%9A%84%E8%AE%80%E8%80%85%E6%8A%8A/1406728244821678/" target="_blank" class="news-card">
+            <span class="news-source">Apify</span>
+            <h3 class="news-title">🎥直擊！蔡康永出沒誠品書店💥
+
+2026年誠品書店展開全新企劃... - 誠品書店 eslite bookstore</h3>
+            <p class="news-desc">誠品書店 eslite bookstore 
+March 4 at 4:03 AM · 
+直擊！蔡康永出沒誠品書店
+2026年誠品書店展開全新企劃
+為讀書人們精心設計了系列活動
+3月份我們迎來重量級嘉賓
+由蔡康永分享書店如何作為一座靈魂的遊樂園
+還沒上車的讀者，把握最後機會！
+【讀書人徽章．名人講座】
+主題｜靈魂的遊樂園，是書店
+講者｜蔡康永
+時間｜03.19 THU 19:30-21:30 
+地點｜誠品表演廳
+誠品會員報名
+https://eslite.me/8r94np
+一般讀者報名
+https://eslite.me/8sceac
+※為維護活動流程與參與品質，本場活動僅開放線上候補名額，...</p>
+        </a>
+    
+        <a href="https://www.facebook.com/Kevin.Tsai.taiwan/" target="_blank" class="news-card">
+            <span class="news-source">Apify</span>
+            <h3 class="news-title">Kevin Tsai</h3>
+            <p class="news-desc">...</p>
+        </a>
+    
+        <a href="https://www.threads.com/@kevint.taiwan/post/DWBy1ukEvvf/%E4%B8%80%E6%9C%88%E6%89%8D%E4%BD%8F%E9%81%8E%E7%95%B6%E6%99%82%E6%9C%89%E8%A2%AB%E8%9F%B2%E8%9F%B2%E6%94%BB%E6%93%8A%E7%8F%BE%E5%9C%A8%E5%B0%B1%E4%B8%8D%E7%9F%A5%E9%81%93%E4%BA%86" target="_blank" class="news-card">
+            <span class="news-source">Apify</span>
+            <h3 class="news-title">一月才住過，當時有被蟲蟲攻擊，現在就不知道了</h3>
+            <p class="news-desc">Thread
+98 views
+kevint.taiwan
+15h
+一月才住過，當時有被蟲蟲攻擊，現在就不知道了 
+Translate
+Log in or sign up for ThreadsSee what people are talking about and join the conversation.
+Log in with username instead...</p>
+        </a>
+    
+        <a href="https://www.facebook.com/kevin.tsai.1526/" target="_blank" class="news-card">
+            <span class="news-source">Apify</span>
+            <h3 class="news-title">Kevin Tsai</h3>
+            <p class="news-desc">...</p>
+        </a>
+    
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

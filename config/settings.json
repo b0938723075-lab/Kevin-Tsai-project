@@ -1,0 +1,27 @@
+{
+  "scheduler": {
+    "cron_expression": "0 9 * * *",
+    "description": "每天早上 9:00 執行"
+  },
+  "keywords": {
+    "primary": [
+      "蔡康永",
+      "Kevin Tsai"
+    ],
+    "exclude": [
+      "同名不相關"
+    ]
+  },
+  "sources": {
+    "google_news_enabled": false,
+    "tavily_enabled": true,
+    "duckduckgo_enabled": true,
+    "apify_enabled": true,
+    "ptt_enabled": false,
+    "dcard_enabled": false
+  },
+  "analysis": {
+    "language": "zh-TW",
+    "theme": "dark"
+  }
+}

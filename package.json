@@ -1,0 +1,21 @@
+{
+  "name": "kevin-tsai-project",
+  "version": "1.0.0",
+  "description": "AI 輿情監控與自動發佈系統 - 蔡康永",
+  "main": "src/pipeline.js",
+  "scripts": {
+    "start": "node src/scheduler/scheduler.js",
+    "test": "node src/pipeline.js"
+  },
+  "dependencies": {
+    "apify-client": "^2.22.2",
+    "axios": "^1.6.8",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.4.5",
+    "duck-duck-scrape": "^2.2.7",
+    "node-cron": "^3.0.3",
+    "openai": "^4.29.2",
+    "rss-parser": "^3.13.0",
+    "winston": "^3.12.0"
+  }
+}

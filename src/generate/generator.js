@@ -1,0 +1,330 @@
+const fs = require('fs');
+const path = require('path');
+
+async function generateHTML() {
+    console.log("=====================================");
+    console.log("  📝 開始寫文：生成華麗的分析網頁報告");
+    console.log("=====================================\n");
+
+    const dateStr = new Date().toISOString().split('T')[0];
+    const reportPath = path.join(__dirname, `../../data/reports/${dateStr}.json`);
+    const rawPath = path.join(__dirname, `../../data/raw/${dateStr}.json`);
+    const articlesDir = path.join(__dirname, '../../data/articles');
+
+    if (!fs.existsSync(articlesDir)) {
+        fs.mkdirSync(articlesDir, { recursive: true });
+    }
+
+    if (!fs.existsSync(reportPath)) {
+        console.error(`❌ 找不到今日的 AI 分析報告 (${dateStr}.json)，請先執行分析模組！`);
+        return;
+    }
+
+    const reportData = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
+    let rawData = [];
+    if (fs.existsSync(rawPath)) {
+        rawData = JSON.parse(fs.readFileSync(rawPath, 'utf8'));
+    }
+
+    console.log(`📂 [讀取] 準備將 ${reportData.source_data_count} 筆分析資料寫入網頁...`);
+
+    // 根據分數決定主題光環顏色
+    let glowColor = "rgba(16, 185, 129, 0.4)"; // 預設綠色 (高分)
+    let scoreText = "好評如潮";
+    if (reportData.score < 40) {
+        glowColor = "rgba(239, 68, 68, 0.4)"; // 紅色 (低分)
+        scoreText = "危機預警";
+    } else if (reportData.score < 70) {
+        glowColor = "rgba(245, 158, 11, 0.4)"; // 橘色 (中等)
+        scoreText = "反應兩極";
+    }
+
+    // 產生新聞清單的 HTML
+    const newsHTML = rawData.length > 0 ? rawData.map(item => `
+        <a href="${item.url || '#'}" target="_blank" class="news-card">
+            <span class="news-source">${item.source}</span>
+            <h3 class="news-title">${item.title}</h3>
+            <p class="news-desc">${item.summary || '點擊查看詳細內容'}</p>
+        </a>
+    `).join('') : '<p style="color: rgba(255,255,255,0.5);">今日暫無原始新聞資料可顯示</p>';
+
+    // 建構充滿玻璃擬態 (Glassmorphism) 與高級動畫的網頁
+    const htmlContent = `
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kevin Tsai 蔡康永 - 每日聲量與輿情控制台</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f111a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --accent-glow: ${glowColor};
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Outfit', 'Noto Sans TC', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, var(--accent-glow), transparent 25%);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInDown 1s ease-out;
+        }
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+        .date-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            font-size: 0.875rem;
+            letter-spacing: 2px;
+            color: var(--text-sub);
+            border: 1px solid var(--card-border);
+        }
+        
+        /* 玻璃擬態卡片列 */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+            border-color: rgba(255,255,255,0.15);
+        }
+        
+        /* 記分板特效 */
+        .score-card {
+            text-align: center;
+            grid-column: 1 / -1;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .score-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(transparent, transparent, transparent, var(--accent-glow));
+            animation: rotate 10s linear infinite;
+            z-index: 0;
+            opacity: 0.5;
+        }
+        .score-card::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: var(--bg-color);
+            border-radius: 22px;
+            z-index: 1;
+        }
+        .score-content { position: relative; z-index: 2; }
+        .score-number {
+            font-size: 6rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+        .score-label {
+            font-size: 1.25rem;
+            color: var(--text-sub);
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        /* 分析清單 */
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+        .card-text {
+            color: var(--text-sub);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        /* 原始新聞區塊 */
+        .news-section {
+            margin-top: 4rem;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+        }
+        .news-section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .news-card {
+            display: block;
+            text-decoration: none;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+        }
+        .news-card:hover {
+            background: rgba(255,255,255,0.06);
+            transform: scale(1.02);
+        }
+        .news-source {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #38bdf8;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .news-title {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+        .news-desc {
+            color: var(--text-sub);
+            font-size: 0.875rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* 動畫設定 */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .score-number { font-size: 4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="date-badge">DATE: ${dateStr}</div>
+        <h1>Kevin Tsai 聲量儀表板</h1>
+        <p style="color: var(--text-sub); margin-top: 1rem;">由 AI 自動搜集、分析與產生的每日輿情簡報，資料筆數：${reportData.source_data_count} 筆。</p>
+    </header>
+
+    <div class="dashboard-grid">
+        <!-- 分數卡片 -->
+        <div class="glass-card score-card" style="animation-delay: 0.1s;">
+            <div class="score-content">
+                <div class="score-number">${reportData.score}</div>
+                <div class="score-label">AI 綜合情緒評分 (${scoreText})</div>
+            </div>
+        </div>
+
+        <!-- 正面評價卡片 -->
+        <div class="glass-card" style="animation-delay: 0.2s;">
+            <div class="card-icon">✨</div>
+            <h2 class="card-title">正面聲量與好評</h2>
+            <p class="card-text">${reportData.positive_summary}</p>
+        </div>
+
+        <!-- 負面預警卡片 -->
+        <div class="glass-card" style="animation-delay: 0.3s; border-top: 2px solid rgba(239, 68, 68, 0.4);">
+            <div class="card-icon">⚡</div>
+            <h2 class="card-title">危機預警與爭議</h2>
+            <p class="card-text">${reportData.negative_summary}</p>
+        </div>
+
+        <!-- 趨勢風向卡片 -->
+        <div class="glass-card" style="animation-delay: 0.4s; grid-column: auto / span 2;">
+            <div class="card-icon">🧭</div>
+            <h2 class="card-title">全網趨勢與風向</h2>
+            <p class="card-text">${reportData.overall_trend}</p>
+        </div>
+    </div>
+
+    <!-- 原始新聞資料列表 -->
+    <div class="news-section">
+        <h2 class="news-section-title">🗞 今日搜集來源檔</h2>
+        <div class="news-grid">
+            ${newsHTML}
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+    `;
+
+    // 4. 寫入 HTML 檔案
+    const outputPath = path.join(articlesDir, `${dateStr}.html`);
+    fs.writeFileSync(outputPath, htmlContent.trim());
+
+    console.log(`✅ [完成] 華麗的網頁報告已成功產出！`);
+    console.log(`🔗 檔案位置：data/articles/${dateStr}.html`);
+    return outputPath;
+}
+
+if (require.main === module) {
+    generateHTML();
+}
+
+module.exports = { generateHTML };
