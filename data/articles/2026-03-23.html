@@ -33,9 +33,40 @@
             padding: 4rem 2rem;
         }
         header {
+            position: relative;
             text-align: center;
             margin-bottom: 4rem;
+            padding: 6rem 2rem;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
             animation: fadeInDown 1s ease-out;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+        }
+        .header-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            /* 讀取 GitHub 雲端上的 banner 圖片作為背景 */
+            background-image: url('https://b0938723075-lab.github.io/Kevin-Tsai-project/banner.png');
+            background-size: cover;
+            background-position: center 20%;
+            z-index: 0;
+            opacity: 0.4;
+            transition: opacity 0.5s ease;
+        }
+        .header-bg:hover {
+            opacity: 0.5;
+        }
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0; height: 60%;
+            background: linear-gradient(to top, var(--bg-color), transparent);
+            z-index: 0;
+        }
+        .header-content {
+            position: relative;
+            z-index: 1;
         }
         h1 {
             font-size: 3.5rem;
@@ -213,9 +244,12 @@
 
 <div class="container">
     <header>
-        <div class="date-badge">DATE: 2026-03-23</div>
-        <h1>Kevin Tsai 聲量儀表板</h1>
-        <p style="color: var(--text-sub); margin-top: 1rem;">由 AI 自動搜集、分析與產生的每日輿情簡報，資料筆數：41 筆。</p>
+        <div class="header-bg"></div>
+        <div class="header-content">
+            <div class="date-badge">DATE: 2026-03-23</div>
+            <h1>Kevin Tsai 聲量儀表板</h1>
+            <p style="color: var(--text-sub); margin-top: 1rem;">由 AI 自動搜集、分析與產生的每日輿情簡報，資料筆數：42 筆。</p>
+        </div>
     </header>
 
     <div class="dashboard-grid">
@@ -232,7 +266,7 @@
             <div class="card-icon">✨</div>
             <h2 class="card-title">正面聲量與好評</h2>
             <p class="card-text">[今日熱門內容]：
-・蔡康永- 維基百科，自由的百科全書
+・Book Review: Kevin Tsai's Way Of Speaking (蔡康永的说话之道)
 ・蔡康永-全部作品在线阅读-微信读书
 ・蔡康永-全部作品在线阅读-微信读书
 (目前為模擬分析，詳細解讀需串接 OpenAI API)</p>
@@ -249,7 +283,7 @@
         <div class="glass-card" style="animation-delay: 0.4s; grid-column: auto / span 2;">
             <div class="card-icon">🧭</div>
             <h2 class="card-title">全網趨勢與風向</h2>
-            <p class="card-text">系統於 PTT, Dcard, FB 等平台共偵測到 41 筆最新討論。</p>
+            <p class="card-text">系統於 PTT, Dcard, FB 等平台共偵測到 42 筆最新討論。</p>
         </div>
     </div>
 
@@ -259,9 +293,135 @@
                 <div class="news-category-block" style="margin-top: 3rem; animation: fadeInUp 0.8s ease-out;">
                     <h2 class="news-category-title" style="font-size: 1.5rem; margin-bottom: 1.5rem; color: #38bdf8; display: flex; align-items: center; gap: 10px;">
                         <span style="background: rgba(56, 189, 248, 0.1); padding: 5px 12px; border-radius: 8px;">📚 作品與書籍</span>
-                        <small style="font-size: 0.9rem; color: var(--text-sub); font-weight: 300;">(16 筆資料)</small>
+                        <small style="font-size: 0.9rem; color: var(--text-sub); font-weight: 300;">(17 筆資料)</small>
                     </h2>
                     <div class="news-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+                        
+                            <a href="https://weread.qq.com/web/search/books?author=%E8%94%A1%E5%BA%B7%E6%B0%B8&ii=aeb32460811e1a9b8g014b35" target="_blank" class="news-card">
+                                <span class="news-source">Tavily</span>
+                                <h3 class="news-title">蔡康永-全部作品在线阅读-微信读书</h3>
+                                <p class="news-desc"># 微信读书首页墨水屏版
+
+蔡康永（Kevin Tsai，1962年3月1日-），出生于中国台湾台北市，毕业于加州大学洛杉矶分校，中国台湾男主持人、作家、设计师、演员、编剧、导演。 1990年，签入香港的邵氏电影公司，并开始参与电影编剧及评审工作。1996年，主持第一个节目《翻书触电王》。1998年，主持名人访谈节目《真情指数》，获得第35届中国台湾电视金钟奖娱乐综艺节目奖。2014年，首次以固定嘉宾身份亮相内地综艺《奇葩说》并担任节目的主持人之一。2015年，微博发文宣布正式离开《康熙来了》。2018年，获得第九届牛耳文娱盛典互联网文化特殊成就奖。
+
+ 书籍封面
+
+  蔡康永
+
+  170人今日阅读 推荐值 80.7%
+
+  蔡康永手把手教你人际关系之道：26招拿捏所有社交场合！ 《奇葩说》马东认证！600万读者亲测有效！ 蔡康永融合西方认知心理学与东方文化背景，为中国人量身定制，用故事说道理，5分钟就能get1个“拿起来就能用”的小技巧！ 瓜几拉定制猫咪插画，边吸猫边get高情商社交心法！ 为什么我们说爱一个人，有功力高下之别？ 为什么在人际关系里，你的付出常常换不来你所期待的回报？ 如何吸引有趣的陌生人，让他成为你的朋友、甚至视你为知音？ 如何借助别人的力量，让自己生活得更好？ 康永哥亲自拆解令人如沐春风的秘密，将“人际关系之道”用26个幽默小故事表达出来，教你如何积极引导、主动塑造你想要的人际关系，强势自我表达的同时，仍能进行简洁、愉悦而高效的沟通，用不造成伤害的温柔手法化解人际冲突，疗愈原生家庭留下的痛楚童年回忆，在亲密关系中获得成长，成为懂得爱人、更能轻易获得别人青睐的情商高手。
+ 书籍封面
+
+  蔡康永
+
+  127人今日阅读 推荐值 74.7% [...] 蔡康永
+
+  127人今日阅读 推荐值 74.7%
+
+  蔡康永的高情商话术！热销500万册的国民阅读经典！ 全新升级，收录未曝光过的新作8章！ 蔡康永说：“把说话练好，是划算的事。” 好好说话，可以让我们的生活更好过。 怎么说话可以让人信任？怎么说话能够让你出类拔萃？ 在这本书中你都可以找到答案。 本书不仅有说话之术，更讲透说话之道， 旨在令“本来已经很讨人喜欢的你，在未来变得更讨人喜欢”。 全书包括44篇精彩短文，通过研究“说话”令读者更加明确自己和别人的关系、自己和别人的思维逻辑，由此加深自我理解，提升生活幸福感。 人气漫画家酚酞瓜倾情奉上生动四格漫画，有梗有料，图文并茂！
+
+  127
+ 书籍封面
+
+  为你自己活一次（独家首发）
+
+  蔡康永
+
+  62人今日阅读 推荐值 72.9% [...] 62
+ 书籍封面
+
+  蔡康永的说话之道2（独家首发）
+
+  蔡康永
+
+  37人今日阅读 推荐值 76.5%
+
+  【有来有往，才叫人情。】 热销500万册的国民阅读经典！蔡康永代表作！ 蔡康永2020年亲自修订，加入全新创作的8个章节的升级版《说话之道》！ 人气金V漫画家酚酞瓜亲自执笔，88幅四格漫画有梗有料，图文并茂，带你开心带你飞！ 《蔡康永的说话之道2》是知名主持人蔡康永说话之道第二册，全新内容展现更直接生动的聊天方法。 《蔡康永的说话之道2》包括40篇精彩聊天秘方，每篇都是让谈话变得生动有趣，让你与他人相处也开始变得有趣，如同蔡康永的主持风格一样俏皮机智，饶有情趣。继百万销量《蔡康永的说话之道》后，时隔五年，蔡康永新领悟到的说话之道，就是“对你好”；因为我说得让你开心，你也会把我放在你心上。演练说话就是演练“如何和别人相处”。蔡康永相信的：越能体会和别人的说话之乐，你就能过得越好！
+
+  37
+ 书籍封面
+
+  蔡康永的说话之道（全2册）
+
+  蔡康永
+
+  32人今日阅读 推荐值 79.5%
+
+  《蔡康永的说话之道》是知名主持人蔡康永诠释“说话的艺术”的随笔集，旨在令“本来已经很讨人喜欢的你，在未来变得更讨人喜欢”。全书包括44篇精彩短文，通过研究“说话”令读者更加明确自己和别人的关系、自己和别人的思维逻辑，由此加深自我理解，提升生活幸福感。 《蔡康永的说话之道2》是知名主持人蔡康永说话之道第二册，全新内容展现更直接生动的聊天方法。《蔡康永的说话之道2》包括40篇精彩聊天秘方，每篇都是让谈话变得生动有趣，让你与他人相处也开始变得有趣，如同蔡康永的主持风格一样俏皮机智，饶有情趣。蔡康永相信的：越能体会和别人的说话之乐，你就能过得越好！
+
+  32
+ 书籍封面
+
+  蔡康永的情商课（全2册）
+
+  蔡康永
+
+  25人今日阅读</p>
+                            </a>
+                        
+                            <a href="https://weread.qq.com/web/search/books?author=%E8%94%A1%E5%BA%B7%E6%B0%B8&ii=73e32e9056615073ed7d3fe" target="_blank" class="news-card">
+                                <span class="news-source">Tavily</span>
+                                <h3 class="news-title">蔡康永-全部作品在线阅读-微信读书</h3>
+                                <p class="news-desc"># 微信读书首页墨水屏版
+
+蔡康永（Kevin Tsai，1962年3月1日-），出生于中国台湾台北市，毕业于加州大学洛杉矶分校，中国台湾男主持人、作家、设计师、演员、编剧、导演。 1990年，签入香港的邵氏电影公司，并开始参与电影编剧及评审工作。1996年，主持第一个节目《翻书触电王》。1998年，主持名人访谈节目《真情指数》，获得第35届中国台湾电视金钟奖娱乐综艺节目奖。2014年，首次以固定嘉宾身份亮相内地综艺《奇葩说》并担任节目的主持人之一。2015年，微博发文宣布正式离开《康熙来了》。2018年，获得第九届牛耳文娱盛典互联网文化特殊成就奖。
+
+ 书籍封面
+
+  蔡康永
+
+  170人今日阅读 推荐值 80.7%
+
+  蔡康永手把手教你人际关系之道：26招拿捏所有社交场合！ 《奇葩说》马东认证！600万读者亲测有效！ 蔡康永融合西方认知心理学与东方文化背景，为中国人量身定制，用故事说道理，5分钟就能get1个“拿起来就能用”的小技巧！ 瓜几拉定制猫咪插画，边吸猫边get高情商社交心法！ 为什么我们说爱一个人，有功力高下之别？ 为什么在人际关系里，你的付出常常换不来你所期待的回报？ 如何吸引有趣的陌生人，让他成为你的朋友、甚至视你为知音？ 如何借助别人的力量，让自己生活得更好？ 康永哥亲自拆解令人如沐春风的秘密，将“人际关系之道”用26个幽默小故事表达出来，教你如何积极引导、主动塑造你想要的人际关系，强势自我表达的同时，仍能进行简洁、愉悦而高效的沟通，用不造成伤害的温柔手法化解人际冲突，疗愈原生家庭留下的痛楚童年回忆，在亲密关系中获得成长，成为懂得爱人、更能轻易获得别人青睐的情商高手。
+ 书籍封面
+
+  蔡康永
+
+  127人今日阅读 推荐值 74.7% [...] 蔡康永
+
+  127人今日阅读 推荐值 74.7%
+
+  蔡康永的高情商话术！热销500万册的国民阅读经典！ 全新升级，收录未曝光过的新作8章！ 蔡康永说：“把说话练好，是划算的事。” 好好说话，可以让我们的生活更好过。 怎么说话可以让人信任？怎么说话能够让你出类拔萃？ 在这本书中你都可以找到答案。 本书不仅有说话之术，更讲透说话之道， 旨在令“本来已经很讨人喜欢的你，在未来变得更讨人喜欢”。 全书包括44篇精彩短文，通过研究“说话”令读者更加明确自己和别人的关系、自己和别人的思维逻辑，由此加深自我理解，提升生活幸福感。 人气漫画家酚酞瓜倾情奉上生动四格漫画，有梗有料，图文并茂！
+
+  127
+ 书籍封面
+
+  为你自己活一次（独家首发）
+
+  蔡康永
+
+  62人今日阅读 推荐值 72.9% [...] 62
+ 书籍封面
+
+  蔡康永的说话之道2（独家首发）
+
+  蔡康永
+
+  37人今日阅读 推荐值 76.5%
+
+  【有来有往，才叫人情。】 热销500万册的国民阅读经典！蔡康永代表作！ 蔡康永2020年亲自修订，加入全新创作的8个章节的升级版《说话之道》！ 人气金V漫画家酚酞瓜亲自执笔，88幅四格漫画有梗有料，图文并茂，带你开心带你飞！ 《蔡康永的说话之道2》是知名主持人蔡康永说话之道第二册，全新内容展现更直接生动的聊天方法。 《蔡康永的说话之道2》包括40篇精彩聊天秘方，每篇都是让谈话变得生动有趣，让你与他人相处也开始变得有趣，如同蔡康永的主持风格一样俏皮机智，饶有情趣。继百万销量《蔡康永的说话之道》后，时隔五年，蔡康永新领悟到的说话之道，就是“对你好”；因为我说得让你开心，你也会把我放在你心上。演练说话就是演练“如何和别人相处”。蔡康永相信的：越能体会和别人的说话之乐，你就能过得越好！
+
+  37
+ 书籍封面
+
+  蔡康永的说话之道（全2册）
+
+  蔡康永
+
+  32人今日阅读 推荐值 79.5%
+
+  《蔡康永的说话之道》是知名主持人蔡康永诠释“说话的艺术”的随笔集，旨在令“本来已经很讨人喜欢的你，在未来变得更讨人喜欢”。全书包括44篇精彩短文，通过研究“说话”令读者更加明确自己和别人的关系、自己和别人的思维逻辑，由此加深自我理解，提升生活幸福感。 《蔡康永的说话之道2》是知名主持人蔡康永说话之道第二册，全新内容展现更直接生动的聊天方法。《蔡康永的说话之道2》包括40篇精彩聊天秘方，每篇都是让谈话变得生动有趣，让你与他人相处也开始变得有趣，如同蔡康永的主持风格一样俏皮机智，饶有情趣。蔡康永相信的：越能体会和别人的说话之乐，你就能过得越好！
+
+  32
+ 书籍封面
+
+  蔡康永的情商课（全2册）
+
+  蔡康永
+
+  25人今日阅读</p>
+                            </a>
                         
                             <a href="https://zh.wikipedia.org/zh-tw/%E8%94%A1%E5%BA%B7%E6%B0%B8" target="_blank" class="news-card">
                                 <span class="news-source">Tavily</span>
@@ -314,299 +474,29 @@
 
 ## 爭議
 
-[編輯] [...] | 年份 | 書名 | 出版社 | ISBN |
+[編輯] [...] | 年份 | 頻道 | 節目 | 備註 |
  ---  --- |
-| 1990 | 《阿嬰》 | 皇冠文化 | ISBN 957-33-0471-6 |
-| 1995 | 《你睡不著，我受不了》 | 平安文化 | ISBN 957-803-045-2 |
-| 1996 | 《再錯也要談戀愛》 | 聯合文學 | ISBN 957-522-114-1 |
-| 1997 | 《同情我可以親我》 | 商周文化 | ISBN 957-9293-53-8 |
-| 1998 | 《痛快日記》 | 皇冠文化 | ISBN 957-33-1572-6 |
-| 2003 | 《LA流浪記》 | ISBN 957-33-1996-9 |
-| 2004 | 《那些男孩教我的事》 | 如何出版 | ISBN 986-136-013-1 |
-| 2006 | 《有一天啊，寶寶》 | 皇冠文化 | ISBN 957-33-2212-9 |
-| 2010 | 《蔡康永的說話之道》 | 如何出版 | ISBN 978-986-136-249-6 |
-| 《你買這個做什麼？：蔡康永和買畫的朋友們》與陳冠宇合著 | Smart智富 | ISBN 9789867283313 |
-| 簡體中文版更名為 《藝術里的金錢遊戲：蔡康永建議你藝術投資之道》與陳冠宇合著 | ISBN 9787540450618 |
-| 2012 | 《蔡康永愛情短信：未知的戀人》 | 皇冠 | ISBN 9789573329466 |
-| 2013 | 《愛了就會活過來》 | ISBN 9789573330141 |
-| 2014 | 《蔡康永的說話之道2》 | 如何出版 | ISBN 9789861363905 |
-| 2018 | 《蔡康永的情商課：為你自己活一次》 | ISBN 9789861365145 |</p>
-                            </a>
-                        
-                            <a href="https://weread.qq.com/web/search/books?author=%E8%94%A1%E5%BA%B7%E6%B0%B8&ii=aeb32460811e1a9b8g014b35" target="_blank" class="news-card">
-                                <span class="news-source">Tavily</span>
-                                <h3 class="news-title">蔡康永-全部作品在线阅读-微信读书</h3>
-                                <p class="news-desc"># 微信读书首页墨水屏版
-
-蔡康永（Kevin Tsai，1962年3月1日-），出生于中国台湾台北市，毕业于加州大学洛杉矶分校，中国台湾男主持人、作家、设计师、演员、编剧、导演。 1990年，签入香港的邵氏电影公司，并开始参与电影编剧及评审工作。1996年，主持第一个节目《翻书触电王》。1998年，主持名人访谈节目《真情指数》，获得第35届中国台湾电视金钟奖娱乐综艺节目奖。2014年，首次以固定嘉宾身份亮相内地综艺《奇葩说》并担任节目的主持人之一。2015年，微博发文宣布正式离开《康熙来了》。2018年，获得第九届牛耳文娱盛典互联网文化特殊成就奖。
-
- 书籍封面
-
-  蔡康永
-
-  170人今日阅读 推荐值 80.7%
-
-  蔡康永手把手教你人际关系之道：26招拿捏所有社交场合！ 《奇葩说》马东认证！600万读者亲测有效！ 蔡康永融合西方认知心理学与东方文化背景，为中国人量身定制，用故事说道理，5分钟就能get1个“拿起来就能用”的小技巧！ 瓜几拉定制猫咪插画，边吸猫边get高情商社交心法！ 为什么我们说爱一个人，有功力高下之别？ 为什么在人际关系里，你的付出常常换不来你所期待的回报？ 如何吸引有趣的陌生人，让他成为你的朋友、甚至视你为知音？ 如何借助别人的力量，让自己生活得更好？ 康永哥亲自拆解令人如沐春风的秘密，将“人际关系之道”用26个幽默小故事表达出来，教你如何积极引导、主动塑造你想要的人际关系，强势自我表达的同时，仍能进行简洁、愉悦而高效的沟通，用不造成伤害的温柔手法化解人际冲突，疗愈原生家庭留下的痛楚童年回忆，在亲密关系中获得成长，成为懂得爱人、更能轻易获得别人青睐的情商高手。
- 书籍封面
-
-  蔡康永
-
-  127人今日阅读 推荐值 74.7% [...] 127
- 书籍封面
-
-  为你自己活一次（独家首发）
-
-  蔡康永
-
-  62人今日阅读 推荐值 72.9%
-
-  情商之神蔡康永的“内心强大之道”！读情商课，学会为自己而活！ 蔡康永开启中国式情商课程先河，设身处地教你为人处世的学问和人际沟通的技巧！ 他用认知心理学搭建情商课逻辑，教你用5大核心能力拆解职场、情场、社交难题。 全书30+真实案例，配上呆萌插画，心理学不再枯燥！ 情商是什么？ 在蔡康永看来，情商，是人应对一切关系的能力总和，而情商真正的意义，在于愉快地做自己。 我们训练情商，不是为了扭曲自己去讨人喜欢，而是为了做情绪的主人。 拥有高情商的人，可以让自我活得更加舒适，不会陷入负面情绪中无法自拔，进而在爱情、亲情、友情中，都能更好地经营一段舒服的关系。 那么，情商应该怎么学？ 在本书中，康永哥化繁为简，提炼出了5种核心能力，包括：情绪管理力、个性塑造、态度养成、领导力，以及个人魅力，来化解社交、爱情、职场等场合中，与情商相关的困惑。 康永哥的情商课，将深邃的道理用清浅的语言、有趣的故事和呆萌可爱的插图表达出来，兼具趣味性、知识性与实用性，干货满满。 翻开本书，解锁让马东惊叹的「中国式高情商」：不委屈自己，也不为难别人！让自己开心，也让世界开心！
-
-  62
- 书籍封面
-
-  蔡康永的说话之道2（独家首发）
-
-  蔡康永
-
-  37人今日阅读 推荐值 76.5% [...] 62
- 书籍封面
-
-  蔡康永的说话之道2（独家首发）
-
-  蔡康永
-
-  37人今日阅读 推荐值 76.5%
-
-  【有来有往，才叫人情。】 热销500万册的国民阅读经典！蔡康永代表作！ 蔡康永2020年亲自修订，加入全新创作的8个章节的升级版《说话之道》！ 人气金V漫画家酚酞瓜亲自执笔，88幅四格漫画有梗有料，图文并茂，带你开心带你飞！ 《蔡康永的说话之道2》是知名主持人蔡康永说话之道第二册，全新内容展现更直接生动的聊天方法。 《蔡康永的说话之道2》包括40篇精彩聊天秘方，每篇都是让谈话变得生动有趣，让你与他人相处也开始变得有趣，如同蔡康永的主持风格一样俏皮机智，饶有情趣。继百万销量《蔡康永的说话之道》后，时隔五年，蔡康永新领悟到的说话之道，就是“对你好”；因为我说得让你开心，你也会把我放在你心上。演练说话就是演练“如何和别人相处”。蔡康永相信的：越能体会和别人的说话之乐，你就能过得越好！
-
-  37
- 书籍封面
-
-  蔡康永的说话之道（全2册）
-
-  蔡康永
-
-  32人今日阅读 推荐值 79.5%
-
-  《蔡康永的说话之道》是知名主持人蔡康永诠释“说话的艺术”的随笔集，旨在令“本来已经很讨人喜欢的你，在未来变得更讨人喜欢”。全书包括44篇精彩短文，通过研究“说话”令读者更加明确自己和别人的关系、自己和别人的思维逻辑，由此加深自我理解，提升生活幸福感。 《蔡康永的说话之道2》是知名主持人蔡康永说话之道第二册，全新内容展现更直接生动的聊天方法。《蔡康永的说话之道2》包括40篇精彩聊天秘方，每篇都是让谈话变得生动有趣，让你与他人相处也开始变得有趣，如同蔡康永的主持风格一样俏皮机智，饶有情趣。蔡康永相信的：越能体会和别人的说话之乐，你就能过得越好！
-
-  32
- 书籍封面
-
-  蔡康永的情商课（全2册）
-
-  蔡康永
-
-  25人今日阅读</p>
-                            </a>
-                        
-                            <a href="https://weread.qq.com/web/search/books?author=%E8%94%A1%E5%BA%B7%E6%B0%B8&ii=73e32e9056615073ed7d3fe" target="_blank" class="news-card">
-                                <span class="news-source">Tavily</span>
-                                <h3 class="news-title">蔡康永-全部作品在线阅读-微信读书</h3>
-                                <p class="news-desc"># 微信读书首页墨水屏版
-
-蔡康永（Kevin Tsai，1962年3月1日-），出生于中国台湾台北市，毕业于加州大学洛杉矶分校，中国台湾男主持人、作家、设计师、演员、编剧、导演。 1990年，签入香港的邵氏电影公司，并开始参与电影编剧及评审工作。1996年，主持第一个节目《翻书触电王》。1998年，主持名人访谈节目《真情指数》，获得第35届中国台湾电视金钟奖娱乐综艺节目奖。2014年，首次以固定嘉宾身份亮相内地综艺《奇葩说》并担任节目的主持人之一。2015年，微博发文宣布正式离开《康熙来了》。2018年，获得第九届牛耳文娱盛典互联网文化特殊成就奖。
-
- 书籍封面
-
-  蔡康永
-
-  170人今日阅读 推荐值 80.7%
-
-  蔡康永手把手教你人际关系之道：26招拿捏所有社交场合！ 《奇葩说》马东认证！600万读者亲测有效！ 蔡康永融合西方认知心理学与东方文化背景，为中国人量身定制，用故事说道理，5分钟就能get1个“拿起来就能用”的小技巧！ 瓜几拉定制猫咪插画，边吸猫边get高情商社交心法！ 为什么我们说爱一个人，有功力高下之别？ 为什么在人际关系里，你的付出常常换不来你所期待的回报？ 如何吸引有趣的陌生人，让他成为你的朋友、甚至视你为知音？ 如何借助别人的力量，让自己生活得更好？ 康永哥亲自拆解令人如沐春风的秘密，将“人际关系之道”用26个幽默小故事表达出来，教你如何积极引导、主动塑造你想要的人际关系，强势自我表达的同时，仍能进行简洁、愉悦而高效的沟通，用不造成伤害的温柔手法化解人际冲突，疗愈原生家庭留下的痛楚童年回忆，在亲密关系中获得成长，成为懂得爱人、更能轻易获得别人青睐的情商高手。
- 书籍封面
-
-  蔡康永
-
-  127人今日阅读 推荐值 74.7% [...] 127
- 书籍封面
-
-  为你自己活一次（独家首发）
-
-  蔡康永
-
-  62人今日阅读 推荐值 72.9%
-
-  情商之神蔡康永的“内心强大之道”！读情商课，学会为自己而活！ 蔡康永开启中国式情商课程先河，设身处地教你为人处世的学问和人际沟通的技巧！ 他用认知心理学搭建情商课逻辑，教你用5大核心能力拆解职场、情场、社交难题。 全书30+真实案例，配上呆萌插画，心理学不再枯燥！ 情商是什么？ 在蔡康永看来，情商，是人应对一切关系的能力总和，而情商真正的意义，在于愉快地做自己。 我们训练情商，不是为了扭曲自己去讨人喜欢，而是为了做情绪的主人。 拥有高情商的人，可以让自我活得更加舒适，不会陷入负面情绪中无法自拔，进而在爱情、亲情、友情中，都能更好地经营一段舒服的关系。 那么，情商应该怎么学？ 在本书中，康永哥化繁为简，提炼出了5种核心能力，包括：情绪管理力、个性塑造、态度养成、领导力，以及个人魅力，来化解社交、爱情、职场等场合中，与情商相关的困惑。 康永哥的情商课，将深邃的道理用清浅的语言、有趣的故事和呆萌可爱的插图表达出来，兼具趣味性、知识性与实用性，干货满满。 翻开本书，解锁让马东惊叹的「中国式高情商」：不委屈自己，也不为难别人！让自己开心，也让世界开心！
-
-  62
- 书籍封面
-
-  蔡康永的说话之道2（独家首发）
-
-  蔡康永
-
-  37人今日阅读 推荐值 76.5% [...] 62
- 书籍封面
-
-  蔡康永的说话之道2（独家首发）
-
-  蔡康永
-
-  37人今日阅读 推荐值 76.5%
-
-  【有来有往，才叫人情。】 热销500万册的国民阅读经典！蔡康永代表作！ 蔡康永2020年亲自修订，加入全新创作的8个章节的升级版《说话之道》！ 人气金V漫画家酚酞瓜亲自执笔，88幅四格漫画有梗有料，图文并茂，带你开心带你飞！ 《蔡康永的说话之道2》是知名主持人蔡康永说话之道第二册，全新内容展现更直接生动的聊天方法。 《蔡康永的说话之道2》包括40篇精彩聊天秘方，每篇都是让谈话变得生动有趣，让你与他人相处也开始变得有趣，如同蔡康永的主持风格一样俏皮机智，饶有情趣。继百万销量《蔡康永的说话之道》后，时隔五年，蔡康永新领悟到的说话之道，就是“对你好”；因为我说得让你开心，你也会把我放在你心上。演练说话就是演练“如何和别人相处”。蔡康永相信的：越能体会和别人的说话之乐，你就能过得越好！
-
-  37
- 书籍封面
-
-  蔡康永的说话之道（全2册）
-
-  蔡康永
-
-  32人今日阅读 推荐值 79.5%
-
-  《蔡康永的说话之道》是知名主持人蔡康永诠释“说话的艺术”的随笔集，旨在令“本来已经很讨人喜欢的你，在未来变得更讨人喜欢”。全书包括44篇精彩短文，通过研究“说话”令读者更加明确自己和别人的关系、自己和别人的思维逻辑，由此加深自我理解，提升生活幸福感。 《蔡康永的说话之道2》是知名主持人蔡康永说话之道第二册，全新内容展现更直接生动的聊天方法。《蔡康永的说话之道2》包括40篇精彩聊天秘方，每篇都是让谈话变得生动有趣，让你与他人相处也开始变得有趣，如同蔡康永的主持风格一样俏皮机智，饶有情趣。蔡康永相信的：越能体会和别人的说话之乐，你就能过得越好！
-
-  32
- 书籍封面
-
-  蔡康永的情商课（全2册）
-
-  蔡康永
-
-  25人今日阅读</p>
-                            </a>
-                        
-                            <a href="https://play.google.com/store/books/details/%E8%94%A1%E5%BA%B7%E6%B0%B8%E7%9A%84%E8%AA%AA%E8%A9%B1%E4%B9%8B%E9%81%93_500%E8%90%AC%E5%86%8A%E7%B4%80%E5%BF%B5%E7%89%88?id=cwkXEQAAQBAJ&hl=el" target="_blank" class="news-card">
-                                <span class="news-source">Tavily</span>
-                                <h3 class="news-title">蔡康永的說話之道（500萬冊紀念版）</h3>
-                                <p class="news-desc">5
-
-4
-
-3
-
-2
-
-1
-
-## Σχετικά με τον συγγραφέα
-
-蔡康永  
- 嬰兒時期和大家一樣學說話，上學後被逼著參加各種演講和辯論比賽，終於變得厭倦靠說話去換取名氣和特權，於是在大學就沉默寡言的埋頭看書談戀愛。研究所去了美國，開始隨時說英文的生活，漸漸體會不同語文其實蘊含不同的生活態度。  
- 然後呢，奇妙的命運，讓我變成一個必須常常在節目中說話的人，也得以和無數很會說話的高手交鋒。到了現在，也該是我報答所有教過我說話的人啦，我用這本書，報告心得，向他們致謝。  
- 康永生產地是台北，血統有時被認為是上海。  
- 在加州大學洛杉磯分校UCLA念完影視製作的研究所，最廣為人知的節目，是主持《康熙來了》及參與《奇葩說》，最廣為人知的書是《蔡康永的說話之道》和《蔡康永的情商課》，導過一部電影《吃吃的愛》，也曾經和蔡國強及五月天的主唱阿信，分別一起做過行為藝術及裝置藝術。另外，開了《情商課》的語音課程，在喜馬拉雅FM播放。  
- 康永想完成的，是召喚幸福的咒語，能把靈魂鞏固了，然後丟在飄蕩的人生裡，當成救生圈。  
-   
- Instagram：instagram.com/kangyongcai  
- 臉書：facebook.com/caikangyong  
- 新浪微博：weibo.com/caikangyong  
- 情商課程：ximalaya.com/caikangyong
-
-## Αξιολογήστε αυτό το ebook
-
-Πείτε μας τη γνώμη σας.
-
-## Πληροφορίες ανάγνωσης
-
-Smartphone και tablet [...] ## Περισσότερα από τον χρήστη 蔡康永
-
-arrow\_forward
-
-Εικόνα μικρογραφίας
-
-你願意，人生就會值得：蔡康永的情商課3
-
-蔡康永
-
-Υγεία, νους και σώμα
-
-4,6star
-
-~~10,99 $~~8,79 $
-
-Εικόνα μικρογραφίας
-
-蔡康永的情商課──為你自己活一次
-
-蔡康永
-
-Υγεία, νους και σώμα
-
-3,9star
-
-~~9,99 $~~7,99 $
-
-Εικόνα μικρογραφίας
-
-蔡康永的情商課2：因為這是你的人生
-
-蔡康永
-
-Υγεία, νους και σώμα
-
-4,0star
-
-~~9,99 $~~7,99 $
-
-Εικόνα μικρογραφίας
-
-蔡康永的說話之道2
-
-蔡康永
-
-Υγεία, νους και σώμα
-
-3,2star
-
-~~8,99 $~~7,55 $
-
-## Παρόμοια ebook
-
-arrow\_forward
-
-Εικόνα μικρογραφίας
-
-蔡康永的說話之道2
-
-蔡康永
-
-Υγεία, νους και σώμα
-
-3,2star
-
-~~8,99 $~~7,55 $
-
-Εικόνα μικρογραφίας
-
-我可能錯了：森林智者的最後一堂人生課【瑞典每30人就1人閱讀．韓國2022讀者最愛年度之書】: Jag kan ha fel och andra visdomar från mitt liv som buddhistmunk
-
-比約恩．納提科．林德布勞（Björn Natthiko Lindeblad）
-
-Βιογραφίες και απομνημονεύματα
-
-4,7star
-
-~~14,99 $~~9,99 $
-
-Εικόνα μικρογραφίας [...] 4,7star
-
-~~14,99 $~~9,99 $
-
-Εικόνα μικρογραφίας
-
-蔡康永的情商課2：因為這是你的人生
-
-蔡康永
-
-Υγεία, νους και σώμα
-
-4,0star
-
-~~9,99 $~~7,99 $
-
-Εικόνα μικρογραφίας
-
-MBTI　我，和我的使用說明書――雪力獻給16型人們，找到最舒服的自己
-
-Υγεία, νους και σώμα
-
-4,6star
-
-~~10,06 $~~8,05 $</p>
+| 1994年 | 傳訊電視大地頻道 | 一千零一頁 |  |
+| 1994年 | 傳訊電視大地頻道 | 流行都市 |  |
+| 1996年 | TVBS-G | 翻書觸電王 |  |
+| 1998年－2005年 | TVBS頻道 | 真情指數 |  |
+| 2002年－2005年5月 | 公視主頻 | 週二不讀書 | 後來改名為「今天不讀書」 |
+| 2003年 | TVBS-G | 兩代電力公司 |  |
+| 2004年1月5日－2016年1月14日 | 中天綜合台 | 康熙來了 |  |
+| 2004年 | 衛視中文台 | 俄羅斯輪盤 |  |
+| 2004年 | 愛的故事 |  |
+| 2005年 | 公視主頻 | 觀點360 | 兩季 |
+| 2005年－2006年5月 | TVBS-G | 志永智勇電力學校 |  |
+| 2006年4月 | 天下本無事 |  |
+| 2006年－2007年7月21日 | 台視主頻 | 幸福星期六 |  |
+| 2006年7月 | 公視主頻 | 峰迴路轉 |  |
+| 2006年8月30日 | TVBS-G | 忍者電力公司 |  |
+| 2007年8月19日 | 華視主頻 | 快樂星期天 |  |
+| 2007年11月21日 | 東風衛視 | 美味鑑定團 |  |
+| 2007年12月5日 | TVBS-G | 決戰第一名 |  |
+| 2008年11月9日 | 中視主頻 | 超級星光大道 | 2008年11月14日正式（代班主持） |
+| 2009年2月23日 | 八大綜合台 | 但是又何奈 |  |
+| 2009年7月20日 | Channel V | Welcome 外星人 |  |</p>
                             </a>
                         
                             <a href="https://www.amazon.com/Kevin-Tsais-speaking-Chinese-Tsai/dp/9861363904" target="_blank" class="news-card">
@@ -650,61 +540,7 @@ Next slide of product details
 
 See all details
 
-The%20Amazon%20Book%20Review [...] Teen & Young Adult
-
-Nonfiction
-
-Arts & Photography
-
-Biographies & Memoirs
-
-Business & Money
-
-Calendars
-
-Computers & Technology
-
-Cookbooks, Food & Wine
-
-Crafts, Hobbies & Home
-
-Education & Teaching
-
-Engineering & Transportation
-
-Health, Fitness & Dieting
-
-History
-
-Humor & Entertainment
-
-Law
-
-LGBTQIA+
-
-Medical Books
-
-Parenting & Relationships
-
-Politics & Social Sciences
-
-Reference
-
-Religion & Spirituality
-
-Science & Math
-
-Self-help
-
-Sports & Outdoors
-
-Test Preparation
-
-Travel
-
-Children's Books
-
-All children's books
+The%20Amazon%20Book%20Review [...] All children's books
 
 Editors' Picks
 
@@ -732,13 +568,81 @@ Amazon First Reads
 
 Great on Kindle
 
-All Categories
+New & Trending)
 
-Top Categories
+Recently Visited
 
-Romance
+Featured
 
-Science Fiction & Fantasy [...] Other Used and New from $16.35)  
+Kindle eBooks
+
+
+
+Kindle Deals
+
+
+
+Best Books of 2025
+
+New & Trending
+
+New Releases
+
+Editors' Picks of the Month
+
+Amazon First Reads
+
+Best of #BookTok books
+
+Comics & Manga New Releases
+
+Deals & Rewards)
+
+Recently Visited
+
+Featured
+
+Kindle eBooks
+
+
+
+Kindle Deals
+
+
+
+Best Books of 2025
+
+Deals & Rewards
+
+Print Deals
+
+Kindle Deals
+
+Audible Deals
+
+Comics & Manga Deals
+
+Kindle Rewards
+
+Best Sellers & More)
+
+Recently Visited
+
+Featured
+
+Kindle eBooks
+
+
+
+Kindle Deals
+
+
+
+Best Books of 2025
+
+Best Sellers
+
+Amazon Best Sellers [...] Other Used and New from $16.35)  
 
 Paperback from $16.35
 
@@ -782,10 +686,404 @@ Something went wrong. Please try your request again later.
 OK</p>
                             </a>
                         
+                            <a href="https://www.facebook.com/kangxiofficial/videos/%E8%94%A1%E5%BA%B7%E6%B0%B8%E7%9A%84%E8%AA%AA%E8%A9%B1%E4%B9%8B%E9%81%93/896770316186501/" target="_blank" class="news-card">
+                                <span class="news-source">Tavily</span>
+                                <h3 class="news-title">蔡康永的說話之道| 康熙來了 - Facebook</h3>
+                                <p class="news-desc"># 蔡康永的說話之道 | 康熙來了 | Facebook
+
+Log In
+
+Log In
+
+Forgot Account?
+
+# Video
+
+Home
+
+Live
+
+Reels
+
+Explore
+
+More
+
+Home
+
+Live
+
+Reels
+
+Explore
+
+0:00 / 0:00
+
+蔡康永的說話之道
+
+Like
+
+Comment
+
+Share
+
+Image 1
+
+Image 2
+
+5.8K
+
+ · 
+
+31 comments
+
+ · 
+
+681K views
+
+[](
+
+## 康熙來了
+
+December 19, 2025 · 
+
+Follow
+
+蔡康永的說話之道
+
+## Comments
+
+Most relevant
+
+[](
+
+Image 3Author
+
+康熙來了
+
+Image 4: 【#ㄎㄧㄤ精彩 1874】白眼女王!! 還有誰能比小S更會翻?!
+
+REURL.CC
+
+【#ㄎㄧㄤ精彩 1874】白眼女王!! 還有誰能比小S更會翻?!
+
+## 【#ㄎㄧㄤ精彩 1874】白眼女王!! 還有誰能比小S更會翻?!
+
+   13w 
+
+5
+
+Image 5
+
+林姐
+
+羅姊曹西平都是有福報的人'不求好生'但求好死
+
+   11w 
+
+36
+
+Image 6Image 7
+
+View more comments
+
+2 of 31
+
+## Related Reels
+
+Image 8 康熙來了 588K
+
+Image 9 康熙來了 513K
+
+Image 10 康熙來了 521K
+
+Image 11 康熙來了 150K
+
+Image 12 康熙來了 232K
+
+Image 13 康熙來了 185K
+
+Image 14 康熙來了 1.2M
+
+Image 15 康熙來了 539K
+
+Image 16 康熙來了 497K
+
+Image 17 康熙來了 330K [...] Image 15 康熙來了 539K
+
+Image 16 康熙來了 497K
+
+Image 17 康熙來了 330K
+
+Image 18 康熙來了 1M
+
+Image 19 康熙來了 202K
+
+## Related Videos
+
+Image 20: Video thumbnail 8:02
+
+[](
+
+【康熙經典回顧】藍心湄藍教幫大集合
+
+康熙來了
+
+81.5K views
+
+ · 
+
+16h ago
+
+Image 21: Video thumbnail 0:54
+
+[](
+
+小S跟張韶涵去唱歌!! 包廂會發生什麼事?!
+
+康熙來了
+
+103.4K views
+
+ · 
+
+19h ago
+
+Image 22: Video thumbnail 8:02
+
+[](
+
+【康熙經典回顧】週年慶失心瘋物品交換會!
+
+康熙來了
+
+71.1K views
+
+ · 
+
+1d ago
+
+Image 23: Video thumbnail 0:42
+
+[](
+
+買玩具給小孩 他看一眼就走QQ
+
+康熙來了
+
+477.6K views
+
+ · 
+
+2d ago
+
+Image 24: Video thumbnail 1:02
+
+[](
+
+方志友當年很敬業在戲裡演未婚懷孕!?
+
+康熙來了
+
+250.7K views
+
+ · 
+
+3d ago
+
+Image 25: Video thumbnail 1:30
+
+[](
+
+這集很失禮欸
+
+康熙來了
+
+129.6K views
+
+ · 
+
+5d ago
+
+Image 26: Video thumbnail 1:00
+
+[](
+
+投資人要注意啦 買房還是買股票?
+
+康熙來了
+
+108K views
+
+ · 
+
+6d ago
+
+Image 27: Video thumbnail 8:27
+
+[](
+
+【康熙經典回顧】他們都是渾然天成的戲精?!
+
+康熙來了 [...] [](
+
+【康熙經典回顧】他們都是渾然天成的戲精?!
+
+康熙來了
+
+157K views
+
+ · 
+
+March 15 at 1:01 PM
+
+Image 28: Video thumbnail 0:40
+
+[](
+
+出國逛商場買東西 聽到有羊在叫?!
+
+康熙來了
+
+536.5K views
+
+ · 
+
+March 15 at 4:01 AM
+
+Pages
+
+Interest
+
+TV & Movies
+
+TV show
+
+康熙來了
+
+Videos
+
+View Transcript
+
+Home
+
+Live
+
+Explore
+
+   Privacy · 
+   Consumer Health Privacy · 
+   Terms · 
+   Advertising · 
+   Ad Choices · 
+   Cookies · 
+   More 
+
+See more on Facebook
+
+See more on Facebook
+
+Email or phone number
+
+ 
+
+Password
+
+ 
+
+Log In
+
+Forgot password?
+
+or
+
+Create new account</p>
+                            </a>
+                        
+                            <a href="https://www.youtube.com/watch?v=-1Rp_L_3CU0" target="_blank" class="news-card">
+                                <span class="news-source">Tavily</span>
+                                <h3 class="news-title">把話說好，你就會過得越好！｜《蔡康永的說話之道2 》｜見人哥來說書</h3>
+                                <p class="news-desc"># 把話說好，你就會過得越好！｜《蔡康永的說話之道2 》｜見人哥來說書
+## 見人哥
+19500 subscribers
+289 likes
+
+### Description
+16282 views
+Posted: 10 Feb 2021
+蔡康永說，書就像是在練詠春拳的時候，前面擺的那個木人樁。你在讀書的時候，要跟書過招，去體會書中所講的招數，這樣會學的比較快。
+
+這本《蔡康永的說話之道2 》提供了四十招，有觀念、態度和技巧。說書影片和大家分享其中的四招，也是很有用的四招。
+
+練好之後，我們說話就能讓人開心，我們自己也能從中獲益。
+
+好書推薦：《蔡康永的說話之道2》如何出版
+
+章節：
+0:00​ 蔡康永的說話之道2
+1:37​ 請從說話方面開始照鏡子
+2:54​ 說話之道的濃縮膠囊
+4:20​ 如何成為一個優良的滅火器
+5:50​ 吵架的時候不要攻擊別人的人生立足點
+
+見人哥頻道：
+
+推薦：
+學會說話是最划算的投資！｜《蔡康永的說話之道》
+
+原來說話可以療癒人心｜《50堂最療癒人心的說話練習》
+
+廣播節目主持人是如何鍛鍊說話技巧的？｜《質感說話課》
+
+你也可以在這些地方發現見人哥：
+見人哥FB：
+見人哥IG：
+見人哥Blog：
+
+#蔡康永​#說話之道​#說話技巧​
+#說書動畫​​#說書​​#說書影片​​#说书​​#说书影片​​#读书心得​​#动画说书​​#讀書心得​​#動畫說書
+
+5 comments
+### Transcript:</p>
+                            </a>
+                        
                             <a href="https://www.youtube.com/watch?v=q5sevWAzLtk" target="_blank" class="news-card">
                                 <span class="news-source">Tavily</span>
                                 <h3 class="news-title">【#ㄎㄧㄤ精彩1799】蔡康永的說話之道!! 讀書人也能很惡毒!!</h3>
-                                <p class="news-desc">🔥2025捍衛新聞&言論自由💪請加入中天新聞志工隊👉 
+                                <p class="news-desc"># 【#ㄎㄧㄤ精彩 1799】蔡康永的說話之道!! 讀書人也能很惡毒!!
+## 我愛貓大
+1450000 subscribers
+148 likes
+
+### Description
+20499 views
+Posted: 23 Sep 2025
+#小S #蔡康永 #康熙來了 #陳漢典 #說話之道 #趙正平 #陳致遠 #小楨 #羅霈穎 #阿布 #阿丹 #林立雯 #丁小芹 #許安安 #汪建民 #洪堂 #小密桃姐姐
+
+🎤完整版在這裡：
+2010-02-04 明星租屋鳥事一籮筐
+
+2010-03-22 康熙真心話轉輪盤第四彈
+
+2010-05-10 拜犬女明星聯誼會
+
+2010-01-13 女明星被小開追的日子
+
+2010-02-15 明星最愛私房旅遊推薦
+
+2010-02-09 年紀差很多也能當朋友
+
+2010-08-04 新一代宅男女神爭霸戰(下)
+
+2010-03-26 驚!猜猜看她們到底幾歲?
+
+2010-04-02 明星痛苦的錄影經驗
+
+2010-04-20 闖星光才會有真正的大道
+
+🔥2025捍衛新聞&言論自由💪請加入中天新聞志工隊👉 
+【聽‧人民的聲音】 
+📣支持監督的力量，請加入中天電視會員👉 [...] 🔥2025捍衛新聞&言論自由💪請加入中天新聞志工隊👉 
 【聽‧人民的聲音】 
 📣支持監督的力量，請加入中天電視會員👉
 
@@ -829,40 +1127,7 @@ OK</p>
 💵線上贊助中天👉 (綠界金流/可用信用卡、ATM)
 💵直接贊助中天👉彰化銀行台北分行:009-5012帳號:50128688988600戶名:中天電視股份有限公司 
 🏧ATM：CHANG HWA COMMERCIAL BANK TAIPEI BRANCH(CCBCTWTP501) 
-🏦A/C NO:50128688988600 A/C NAME:CTI TELEVISION INCORPORATION [...] # 【#ㄎㄧㄤ精彩 1799】蔡康永的說話之道!! 讀書人也能很惡毒!!
-## 我愛貓大
-1450000 subscribers
-148 likes
-
-### Description
-20499 views
-Posted: 23 Sep 2025
-#小S #蔡康永 #康熙來了 #陳漢典 #說話之道 #趙正平 #陳致遠 #小楨 #羅霈穎 #阿布 #阿丹 #林立雯 #丁小芹 #許安安 #汪建民 #洪堂 #小密桃姐姐
-
-🎤完整版在這裡：
-2010-02-04 明星租屋鳥事一籮筐
-
-2010-03-22 康熙真心話轉輪盤第四彈
-
-2010-05-10 拜犬女明星聯誼會
-
-2010-01-13 女明星被小開追的日子
-
-2010-02-15 明星最愛私房旅遊推薦
-
-2010-02-09 年紀差很多也能當朋友
-
-2010-08-04 新一代宅男女神爭霸戰(下)
-
-2010-03-26 驚!猜猜看她們到底幾歲?
-
-2010-04-02 明星痛苦的錄影經驗
-
-2010-04-20 闖星光才會有真正的大道
-
-🔥2025捍衛新聞&言論自由💪請加入中天新聞志工隊👉 
-【聽‧人民的聲音】 
-📣支持監督的力量，請加入中天電視會員👉 [...] ⚠️未經著作權人事先書面同意，勿將內容用於商業性質之分享、連結。 
+🏦A/C NO:50128688988600 A/C NAME:CTI TELEVISION INCORPORATION [...] ⚠️未經著作權人事先書面同意，勿將內容用於商業性質之分享、連結。 
 ⚠️如有任何營業使用，必須事先取得書面同意。
 
 【貓大聊天室規範】歡迎留言互動，請尊重各自立場、理性發言，請遵守本聊天室規範。 違規者一經發現，將遭刪言或封鎖。
@@ -880,68 +1145,11 @@ Posted: 23 Sep 2025
 ### Transcript:</p>
                             </a>
                         
-                            <a href="https://podcasts.apple.com/us/podcast/ep87-%E4%BD%A0%E9%A1%98%E6%84%8F-%E4%BA%BA%E7%94%9F%E5%B0%B1%E6%9C%83%E5%80%BC%E5%BE%97-%E8%94%A1%E5%BA%B7%E6%B0%B8%E6%95%99%E4%BD%A0%E6%B4%BB%E5%BE%97%E6%9B%B4%E8%87%AA%E5%9C%A8/id1673284782?i=1000677602061&l=pt-BR" target="_blank" class="news-card">
+                            <a href="https://www.youtube.com/watch?v=v9oySbWLWVg" target="_blank" class="news-card">
                                 <span class="news-source">Tavily</span>
-                                <h3 class="news-title">EP87.【你願意，人生就會值得】蔡康永教你活得更自在</h3>
-                                <p class="news-desc">書店老闆氣噗噗 飽讀說書
-
-# EP87.【你願意，人生就會值得】蔡康永教你活得更自在
-
-在本集節目中，我們聊聊蔡康永的情商課三部曲最終篇 ——《你願意，人生就會值得》。
-  
-  
-人生的目標，不是活得了不起，而是活得好過。
-  
-  
-拒絕那些不必要的要求，輕鬆累積改變的力量，讓情商成為你日常生活的陽光與微風。
-  
-  
-  
---- 本節目由 Pubu 電子書城獨家贊助播出 —
-  
-  
-  
-▎本集購書連結
-  
-  
-蔡康永著作：
-  
-  
-▎老闆不藏私推薦書單：
-  
-  
---  
-Hosting provided by SoundOn
-
-## Informações
-
-## África, Oriente Médio e Índia
-
-## Ásia‑Pacífico
-
-## Europa
-
-## América Latina e Caribe
-
-## Estados Unidos e Canadá
-
-Copyright © 2026 Apple Inc. Todos os direitos reservados.
-
-Para ouvir episódios explícitos, inicie sessão.
-
-Apple Podcasts
-
-Fique por dentro deste podcast
-
-Inicie sessão ou crie uma conta para seguir podcasts, salvar episódios e receber as atualizações mais recentes.
-
-## África, Oriente Médio e Índia
-
-## Ásia‑Pacífico
-
-## Europa
-
-## América Latina e Caribe</p>
+                                <h3 class="news-title">蔡康永的情商課，最後教《 你願意人生就值得》不是單純的正能量</h3>
+                                <p class="news-desc">75 comments
+### Transcript: [...] 最近因為Netflix上的網紅真人實境秀 讓我深受打擊 對我來說 它不只是一場秀 更血淋淋地把我不想面對的現實 擺在我面前 像是麥當勞和健康餐盒 絕對是前者的客群多過於後者一樣 長影片式微的現在 我耗費了這麼多年 只是在瞎幹嘛 然後蔡康永對我說 你願意，人生就值得 Hello guys 我是NeKo嗚喵 歡迎回來這個星期的說書時間 據說這一本 是《蔡康永的情商課》系列最後一本書 他把這個系列比喻成 《為你自己活一次》 談的是怎麼變得明白 瞭解自己 懂得自己 像是光灑在身上 看見自己 《因為這是你的人生》談的是 找出適合的自己 恰如其分的條件 讓我們這個獨一無二的自己 活的更自在 像是微風吹過髮梢一樣 《你願意，人生就會值得》 在聊的是 滴水的努力 慢慢來的情商 我看到第15頁的這一段話 微微泛淚 他舉例了白蛇傳的故事 很多人都說白蛇輸了 最後被壓在雷峰塔下 但是在蔡康永的眼裡 白蛇並沒有輸啊 她想成為人類 而感受到了人類的愛與背叛 為了愛轟轟轟烈烈 拼盡全力 她有哭 有笑 有嘆息 有眼神發光 熱血沸騰的時候 至少她贏過了大半 庸庸碌碌一輩子 不知道自己 在幹什麼的人了 裡面是一篇一篇的小短篇 總共5個大主題 我會挑選其中幾個 我最愛的篇章來分享 第一篇就是 其實解決拖延最棒的態度就是 就這麼簡單的基本道理 但多數的人卻覺得做卻沒做好 不如不要做 還是做完就怪自己 只有60分 有什麼好高興的 可是啊 98分比80分的人只多了18分 53分比35分的人也一樣多了18分 兩者受到的待遇絕對大不相同 康永哥說就是100/2比中間值多一點 起碼打敗一半以上的人吧 這麼沒道理的規定 卻成為我們學生的夢魘 甚至是衡量自己的尺度 因為大腦很喜歡方便管理的東西 討厭搞不清楚的事情 貼個標籤方便理解所有人 星座不夠分類 那就用MBTI啊 與其花時間瞭解一個人 不如先問他MBTI是什麼 [...] 精簡整合 不是嗎 人生很累 那要怎樣才可以不那麼累呢 我為了上班不要這麼累 製造一套SOP 特定的案子有自己的版型 搞懂每個窗口喜歡的版型 抓出來修修改改就好了 為了跟剪輯師溝通方便 我先順完一遍影片 用固定的模組加速過片的速度 IG有套版 短影片有固定字幕格式 這些東西都是因為 只要不把懶這件事情用在賴床 我認同康永哥說的 這本書雖然在低潮的時候 小小扶起我一把 但三本書看下來 我還是最喜歡第一本 《你願意，人生就會值得》 很像寫給大人的童書寓言 後面還有跟基多拉的對話 只為了帶出後續的論點 我會覺得這樣的論調太偏價值觀了 還好我是很樂意接受康永哥的洗腦啦 所以這算是雞蛋裡面挑骨頭吧 書中還提到了習慣 完美主義等等的篇章 每一篇章都是短短的三到五面 非常輕鬆就可以看完 閱讀的過程像白開水一樣 清清淡淡很舒服 幾乎可以聽到康永哥的聲音 如果你最近也陷入了這種比較失落 好像在原地打轉 不知道在瞎忙什麼 被同事看不起的低潮 這本書我覺得可以看看 也許可以幫助你把心態回穩一下 至少它幫助了我 讓我開始有動力寫一點東西出來 最後如果你喜歡我的影片 請用訂閱代替掌聲 或者在下方幫我按個喜歡 心有餘力 歡迎使用加入按鈕 一個月75塊錢支持我 繼續在這裡分享一本好書給你 我會非常感激你的 我們就下個星期說書時間再見了 大家拜拜 當然還有很多漏網之魚 留到Podcast去補充啦 你如果還不知道我有Podcast的話</p>
                             </a>
                         
                             <a href="https://newtalk.tw/news/view/2026-03-20/1025275" target="_blank" class="news-card">
@@ -967,6 +1175,28 @@ Loading...
 社會 名間鄉茶師常行深強大氣場！當場打臉南投縣府官員：你敢動我茶葉一定跟你...</p>
                             </a>
                         
+                            <a href="https://www.cna.com.tw/news/amov/202601155002.aspx" target="_blank" class="news-card">
+                                <span class="news-source">Apify</span>
+                                <h3 class="news-title">
+	「康熙來了」停播10年　蔡康永深夜感性發文：慶幸曾那樣陪伴你
+ | 娛樂 | 中央社 CNA
+</h3>
+                                <p class="news-desc">立刻加入 
+本網站使用相關技術提供更好的閱讀體驗，同時尊重使用者隱私，點這裡瞭解中央社隱私聲明。當您關閉此視窗，代表您同意上述規範。
+Your browser does not appear to support Traditional Chinese. Would you like to go to CNA’s English website, “Focus Taiwan”? 
+こちらのページは繁体字版です。日本語版「フォーカス台湾」に移動しますか。 
+中央社一手新聞APP
+下載
+Focus Taiwan
+フォーカス台湾
+Fokus Taiwan
+淨零碳排
+媒體識讀
+好生活
+影像空間
+客戶頻...</p>
+                            </a>
+                        
                             <a href="https://www.facebook.com/cheers.tw/posts/%E8%94%A1%E5%BA%B7%E6%B0%B8%E4%BD%A0%E6%80%8E%E9%BA%BC%E8%AA%AA%E8%A9%B1%E6%B1%BA%E5%AE%9A%E4%BD%A0%E6%98%AF%E8%AA%B0%E8%B2%B4%E4%BA%BA%E4%B8%8D%E4%B8%80%E5%AE%9A%E8%83%BD%E6%94%B9%E8%AE%8A%E4%BA%BA%E7%94%9F%E5%A4%96%E8%A1%A8%E4%B8%8D%E4%B8%80%E5%AE%9A%E6%9C%83%E6%B1%BA%E5%AE%9A%E9%AD%85%E5%8A%9B%E4%BD%86%E7%94%9F%E6%B4%BB%E7%9A%84%E7%A8%AE%E7%A8%AE%E9%96%8B%E6%9C%83%E9%81%93%E6%AD%89%E8%A6%81%E6%B1%82%E5%8A%A0%E8%96%AA%E9%83%BD%E8%B7%9F%E4%B8%80%E4%BB%B6%E4%BA%8B%E6%83%85%E6%9C%89%E9%97%9C%E5%B0%B1%E6%98%AF%E4%BD%A0%E6%9C%83%E4%B8%8D%E6%9C%83%E8%AA%AA%E8%A9%B1%E5%BE%9E%E5%B0%8F%E5%9C%A8%E4%BA%BA%E6%83%85%E4%B8%96%E6%95%85%E8%A4%87%E9%9B%9C%E7%9A%84%E5%A4%A7%E5%AE%B6%E5%BA%AD%E6%88%90%E9%95%B7%E8%94%A1%E5%BA%B7/982394233917633/" target="_blank" class="news-card">
                                 <span class="news-source">Apify</span>
                                 <h3 class="news-title">Cheers：快樂工作人 - 【蔡康永：你怎麼說話，決定你是誰】...</h3>
@@ -980,29 +1210,26 @@ December 19, 2024 ·
 慧黠...</p>
                             </a>
                         
-                            <a href="https://www.instagram.com/p/C5vN2vgNv_1/" target="_blank" class="news-card">
+                            <a href="https://www.scribd.com/document/807314679/%E8%94%A1%E5%BA%B7%E6%B0%B8%E7%9A%84%E8%AA%AA%E8%A9%B1%E4%B9%8B%E9%81%93" target="_blank" class="news-card">
                                 <span class="news-source">Apify</span>
-                                <h3 class="news-title">Instagram</h3>
-                                <p class="news-desc">Log In
-Sign Up
-btoday_ig
-•
-Follow
-btoday_ig
-101w
-《蔡康永的說話之道》有提到：「做自己跟沒禮貌常常是一線之間。」
-​
-你有遇過這種人嗎？明明就是沒禮貌或失言，卻要用率真來包裝，要別人同理他......
-​
-【👉🏻邀請大家下方留言分享，遇到這類的人，你通常怎麼處理？】
-​
-#relationship #人際關係 #今周刊 #新聞 #news #weeklynews #媒體
-lilya_hsu
-100w
-所謂説話直，是建立在尊重他人的基礎上，否則若傷害到別人，則已不是說話直了，而是言語犀利，這樣的人，通常會得罪人！
-Like
-Reply
-huho...</p>
+                                <h3 class="news-title">蔡康永的說話之道 | PDF</h3>
+                                <p class="news-desc">Skip to main content
+Open navigation menu
+Close suggestionsSearchSearch
+enChange Language
+Upload
+Sign in
+Sign in
+0 ratings0% found this document useful (0 votes)
+512 views57 pages
+蔡康永的說話之道
+Document Information
+Uploaded by
+huangponyu02
+Download
+SaveSave 蔡康永的說話之道 For Later
+Share
+0%0% found this docume...</p>
                             </a>
                         
                             <a href="https://vocus.cc/article/67a1c862fd897800016875b5" target="_blank" class="news-card">
@@ -1014,8 +1241,6 @@ huho...</p>
 思嘉女郎日常隨筆
 方案
 關於
-方格子 vocus
-開啟 App
 目錄
 「說話」是一門需要不斷練習的藝術
 有品味的八卦，更勝一籌
@@ -1027,7 +1252,9 @@ huho...</p>
 思嘉
 發佈於想要和你談心說愛
 2025/07/21 更新2025/02/10 發佈閱讀 6 分鐘
-繼上一本與「說話」有關的書（分享文：《成熟大人說話課》）今天想分享的第二本則是由知名藝人蔡康永所著的《蔡康永的說...</p>
+繼上一本與「說話」有關的書（分享文：《成熟大人說話課》）今天想分享的第二本則是由知名藝人蔡康永所著的《蔡康永的說話之道2》。
+
+這本書的風格與《成...</p>
                             </a>
                         
                             <a href="https://www.instagram.com/p/DV84qMGkaIg/" target="_blank" class="news-card">
@@ -1055,31 +1282,63 @@ More posts from hk.little.booker
 See more posts...</p>
                             </a>
                         
-                            <a href="https://tw.news.yahoo.com/%E5%BC%B5%E5%BF%A0%E8%AC%80%E7%9A%84%E6%A0%BC%E5%B1%80-%E8%94%A1%E5%BA%B7%E6%B0%B8%E7%9A%84%E6%83%85%E5%95%86-%E6%98%A5%E7%AF%80%E5%BF%85%E8%AE%805%E6%9B%B8-030000938.html" target="_blank" class="news-card">
+                            <a href="https://tw.news.yahoo.com/2025%E5%8D%9A%E5%AE%A2%E4%BE%86%E5%B9%B4%E5%BA%A6%E9%96%B1%E8%AE%80%E5%A0%B1%E5%91%8A-threads%E6%88%90%E6%96%B0%E6%9B%B8%E7%88%86%E7%B4%85%E5%AD%B5%E5%8C%96%E5%99%A8-%E5%BC%B5%E5%BF%A0%E8%AC%80%E8%94%A1%E5%BA%B7%E6%B0%B8%E9%9C%B8%E6%A6%9C-082700884.html" target="_blank" class="news-card">
                                 <span class="news-source">Apify</span>
-                                <h3 class="news-title">張忠謀的格局、蔡康永的情商：春節必讀5書</h3>
+                                <h3 class="news-title">2025博客來年度閱讀報告 Threads成新書爆紅孵化器！張忠謀蔡康永霸榜</h3>
                                 <p class="news-desc">Yahoo新聞
 搜尋
 登入
 熱搜
 伊朗戰爭
-重啟核電
-馬祖機票
 員林百果山
-房屋仲介
+旅平險各家比較
+逐玉結局
+北投溫泉推薦
+重啟核電
+房貸利率試算表
 古林睿煬
-谷關溫泉飯店
-華邦電
-TWICE
-美超微股價
+Twice成員
+黃色塑膠袋
 打開App
 廣告 
-張忠謀的格局、蔡康永的情商：春節必讀5書
-彭杏珠
-2026年2月20日 週五 下午10:00
-在充滿爆竹聲的春節假期，人們往往習慣了外在的熱鬧，卻忘了向內的安頓。長達九天的年假，除了吃喝玩樂，更需要一場心靈的「斷捨離」，不妨透過這五本書，藉助「張忠謀的格局」與「蔡康永的情商」，為自己播下希望與定力的種子。
-在快節奏的時代，我們往往急著追逐剛上架的新書，卻疏忽「真正的影響力」是需要時間發酵與驗證的。
-2025堪稱出版界競爭激烈的一年，但...</p>
+2025博客來年度閱讀報告 Threads成新書爆紅孵化器！張忠謀蔡康永霸榜
+三立新聞網
+2025年12月4日 週四 上午3:27
+記者李鴻典／台北報導
+博客來今（4）日發布「2025 年度閱讀報告」涵蓋「暢銷書總榜、新書榜、電子書分析、年度暢銷作家、年度選書」，全面解析2025年度閱讀樣貌。
+2025博客來年度閱讀暢銷榜TOP10，《世界上最透明的故事》贏得總榜桂冠，《張忠謀自傳》登新書榜冠軍、總榜亞軍。（圖／品牌...</p>
+                            </a>
+                        
+                            <a href="https://www.instagram.com/reel/DWF4i8ET--h/" target="_blank" class="news-card">
+                                <span class="news-source">Apify</span>
+                                <h3 class="news-title">Instagram</h3>
+                                <p class="news-desc">Log In
+Sign Up
+eslite_global
+•
+Follow
+Original audio
+eslite_global
+3d
+#蔡康永 的 1000 元挑戰 💵
+今天任務是必須買「想一讀再讀」的書。
+而康永哥兩本都選了科普類書籍
+究竟是哪本書引起康永哥興趣呢？
+
+-
+
+🗒️一起來看 蔡康永 的購物清單 .ᐟ.ᐟ ——
+✦《#隱藏的宇宙》
+真好奇本書是什麼內容，能帶給我們什麼啟發～
+
+✦《#萬物的名字》
+理解事物的第一步，就是認識名字！
+
+—————————————————————
+
+蔡康永當天分享的書籍還不只這些？
+歡迎前往 #迷誠品YouTube 收看完整影片
+【蔡康永來了...</p>
                             </a>
                         
                             <a href="https://udn.com/news/story/120911/9226177" target="_blank" class="news-card">
@@ -1103,131 +1362,20 @@ udn NBA 野球夢田 HBL
 數位文創...</p>
                             </a>
                         
-                            <a href="https://www.threads.net/@nownews/post/DFuQuUHTVNV?hl=en-gb" target="_blank" class="news-card">
-                                <span class="news-source">Apify</span>
-                                <h3 class="news-title">蔡康永現身國際書展，和日本作家吉本芭娜娜進行約1小時的對談，分享好書內容，這是他在摯友大S過世後首度公開露面，他一登台還在整理心情，遲遲沒有開口，說著書中故事到一半，他在台上忍不住激動情緒，直接淚崩⋯⋯</h3>
-                                <p class="news-desc">Thread
-117K views
-nownews
-05/02/2025
-蔡康永現身國際書展，和日本作家吉本芭娜娜進行約1小時的對談，分享好書內容，這是他在摯友大S過世後首度公開露面，他一登台還在整理心情，遲遲沒有開口，說著書中故事到一半，他在台上忍不住激動情緒，直接淚崩⋯⋯ 
-Translate
-6K
-25
-87
-199
-Log in or sign up for ThreadsSee what people are talking about and join the conversation.
-Log in with username instead...</p>
-                            </a>
-                        
-                            <a href="https://www.threads.net/@big.wei/post/DFwgaNJT0ZG" target="_blank" class="news-card">
-                                <span class="news-source">Apify</span>
-                                <h3 class="news-title">昨天是蔡康永在大S走後的第一個公開活動，是難以拒絕的、在國際書展跟吉本芭娜娜的對談。
-
-大批記者安靜守候，蔡康永拿起麥克風提到他跟吉本的淵源。他說吉本在23歲就出版了成名作《廚房》，裡面有一篇叫做月影的小說，描述人在面對重大的失去之後，如果他非常想念這個人，他有什麼辦法可以再見到這個人。
-
-當時女主角每天去慢跑都會跑到一個橋邊然後折回來，一個女巫跟她說，你只要在特定的時間到橋邊，就有機會看到你所失去的人。蔡康永於是在現場朗讀了書中的段落（文字附在下面），這也是他第一次在公開場合朗讀小說。
-
-蔡康永唸的哽咽，台下觀眾很多都哭了，活動就平順的繼續下去。
-
-有時候生活如此困難，或者說，作為一個公眾人物要擁有自己私下的、小小的悲傷是多麼不可能。然而他讓我看到一個人在那個時刻中，能夠拿出的，最得體、最內斂、最柔情的某種告別。
-
-他沒有假裝自己沒事，我們也不可能假裝自己沒事，但他也沒有讓這個場合偏離主題。透過盛讚一位傳世作家的經典作品，透過自己真實的哭泣，他讓我們看到文學如何幫助人類移情、投射經驗、並且獲得釋放。
-
-這是一件多美的事啊，一個人在生命的枷鎖限制之下能做到最好的選擇，或許就是這個樣子。</h3>
-                                <p class="news-desc">Thread
-436K views
-big.wei
-02/06/25
-昨天是蔡康永在大S走後的第一個公開活動，是難以拒絕的、在國際書展跟吉本芭娜娜的對談。
-大批記者安靜守候，蔡康永拿起麥克風提到他跟吉本的淵源。他說吉本在23歲就出版了成名作《廚房》，裡面有一篇叫做月影的小說，描述人在面對重大的失去之後，如果他非常想念這個人，他有什麼辦法可以再見到這個人。
-當時女主角每天去慢跑都會跑到一個橋邊然後折回來，一個女巫跟她說，你只要在特定的時間到橋邊，就有機會看到你所失去的人。蔡康永於是在現場朗讀了書中的段落（文字附在下面），這也是他第一次在公開場合朗讀小說。
-蔡康永唸的哽咽，台下觀眾很多都哭了，活動...</p>
-                            </a>
-                        
                     </div>
                 </div>
             
                 <div class="news-category-block" style="margin-top: 3rem; animation: fadeInUp 0.8s ease-out;">
                     <h2 class="news-category-title" style="font-size: 1.5rem; margin-bottom: 1.5rem; color: #38bdf8; display: flex; align-items: center; gap: 10px;">
                         <span style="background: rgba(56, 189, 248, 0.1); padding: 5px 12px; border-radius: 8px;">📺 節目與主持</span>
-                        <small style="font-size: 0.9rem; color: var(--text-sub); font-weight: 300;">(9 筆資料)</small>
+                        <small style="font-size: 0.9rem; color: var(--text-sub); font-weight: 300;">(10 筆資料)</small>
                     </h2>
                     <div class="news-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
-                        
-                            <a href="https://workingwithgrace.wordpress.com/2016/04/11/book-review-kevin-tsais-way-of-speaking-%E8%94%A1%E5%BA%B7%E6%B0%B8%E7%9A%84%E8%AF%B4%E8%AF%9D%E4%B9%8B%E9%81%93/" target="_blank" class="news-card">
-                                <span class="news-source">Tavily</span>
-                                <h3 class="news-title">Book Review: Kevin Tsai's Way Of Speaking (蔡康永的说话之道)</h3>
-                                <p class="news-desc">8. Know how to “lose” and hand unnecessary victories to others. It is better to lose an argument than to be hated for winning one. Don’t force an apology or admittance of defeat from someone. Maintain love between the couple; don’t make a fuss over winning or losing an argument.
-9. See people as equals.
-10. Maintain eye contact in moderation.
-11. Don’t obsess over the meal; have a good conversation.
-12. Get unstuck; change the topic.
-13. Concrete questions lead to effortless answers. Be specific in your questioning. Ask about a topic that you have something interesting to share about too.
-14. People want to find others who understand them. [...] Posted on   by  Grace Tan
-
-I’ve enjoyed Kevin Tsai’s and Dee Hsu’s hosting of 康熙來了(Kang Xi Lai Le) – too bad the show has ended after more than a decade on television. As Dee has frequently referred to Kevin’s book, I decided to locate a copy and attempt to read all those traditional Chinese characters. If you know of the existence of a version in simplified Mandarin or better yet, a translated version in English, please let me know. My speed-reading skills have been severely hampered by the way the book is presented – just like Chinese comics, back to front, and read from right to left, the exact opposite of what I’m used to. [...] 14. People want to find others who understand them.
-15. Everyone wants to talk about themselves. Be a good listener. See if you can avoid using “I” and “me” in your conversation. Indulge your friends – let them say all that they want to.</p>
-                            </a>
                         
                             <a href="https://www.youtube.com/watch?v=2U9A_MYfSxY" target="_blank" class="news-card">
                                 <span class="news-source">Tavily</span>
                                 <h3 class="news-title">《蔡康永的说话之道》学会蔡康永的说话艺术,轻松打动人心,说话的 ...</h3>
-                                <p class="news-desc">今天为你解读的书叫做蔡康永的说话之道 这本书的中文版呢 大约是9.5万字 我会用大约22分钟左右的时间为你讲解 书中的精髓 说话之道其实也是人生之道 在所有时候 透过说话懂得把别人放在心上 才是我们应该学习和掌握的说话之道 在日常社交中呢 为什么和有些人讲几句话之后就不愿意再 深交了 和有些人说起话来呢 却觉得舒适自然 如沐春风一般 希望与其亲近并成为朋友 这些感受呢 都是来自一个人的言语中 会说话的言语如同一个人的第二张脸 表现的是一个人的为人和思想水平 说话人人都会 会说话却是需要学习和练习的 把说话练好 是 最划算的事情 懂得说话之道 让本来就讨人喜欢的你在未来更讨人喜欢 这就是蔡康永要教会我们的说话之道 蔡康永在本书写道 贵人不一定能改变人生 外表不一定能决定魅力 但是说话可以 本书是一本教你说话的使用书 40篇精彩短文 蔡康永用他最擅长的说故事的方式 构造出一个个生活的实际场景中的有趣 谈话 在快乐之余 教我们可以改变人生的说话方式 并不是在语言中去包装自己 而是透过说话 在任何时候应该学会懂得把别人放在心上 作者蔡康永 中国首档说话达人秀奇葩说的导师之一 台湾知名主持人 曾主持综艺访谈节目康熙来了 获得200 零五年第40届金钟奖最佳综艺节目主持 奖 主持过七届金马奖的颁奖典礼 他的主持风格低调 沉稳 敏锐 机智 随意 自然 搞怪幽默 语言犀利 但是绝不会刺伤别人 他精彩绝伦的说话之道 和他交际的能力 使他在圈内出名的好人缘 蔡康永说呢 他喜欢研究说话这件事儿 觉得透过研究说话 会比较根本的搞清楚自己和别人的关系 搞清楚自己在想什么 别人在想什么 同时搞清楚自己是什么样的人 他相信 只有先对人和人之间的沟通认真对待 才会得到比较多的对人对己的了解 然后才会比较靠近幸福 好了 介绍完本书的基本情况和作者概况呢 接下来我就为你详细讲述书中的内容 [...] 第二个重点是把无谓的胜利让给对方 懂得认输的人很懂说话 你总是很想赢 当你有这个想法的时候呢 其实已经输了 在说话中也是一样 为了一定要说赢对方 弄得彼此都不开心 还心生芥蒂 伤了和气 这样的赢又有什么意义呢 懂得认输才会赢 才是真正的懂得说话 第三个重点 而是把对方看在眼里 放在心里 为人处世懂得换位思考 对人和对事就会多一些理解 也能减少不必要的烦恼 说话也一样 学会换位思考 把对方看在眼里 放在心里 别人自然也会愿意和你结交 为自己赢得好人缘 第四个重点是初次见面应该说什么 只要对方报了名字 你就应该也报自己的名字 不要麻烦别人再次询问要怎么称呼你 这是基本的社交礼仪 初次见面呢 最好不要聊对方收入一类的敏感话题 切忌交浅言深 第五个重点是传达感情 不只要会说话 人和人之间沟通常有障碍 有的时候觉得对方好像和你不在同一个 世界 明明说的同样的语言 却怎么都说不通 那也只能 尽力为之 人生有时候就是这样 需要不断的尝试和学习 才能透过语言表达感受到彼此的需要和 存在 我们常说一句古话 好言一句三冬暖 恶语伤人六月寒 出自增广贤文的谜面 告诉我们学习用语言来结善缘 很多时候 一句理解安慰的话能够给人勇气 即使在冰冷的冬季 也让人感到温暖 一句伤人的话 如同一把利刃 刺伤柔软的内心 即使在六月 炎夏也让人感到寒冷 生活中呢 愿我们都可以是说话温暖的人 人与人之间的沟通障碍 有的时候就是对方和你不同世界 怎么说都说不通 那也要尽力而为 人生本来就是这样子的 不断尝试和练习说话之道 认真对待和别人的沟通 透过说话懂得 把别人放在心上 才有可能真正掌握康永哥的说话之道 [...] # 《蔡康永的说话之道》学会蔡康永的说话艺术,轻松打动人心,说话的艺术,让沟通更有魅力,听书财富 Listening to Forture
-## 听书财富
-10100 subscribers
-
-### Description
-50 views
-Posted: 19 Apr 2025
-《蔡康永的说话之道》：学习蔡康永的沟通艺术，提升说话的影响力和魅力。</p>
-                            </a>
-                        
-                            <a href="https://www.chinatimes.com/realtimenews/20260114004693-260404" target="_blank" class="news-card">
-                                <span class="news-source">Apify</span>
-                                <h3 class="news-title">《康熙來了》停播滿10年！蔡康永深夜感性：真慶幸曾那樣陪伴你 - 娛樂 - 中時新聞網</h3>
-                                <p class="news-desc">中時新聞網
-《康熙來了》停播滿10年！蔡康永深夜感性：真慶幸曾那樣陪伴你
-22:592026/01/14 
-中時新聞網
-翁語岑 
-Facebook
-Line
-Threads
-複製連結
-《康熙來了》停播滿10年，蔡康永感性發文引發大批粉絲共鳴。（中時資料照） 
-Facebook
-Line
-Threads
-複製連結
-字級設定：小中大特 
-主持人蔡康永與小S（徐熙娣），過去攜手主持經典綜藝節目《康熙來了》，培養出絕佳默契，也陪伴無數觀眾走過青春歲月。節目雖於2015年正式停播，但多年來仍不時被網友翻出反覆重溫片段，回味當時節目的笑聲與感動。在《康熙來了》最後一集播出滿10周年之際，蔡康永今（14日）...</p>
-                            </a>
-                        
-                            <a href="https://tw.news.yahoo.com/%E3%80%8A%E5%BA%B7%E7%86%99%E4%BE%86%E4%BA%86%E3%80%8B%E5%81%9C%E6%92%AD%E6%BB%BF10%E5%B9%B4%EF%BC%81%E8%94%A1%E5%BA%B7%E6%B0%B8%E6%B7%B1%E5%A4%9C%E6%84%9F%E6%80%A7%EF%BC%9A%E7%9C%9F%E6%85%B6%E5%B9%B8%E6%9B%BE%E9%82%A3%E6%A8%A3%E9%99%AA%E4%BC%B4%E4%BD%A0-150459632.html" target="_blank" class="news-card">
-                                <span class="news-source">Apify</span>
-                                <h3 class="news-title">《康熙來了》停播滿10年！蔡康永深夜感性：真慶幸曾那樣陪伴你</h3>
-                                <p class="news-desc">Yahoo新聞
-搜尋
-登入
-熱搜
-伊朗戰爭
-重啟核電
-馬祖機票
-員林百果山
-房屋仲介
-古林睿煬
-谷關溫泉飯店
-華邦電
-TWICE
-美超微股價
-打開App
-廣告 
-《康熙來了》停播滿10年！蔡康永深夜感性：真慶幸曾那樣陪伴你
-中時新聞網
-2026年1月14日 週三 上午10:04
-《康熙來了》停播滿10年，蔡康永感性發文引發大批粉絲共鳴。（中時資料照）
-主持人蔡康永與小S（徐熙娣），過去攜手主持經典綜藝節目《康熙來了》，培養出絕佳默契，也陪伴無數觀眾走過青春歲月。節目雖於2015年正式停播，但多年來仍不時被網友翻出反覆重溫片段，回味當時節目的笑聲與感動。在《康熙來了》最後一集播出滿10周年之際，...</p>
+                                <p class="news-desc">今天为你解读的书叫做蔡康永的说话之道 这本书的中文版呢 大约是9.5万字 我会用大约22分钟左右的时间为你讲解 书中的精髓 说话之道其实也是人生之道 在所有时候 透过说话懂得把别人放在心上 才是我们应该学习和掌握的说话之道 在日常社交中呢 为什么和有些人讲几句话之后就不愿意再 深交了 和有些人说起话来呢 却觉得舒适自然 如沐春风一般 希望与其亲近并成为朋友 这些感受呢 都是来自一个人的言语中 会说话的言语如同一个人的第二张脸 表现的是一个人的为人和思想水平 说话人人都会 会说话却是需要学习和练习的 把说话练好 是 最划算的事情 懂得说话之道 让本来就讨人喜欢的你在未来更讨人喜欢 这就是蔡康永要教会我们的说话之道 蔡康永在本书写道 贵人不一定能改变人生 外表不一定能决定魅力 但是说话可以 本书是一本教你说话的使用书 40篇精彩短文 蔡康永用他最擅长的说故事的方式 构造出一个个生活的实际场景中的有趣 谈话 在快乐之余 教我们可以改变人生的说话方式 并不是在语言中去包装自己 而是透过说话 在任何时候应该学会懂得把别人放在心上 作者蔡康永 中国首档说话达人秀奇葩说的导师之一 台湾知名主持人 曾主持综艺访谈节目康熙来了 获得200 零五年第40届金钟奖最佳综艺节目主持 奖 主持过七届金马奖的颁奖典礼 他的主持风格低调 沉稳 敏锐 机智 随意 自然 搞怪幽默 语言犀利 但是绝不会刺伤别人 他精彩绝伦的说话之道 和他交际的能力 使他在圈内出名的好人缘 蔡康永说呢 他喜欢研究说话这件事儿 觉得透过研究说话 会比较根本的搞清楚自己和别人的关系 搞清楚自己在想什么 别人在想什么 同时搞清楚自己是什么样的人 他相信 只有先对人和人之间的沟通认真对待 才会得到比较多的对人对己的了解 然后才会比较靠近幸福 好了 介绍完本书的基本情况和作者概况呢 接下来我就为你详细讲述书中的内容 [...] 讨人喜欢 那是因为他们说话空洞 只是一些漂亮 没有任何意义的话 只顾自己说的过瘾 从不理会听者的感受 作为听的人呢 如果有人说可以把天上的月亮摘下来给你 那只是夸夸其谈的虚话 说话想要言之有物 不空洞 就要知道所言悟是什么 才会拿捏准自己该说多少话 在什么时候说 说完之后要做什么 说得多 或是一直说 都比不上 说得实在又能做到 参加或是组织朋友聚会 其实追求都是一样的 大家都有机会说说自己的事儿 也听听别人的事儿 更理想的话 有好笑的话题 也有透露心事的话题 那就绝对是一次大家都难忘的聚会 偶尔为自己朋友创造一场这样的聚会呢 会让大家觉得你很温暖 是很有心的朋友 如果你关心一个朋友 请他吃饭或者到家做客 用心比用钱更重要 你招待朋友 要表达关心 找话和他聊 让他说话 因为倾诉是人的本能 而倾诉呢 像饿了必须吃东西一样 是我们活下去的生存之道 你如果关心朋友 请给他机会倾诉 而不是一直在劝朋友喝酒吃菜 练习关心别人 并且表现出你的关心是非常值得的 因为每个人生命中必须有你最在乎的人 你才会生活的有滋味 而那些你想关心的人 你一定会关心 重要的是呢 你要把你的关心表现出来 让对方收到 好了 上面就是我为你说的今天的最后一个重点 了 传达感情呢 不只要会说话 语言本来就是为了连接你我他才存在的 可是很多时候只顾使用语言 却不在乎别人 语言最美的时候 就是我们透过语言感受到彼此 需要和关心的时候 好 说到这里呢 我们今天说的内容就差不多了 让我们回顾一下我们今天所聊到的重点 内容 第一个重点是 你说什么样的话 你就是什么样的人 生活中你在别人眼里是什么样的人 往往不是你做了什么事 而是你说了什么话 你嘴上爱抱怨 你就成为怨女 你说话自信 那么你就会是一个自信的人 第二个重点是把无谓的胜利让给对方 懂得认输的人很懂说话 你总是很想赢 当你有这个想法的时候呢 其实已经输了 [...] 然后才会比较靠近幸福 好了 介绍完本书的基本情况和作者概况呢 接下来我就为你详细讲述书中的内容 相较于其他教说话技巧说理的书 这是一本更有趣的书 40个场景故事设定了两个人物 紫玉和晴天 在说道理之前呢 会先用一个故事做铺垫 然后再换位思考 在此场景下如何说话才是最好的 蔡康永的说话逻辑实用又直接 你越会说话 别人就越快乐 别人越快乐就越喜欢你 你所得到的帮助也就越多 想要成为能够与人愉快的聊天 懂得尊重他人 温暖又有人缘的人 会说话是人生的必修课 从书中的40个小故事中呢 我总结了五个重点来讲解康永哥让人舒服 又信服的说话之道 下面呢 我会分别来做讲解 第一个重点是你说什么样的话 你就是什么样的人 第二个重点是 把无谓的胜利让给对方 懂得认输的人很懂说话 第三个重点是把对方看在眼里 放在心里 第四个重点是初次见面应该说什么 第五个重点是传达感情 不只要会说话 好 我们先来看这第一个重点啊 你说什么样的话 你就是什么样的人 很多人认为你说什么样的话 会透露出你是什么样的人 康永哥觉得你说什么样的话 你就是什么样的人 比如说你老是觉得自己可怜 很倒霉 周围的人呢 都对你不好 你常常说出很可怜和消极的话 说久了 慢慢可能真的变成了如鲁迅笔下的祥林嫂 一样悲剧的人生 故事中 紫玉因为被男朋友的球鞋绊倒了 就对男朋友大吼说 你想害死我呀 如果你是子玉的男朋友 你听到这样子说 一定会觉得子玉是个有被害妄想症的 疯婆子 因为没人会用乱丢球鞋这种招数来杀人吧 下次再吵架的时候呢 子玉的被迫害就会变成男朋友抱怨她的 一个依据 他就会说 你每次以为我会对不起你 你这么爱冤枉我 干脆我真的出去跟别人乱搞算了 这个时候 如果你是子玉 是不是就会很无语了 因为这是你自己说话种下的因 通过这个故事反观我们自己 在生活中是不是也有这样的对话场景 因为别人的一点小失误就喋喋不休的抱怨</p>
                             </a>
                         
                             <a href="https://tw.news.yahoo.com/%E7%8D%A8%E5%AE%B6-%E5%BA%B7%E7%86%99%E7%B5%84%E5%90%88-%E5%9B%9E%E4%BE%86%E4%BA%86-%E8%94%A1%E5%BA%B7%E6%B0%B8%E7%99%BB-%E4%B8%8D%E7%86%99%E5%A8%A3-063200131.html" target="_blank" class="news-card">
@@ -1257,6 +1405,102 @@ Yahoo新聞AI功能使用意見調查，填問卷抽好禮！
 蔡康永到小S節目擔任來賓。（圖／東森綜合台提供）
 
 女星小S（徐熙娣）今年3月宣布回歸主持東森節目《小姐不熙娣》，並同步推出「主持復健之路」特輯，日前她與搭檔派翠克現身信義區舉行快閃簽名會、突襲台北101董事長賈永婕辦公室後，如今小S正式回...</p>
+                            </a>
+                        
+                            <a href="https://ettv.ebc.net.tw/News/Content/1837" target="_blank" class="news-card">
+                                <span class="news-source">Apify</span>
+                                <h3 class="news-title">小S、蔡康永《小姐不熙娣》神合體，揭「隱身一年」療傷真相！</h3>
+                                <p class="news-desc">EBC東森電視｜東森Apps｜简体
+會員中心｜登入 
+首頁
+節目表
+最新消息
+影音專區
+活動專區
+小S、蔡康永《小姐不熙娣》神合體，揭「隱身一年」療傷真相！
+2026/03/19 15:04 東森綜合台 
+東森綜合《小姐不熙娣》由金鐘主持人小S（徐熙娣）與派翠克領軍，繼信義區快閃、台北101突擊賈永婕掀起熱潮後，今（19日）錄影現場迎來核彈級嘉賓！曾在2004年至2016年與小S攜手締造綜藝傳奇的蔡康永，特別以「重磅來賓」身分現身，陪著摯友正式宣告回歸，兩人睽違已久的「康熙合體」，令在場工作人員鼻酸。
+圖說：東森電視林文淵董事長更驚喜現身，贈禮和祝福小S徐熙娣。（資料來源：東森綜合台提供）
+蔡...</p>
+                            </a>
+                        
+                            <a href="https://tw.news.yahoo.com/%E5%BA%B7%E7%86%99-%E5%81%9C%E6%92%AD10%E5%B9%B4-%E8%A3%BD%E4%BD%9C%E4%BA%BAb2%E9%A6%96%E9%AC%86%E5%8F%A3%E6%94%B6%E6%94%A4%E5%85%A7%E5%B9%95-%E5%B0%8Fs-%E5%BE%A9%E5%87%BA%E6%99%82%E9%96%93%E9%BB%9E-061500839.html" target="_blank" class="news-card">
+                                <span class="news-source">Apify</span>
+                                <h3 class="news-title">《康熙》停播10年！製作人B2首鬆口收攤內幕 小S「復出時間點」曝光</h3>
+                                <p class="news-desc">Yahoo新聞
+搜尋
+登入
+熱搜
+伊朗戰爭
+員林百果山
+旅平險各家比較
+逐玉結局
+北投溫泉推薦
+重啟核電
+房貸利率試算表
+古林睿煬
+Twice成員
+黃色塑膠袋
+打開App
+廣告 
+《康熙》停播10年！製作人B2首鬆口收攤內幕 小S「復出時間點」曝光
+三立新聞網
+2026年1月24日 週六 上午1:15
+記者蔡維歆／台北報導
+蔡康永（右）與小S主持經典談話節目《康熙來了》。（圖／翻攝自康熙來了）
+蔡康永（右）與小S主持經典談話節目《康熙來了》，自2004年開播至停播已經過了10年，今（24）日昔《康熙》製作人B2出席活動受訪，也吐露當年決定收掉節目的原因。
+提到《康熙來了》，B2透露當時停播的原...</p>
+                            </a>
+                        
+                            <a href="https://www.chinatimes.com/realtimenews/20260114004693-260404" target="_blank" class="news-card">
+                                <span class="news-source">Apify</span>
+                                <h3 class="news-title">《康熙來了》停播滿10年！蔡康永深夜感性：真慶幸曾那樣陪伴你 - 娛樂 - 中時新聞網</h3>
+                                <p class="news-desc">中時新聞網
+《康熙來了》停播滿10年！蔡康永深夜感性：真慶幸曾那樣陪伴你
+22:592026/01/14 
+中時新聞網
+翁語岑 
+Facebook
+Line
+Threads
+複製連結
+《康熙來了》停播滿10年，蔡康永感性發文引發大批粉絲共鳴。（中時資料照） 
+Facebook
+Line
+Threads
+複製連結
+字級設定：小中大特 
+主持人蔡康永與小S（徐熙娣），過去攜手主持經典綜藝節目《康熙來了》，培養出絕佳默契，也陪伴無數觀眾走過青春歲月。節目雖於2015年正式停播，但多年來仍不時被網友翻出反覆重溫片段，回味當時節目的笑聲與感動。在《康熙來了》最後一集播出滿10周年之際，蔡康永今（14日）...</p>
+                            </a>
+                        
+                            <a href="https://tw.news.yahoo.com/%E3%80%8A%E5%BA%B7%E7%86%99%E4%BE%86%E4%BA%86%E3%80%8B%E7%B5%90%E6%9D%9F%E6%BB%BF10%E5%B9%B4-%E8%94%A1%E5%BA%B7%E6%B0%B8%E5%90%90%E5%AF%A6%E6%83%85%EF%BC%9A%E5%BE%9E%E6%B2%92%E5%AE%8C%E6%95%B4%E7%9C%8B%E9%81%8E%E6%9C%80%E5%BE%8C%E4%B8%80%E9%9B%86-233300748.html" target="_blank" class="news-card">
+                                <span class="news-source">Apify</span>
+                                <h3 class="news-title">《康熙來了》結束滿10年 蔡康永吐實情：從沒完整看過最後一集</h3>
+                                <p class="news-desc">Yahoo新聞
+搜尋
+登入
+熱搜
+伊朗戰爭
+員林百果山
+旅平險各家比較
+逐玉結局
+北投溫泉推薦
+重啟核電
+房貸利率試算表
+古林睿煬
+Twice成員
+黃色塑膠袋
+打開App
+廣告 
+《康熙來了》結束滿10年 蔡康永吐實情：從沒完整看過最後一集
+三立新聞網 setn.com
+2026年1月14日 週三 下午6:33
+1 / 2
+《康熙來了》結束滿10年 蔡康永吐實情：從沒完整看過最後一集
+蔡康永與小S所主持經典節目《康熙來了》結束滿10年。（圖／資料照）
+娛樂中心／綜合報導
+蔡康永與小S所主持經典節目《康熙來了》結束滿10年。（圖／資料照）
+華語綜藝史上經典的談話節目《康熙來了》，於昨（14）日十...</p>
                             </a>
                         
                             <a href="https://www.ptt.cc/bbs/TW_Entertain/M.1768400126.A.1E5.html" target="_blank" class="news-card">
@@ -1314,44 +1558,41 @@ Yahoo新聞AI功能使用意見調查，填問卷抽好禮！
                     </h2>
                     <div class="news-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
                         
-                            <a href="https://www.threads.net/@wtalk.me/post/DBGjLtSTSK4?hl=zh-tw" target="_blank" class="news-card">
+                            <a href="https://www.storm.mg/lifestyle/11090739" target="_blank" class="news-card">
                                 <span class="news-source">Apify</span>
-                                <h3 class="news-title">『蔡康永的人生金句』
-
-最近蔡康永成了社群媒體的大熱門，他的幾個論點讓人覺得他活得真是清醒！
-
-來看看他的幾個金句:
-
-1. 當你覺得這個世界充滿惡意、不喜歡你的時候，不是選擇離開，應該要理解為「它不重要」
-
-2. 每個人生活追求最簡單的原則就是「實現自己」
-
-3. 對很多事沒有反應，才是最高級的反應
-
-4. 把時間投資在值得的人身上
-
-5. 很多事不必贏，不輸就很了不起了
-
-6. 沒有時間限制時你不會做抉擇，因為時間有限你才會急著去做
-
-7. 變強不見得是為了「想要」，更多是為了「不想要」
-
-8. 生活令人憤怒的時候，不要看向那些忙著憤怒的人，要看向那些沒有忙著憤怒的人</h3>
-                                <p class="news-desc">串文
-24 萬次瀏覽
-wtalk.me
-2024-10-14
-『蔡康永的人生金句』
-最近蔡康永成了社群媒體的大熱門，他的幾個論點讓人覺得他活得真是清醒！
-來看看他的幾個金句:
-1. 當你覺得這個世界充滿惡意、不喜歡你的時候，不是選擇離開，應該要理解為「它不重要」
-2. 每個人生活追求最簡單的原則就是「實現自己」
-3. 對很多事沒有反應，才是最高級的反應
-4. 把時間投資在值得的人身上
-5. 很多事不必贏，不輸就很了不起了
-6. 沒有時間限制時你不會做抉擇，因為時間有限你才會急著去做
-7. 變強不見得是為了「想要」，更多是為了「不想要」
-8. 生活令人憤怒的時候，不要看向那些忙著憤怒的人，要看向...</p>
+                                <h3 class="news-title">台北跨年卡司曝光！網挖出20年前「神級名單」開戰：台灣演藝圈難道沒巨星了嗎 | 陳姿諭 | 風生活 - 風傳媒</h3>
+                                <p class="news-desc">註冊 登入
+咖啡贊助
+支持我們
+常見問題
+VIP
+新聞評論財經風生活
+風影音
+支持風傳媒
+VIP
+新聞評論財經風生活
+風影音
+支持風傳媒
+註冊 登入
+咖啡贊助
+支持我們
+常見問題
+註冊 登入
+咖啡贊助
+支持我們
+常見問題
+VIP
+新聞評論財經風生活
+風影音
+支持風傳媒
+台北跨年卡司曝光！網挖出20年前「神級名單」開戰：台灣演藝圈難道沒巨星了嗎
+2025-12-26 14:57
+陳姿諭
+2025-12-26 14:57
+陳姿諭
+年末將至，各縣市紛紛公布跨年晚會陣容。一位網友日前發文分享2006年的台北市跨年晚會卡司陣容，意外掀起網友熱議。（示意圖／取自unsplash）
+目錄
+2006年台北跨年...</p>
                             </a>
                         
                     </div>
@@ -1360,255 +1601,34 @@ wtalk.me
                 <div class="news-category-block" style="margin-top: 3rem; animation: fadeInUp 0.8s ease-out;">
                     <h2 class="news-category-title" style="font-size: 1.5rem; margin-bottom: 1.5rem; color: #38bdf8; display: flex; align-items: center; gap: 10px;">
                         <span style="background: rgba(56, 189, 248, 0.1); padding: 5px 12px; border-radius: 8px;">📰 最新新聞</span>
-                        <small style="font-size: 0.9rem; color: var(--text-sub); font-weight: 300;">(15 筆資料)</small>
+                        <small style="font-size: 0.9rem; color: var(--text-sub); font-weight: 300;">(14 筆資料)</small>
                     </h2>
                     <div class="news-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
                         
-                            <a href="https://www.amazon.com/-/zh_TW/%E8%94%A1%E5%BA%B7%E6%B0%B8%E7%BB%8F%E5%85%B8%E7%B3%BB%E5%88%97%E5%A5%97%E8%A3%85%EF%BC%88%E8%94%A1%E5%BA%B7%E6%B0%B8%E7%9A%84%E8%AF%B4%E8%AF%9D%E4%B9%8B%E9%81%931-2-%E8%94%A1%E5%BA%B7%E6%B0%B8%E7%9A%84%E6%83%85%E5%95%86%E8%AF%BE%EF%BC%89-%E8%94%A1%E5%BA%B7%E6%B0%B8/dp/B07JJGV5MS" target="_blank" class="news-card">
+                            <a href="https://workingwithgrace.wordpress.com/2016/04/11/book-review-kevin-tsais-way-of-speaking-%E8%94%A1%E5%BA%B7%E6%B0%B8%E7%9A%84%E8%AF%B4%E8%AF%9D%E4%B9%8B%E9%81%93/" target="_blank" class="news-card">
                                 <span class="news-source">Tavily</span>
-                                <h3 class="news-title">蔡康永经典系列套装（蔡康永的说话之道1.2+蔡康永的情商课）</h3>
-                                <p class="news-desc">## Skip to
-
-## Keyboard shortcuts
-
-Books
-
-Recently Visited
-
-Featured
-
-Top Categories
-
-Fiction
-
-Nonfiction
-
-Children's Books
-
-Shorts
-
-More Categories
-
-All Categories
-
-Top Categories
-
-Fiction
-
-Nonfiction
-
-Children's Books
-
-Shorts
-
-More Categories
-
-Recently Visited
-
-Featured
-
-New & Trending
-
-Recently Visited
-
-Featured
-
-Deals & Rewards
-
-Recently Visited
-
-Featured
-
-Best Sellers
-
-Acclaimed
-
-From Our Editors
-
-Recently Visited
-
-Featured
-
-Memberships
-
-Recently Visited
-
-Featured
-
-Best Sellers
-
-Acclaimed
-
-From Our Editors
-
-Memberships
-
-Tools
-
-Ways to Read and Listen
-
-Other
-
-Recently Visited
-
-Featured
-
-Tools
-
-Ways to Read and Listen
-
-Other
-
-Your Books
-
-Holiday Hosting Essentials for the Kitchen
-Amazon Prime Logo
-
-### Sorry, there was a problem.
-
-### Sorry, there was a problem.
-
-Kindle app logo image [...] ##### Veeqo
-
-##### Amazon Business
-
-##### Amazon Fresh
-
-##### AmazonGlobal
-
-##### Home Services
-
-##### Amazon Web Services
-
-##### Audible
-
-##### Box Office Mojo
-
-##### Goodreads
-
-##### IMDb
-
-##### IMDbPro
-
-##### Kindle Direct Publishing
-
-##### Amazon Photos
-
-##### Prime Video Direct
-
-##### Shopbop
-
-##### Amazon Resale
-
-##### Whole Foods Market
-
-##### Woot!
-
-##### Zappos
-
-##### Ring
-
-##### eero WiFi
-
-##### Blink
-
-##### Neighbors App
-
-##### Amazon Subscription Boxes
-
-##### PillPack
-
-##### Amazon Renewed [...] ### Sorry, there was a problem.
-
-Kindle app logo image
-
-Download the free Kindle app and start reading Kindle books instantly on your smartphone, tablet, or computer - no Kindle device required.
-
-Read instantly on your browser with Kindle for Web.
-
-Using your mobile phone camera - scan the code below and download the Kindle app.
-
-QR code to download the Kindle App
-
-QR code to download the Kindle App
-
-#### Image Unavailable
-
-蔡康永经典系列套装（蔡康永的说话之道1.2+蔡康永的情商课）
-
-# Follow the author
-
-蔡康永
-
-OK
-
-# 蔡康永经典系列套装（蔡康永的说话之道1.2+蔡康永的情商课） Paperback – January 1, 2018
-
-### Purchase options and add-ons
-
-The%20Amazon%20Book%20Review
-
-|  |
-
-|  |
-
-##### Amazon Music
-
-##### Amazon Ads
-
-##### 6pm
-
-##### AbeBooks
-
-##### ACX
-
-##### Sell on Amazon
-
-##### Veeqo
-
-##### Amazon Business
-
-##### Amazon Fresh</p>
-                            </a>
-                        
-                            <a href="https://tw.news.yahoo.com/%E5%BA%B7%E7%86%99-%E5%90%88%E9%AB%94%E9%80%BC%E5%93%AD%E5%85%A8%E5%A0%B4-%E5%B0%8Fs%E5%BE%A9%E5%B7%A5%E9%A6%96%E9%8C%84-%E8%94%A1%E5%BA%B7%E6%B0%B8%E7%8F%BE%E8%BA%AB-%E5%8F%A5%E8%A9%B1%E8%AE%93%E5%A5%B9%E7%A0%B4%E9%98%B2-094100360.html" target="_blank" class="news-card">
-                                <span class="news-source">Apify</span>
-                                <h3 class="news-title">「康熙」合體逼哭全場！小S復工首錄 蔡康永現身一句話讓她破防</h3>
-                                <p class="news-desc">Yahoo新聞
-搜尋
-登入
-熱搜
-伊朗戰爭
-重啟核電
-馬祖機票
-員林百果山
-房屋仲介
-古林睿煬
-谷關溫泉飯店
-華邦電
-TWICE
-美超微股價
-打開App
-廣告 
-「康熙」合體逼哭全場！小S復工首錄 蔡康永現身一句話讓她破防
-娛樂組
-更新時間2026年3月19日 週四 下午11:59
-蔡康永、小S錄影合體。（東森提供）
-小S（徐熙娣）近日復工進棚錄製東森《小姐不熙娣》，好友蔡康永，特別以「重磅來賓」身分現身，陪著摯友正式宣告回歸，兩人睽違已久的「康熙合體」，令在場工作人員鼻酸。
-蔡康永開場便陷入兩難，直言在思考要讓小S大哭一場，還是平靜對談。對此，小S感性回應，情緒從非刻意設計，即便在金鐘獎高壓...</p>
-                            </a>
-                        
-                            <a href="https://cj.sina.cn/articles/view/7879776328/1d5abd84806801deei?froms=ggmp&vt=4" target="_blank" class="news-card">
-                                <span class="news-source">Apify</span>
-                                <h3 class="news-title">财经头条</h3>
-                                <p class="news-desc">文章不存在
-返回上页 回到首页...</p>
+                                <h3 class="news-title">Book Review: Kevin Tsai's Way Of Speaking (蔡康永的说话之道)</h3>
+                                <p class="news-desc">and show you have nothing to hide. Step out and say “I’m gay. So?” and you’ll find that people (even the critics) will have to just start minding their own business. [...] Here are some learning points from the book (It’s Book One. There’s a Book Two out as well)… [...] ends up feeling really happy. Yes, we’re superficial like that. Most of us just want to hear only the good things. 😀</p>
                             </a>
                         
                             <a href="https://www.facebook.com/Kevin.Tsai.taiwan/" target="_blank" class="news-card">
                                 <span class="news-source">Apify</span>
                                 <h3 class="news-title">Kevin Tsai</h3>
                                 <p class="news-desc">...</p>
+                            </a>
+                        
+                            <a href="https://www.threads.com/@kevint.taiwan/post/DV_kn4wEi_a/%E9%A0%86%E4%BE%BF%E6%94%BE%E4%B8%80%E5%BC%B5%E7%BF%81%E5%B0%8F%E4%BA%BA%E7%9A%84%E7%85%A7%E7%89%87%E6%9C%80%E8%BF%91%E9%80%99%E6%98%AF%E6%88%91%E6%9C%80%E8%BF%91%E6%89%93%E5%B0%8F%E4%BA%BA%E7%9A%84%E5%B0%8D%E8%B1%A1%E5%B8%8C%E6%9C%9B%E5%A5%B9%E5%8F%AF%E4%BB%A5%E6%97%A9%E9%BB%9E%E9%80%80%E6%95%A3" target="_blank" class="news-card">
+                                <span class="news-source">Apify</span>
+                                <h3 class="news-title">順便放一張翁小人的照片，最近這是我最近打小人的對象，希望她可以早點退散</h3>
+                                <p class="news-desc">Thread
+6 views
+kevint.taiwan
+5d
+順便放一張翁小人的照片，最近這是我最近打小人的對象，希望她可以早點退散 
+Translate
+3
+Log in or sign up for ThreadsSee what people are talking about and join the conversation.
+Log in with username instead...</p>
                             </a>
                         
                             <a href="https://www.instagram.com/reel/DVwDuD_E8-Q/" target="_blank" class="news-card">
@@ -1628,26 +1648,13 @@ More posts from kevin313033
 See more posts...</p>
                             </a>
                         
-                            <a href="https://www.threads.com/@kevint.taiwan/post/DV_kn4wEi_a/%E9%A0%86%E4%BE%BF%E6%94%BE%E4%B8%80%E5%BC%B5%E7%BF%81%E5%B0%8F%E4%BA%BA%E7%9A%84%E7%85%A7%E7%89%87%E6%9C%80%E8%BF%91%E9%80%99%E6%98%AF%E6%88%91%E6%9C%80%E8%BF%91%E6%89%93%E5%B0%8F%E4%BA%BA%E7%9A%84%E5%B0%8D%E8%B1%A1%E5%B8%8C%E6%9C%9B%E5%A5%B9%E5%8F%AF%E4%BB%A5%E6%97%A9%E9%BB%9E%E9%80%80%E6%95%A3" target="_blank" class="news-card">
+                            <a href="https://www.facebook.com/VogueTW/posts/10157040739648754/?locale=zh_CN" target="_blank" class="news-card">
                                 <span class="news-source">Apify</span>
-                                <h3 class="news-title">順便放一張翁小人的照片，最近這是我最近打小人的對象，希望她可以早點退散</h3>
-                                <p class="news-desc">Thread
-6 views
-kevint.taiwan
-5d
-順便放一張翁小人的照片，最近這是我最近打小人的對象，希望她可以早點退散 
-Translate
-3
-Log in or sign up for ThreadsSee what people are talking about and join the conversation.
-Log in with username instead...</p>
-                            </a>
-                        
-                            <a href="https://tw.news.yahoo.com/%E3%80%8A%E5%BA%B7%E7%86%99%E4%BE%86%E4%BA%86%E3%80%8B%E7%B5%90%E6%9D%9F%E6%BB%BF10%E5%B9%B4-%E8%94%A1%E5%BA%B7%E6%B0%B8%E5%90%90%E5%AF%A6%E6%83%85%EF%BC%9A%E5%BE%9E%E6%B2%92%E5%AE%8C%E6%95%B4%E7%9C%8B%E9%81%8E%E6%9C%80%E5%BE%8C%E4%B8%80%E9%9B%86-233300748.html" target="_blank" class="news-card">
-                                <span class="news-source">Apify</span>
-                                <h3 class="news-title">Yahoo</h3>
-                                <p class="news-desc">Will be right back...
-Thank you for your patience.
-Our engineers are working quickly to resolve the issue....</p>
+                                <h3 class="news-title">Error</h3>
+                                <p class="news-desc">Sorry, something went wrong.
+We're working on getting this fixed as soon as we can.
+Go back
+Meta © 2026 · Help...</p>
                             </a>
                         
                             <a href="https://news.readmoo.com/2025/07/25/250725-eq3/" target="_blank" class="news-card">
@@ -1656,9 +1663,9 @@ Our engineers are working quickly to resolve the issue....</p>
                                 <p class="news-desc">...</p>
                             </a>
                         
-                            <a href="https://ettv.ebc.net.tw/News/Content/1837" target="_blank" class="news-card">
+                            <a href="http://k.sina.com.cn/article_7879776328_1d5abd84806801deei.html?wm=" target="_blank" class="news-card">
                                 <span class="news-source">Apify</span>
-                                <h3 class="news-title">小S、蔡康永《小姐不熙娣》神合體，揭「隱身一年」療傷真相！</h3>
+                                <h3 class="news-title">该文章已不存在_手机新浪网</h3>
                                 <p class="news-desc">...</p>
                             </a>
                         
@@ -1666,20 +1673,6 @@ Our engineers are working quickly to resolve the issue....</p>
                                 <span class="news-source">Apify</span>
                                 <h3 class="news-title">MSN</h3>
                                 <p class="news-desc">...</p>
-                            </a>
-                        
-                            <a href="https://www.threads.com/@atom1012/post/DWEYZujD7RQ/%E8%94%A1%E5%BA%B7%E6%B0%B8%E5%B7%B2%E5%93%AD%E6%98%8F" target="_blank" class="news-card">
-                                <span class="news-source">Apify</span>
-                                <h3 class="news-title">蔡康永已哭昏</h3>
-                                <p class="news-desc">Thread
-23 views
-atom1012
-3d
-蔡康永已哭昏 
-Translate
-1
-Log in or sign up for ThreadsSee what people are talking about and join the conversation.
-Log in with username instead...</p>
                             </a>
                         
                             <a href="https://www.pttweb.cc/bbs/Gossiping/M.1773965639.A.F6A" target="_blank" class="news-card">
@@ -1693,16 +1686,81 @@ Log in with username instead...</p>
 備註請放最後面 違者新聞文章刪除 1.媒體來源: 自由時報 2.記者署名: 林欣穎 3.完整新聞標題: 小S復工首度進棚 蔡康永力挺陷兩難 4.完整新聞內文: 小S復工首度進棚 蔡康永力挺陷兩難 2026/03/20 05:30 https://img.ltn.com.tw/Upload/ent/p...</p>
                             </a>
                         
-                            <a href="https://www.dcard.tw/f/talk" target="_blank" class="news-card">
-                                <span class="news-source">Apify</span>
-                                <h3 class="news-title">閒聊板熱門討論</h3>
-                                <p class="news-desc">...</p>
-                            </a>
-                        
                             <a href="https://www.threads.com/@marieclairetw/post/DWDtu50k-zj/%E8%83%BD%E8%AE%93s%E7%AC%91%E7%9A%84%E9%82%A3%E9%BA%BC%E9%96%8B%E5%BF%83%E7%9A%84%E6%9E%9C%E7%84%B6%E9%82%84%E6%98%AF%E5%BA%B7%E6%B0%B8%E5%93%A5" target="_blank" class="news-card">
                                 <span class="news-source">Apify</span>
-                                <h3 class="news-title">Threads</h3>
-                                <p class="news-desc">...</p>
+                                <h3 class="news-title">能讓S笑的那麼開心的果然還是康永哥！</h3>
+                                <p class="news-desc">Thread
+7.8K views
+marieclairetw
+3d
+能讓S笑的那麼開心的果然還是康永哥！
+98
+Log in or sign up for ThreadsSee what people are talking about and join the conversation.
+Log in with username instead...</p>
+                            </a>
+                        
+                            <a href="https://www.threads.net/@im41lee" target="_blank" class="news-card">
+                                <span class="news-source">Apify</span>
+                                <h3 class="news-title">Annabel Lee (@im41lee) • Threads, Say more</h3>
+                                <p class="news-desc">im41lee
+Annabel Lee
+im41lee
+喵喵喵喵喵喵喵 曾經是狗派，後來變成貓狗派。 認為生活是由很多片段的體驗所組成，可是只要猶豫片刻，眼睛一眨時間就過了喔。 __________________________________ 說感恩太老派，但喜歡脆友們上傳的各種可愛、自嘲、好人動態。 我們都需要 可愛之力、誇誇之力跟 宇宙之力啊。
+236 followers
+Follow
+Mention
+Threads
+Replies
+Media
+Reposts
+Pinned
+im41lee
+蔡康永
+3d
+真的是非常感謝誠品辦了這一場，我想會讓人念念不忘的演講。
+我到底是多幸福的人啊！貼...</p>
+                            </a>
+                        
+                            <a href="https://www.threads.net/@mincykang/post/DA5Aq2vptxq" target="_blank" class="news-card">
+                                <span class="news-source">Apify</span>
+                                <h3 class="news-title">聽了蔡康永近期的三個訪問：博音（博恩）、阿滴和百靈果。
+
+百靈果有一部分聊的和阿滴的差不多，但阿滴的另一半是屬於溫暖型的，如果你想得到什麼啟發或回饋。百靈果的另一半則維持他們的風格，有聽過 KK Show 的大概都想像的出。
+
+博恩的則完全不一樣，因為博恩一開始就說他沒看過康熙，所以無法聊康熙，而是聊他喜歡的歡樂三國志。印象中我有聽過他和侯文詠的歡樂三國志，和現在完全想不起來。😂</h3>
+                                <p class="news-desc">Thread
+1.2K views
+mincykang
+10/08/24
+聽了蔡康永近期的三個訪問：博音（博恩）、阿滴和百靈果。
+百靈果有一部分聊的和阿滴的差不多，但阿滴的另一半是屬於溫暖型的，如果你想得到什麼啟發或回饋。百靈果的另一半則維持他們的風格，有聽過 KK Show 的大概都想像的出。
+博恩的則完全不一樣，因為博恩一開始就說他沒看過康熙，所以無法聊康熙，而是聊他喜歡的歡樂三國志。印象中我有聽過他和侯文詠的歡樂三國志，和現在完全想不起來。😂 
+Translate
+14
+Log in or sign up for ThreadsSee what people are talking a...</p>
+                            </a>
+                        
+                            <a href="https://www.threads.net/@yievah/post/DCj4DIUyMPz?hl=ar" target="_blank" class="news-card">
+                                <span class="news-source">Apify</span>
+                                <h3 class="news-title">人的憂慮怎麼來的？
+：是來自於你對於不確定的容忍能力
+
+蔡康永的訪談是我近期做事時的背景音
+真的很喜歡聽他講話✨
+只是想說我真的完全不理解那種很焦慮
+但也只會焦慮並轉嫁焦慮的人🫠</h3>
+                                <p class="news-desc">المقتطف
+١٣٫٧ ألف من المشاهدات
+yivarah
+19/11/2024
+人的憂慮怎麼來的？ ：是來自於你對於不確定的容忍能力
+蔡康永的訪談是我近期做事時的背景音 真的很喜歡聽他講話✨ 只是想說我真的完全不理解那種很焦慮 但也只會焦慮並轉嫁焦慮的人🫠
+٥٩٧
+١
+٤٧
+٩٣
+تسجيل الدخول أو التسجيل في Threadsتعرف على الأمور التي يتحدث عنها الأشخاص وانضم إلى المحادثة.
+تسجيل الدخول باسم المستخدم بدلاً من ذلك...</p>
                             </a>
                         
                             <a href="https://www.facebook.com/epapago/photos/%E8%94%A1%E5%BA%B7%E6%B0%B8%E7%84%A1%E9%A0%90%E8%AD%A6%E5%90%88%E9%AB%94%E5%B0%8Fs%E4%B8%8D%E7%86%99%E5%A8%A3%E7%8F%BE%E5%A0%B4%E7%88%86%E5%93%AD%E6%8F%AD%E9%87%91%E9%90%98%E5%BE%8C%E5%8F%B0%E5%85%A7%E5%B9%95%E5%A4%A7%E5%AE%B6%E5%8F%AF%E8%83%BD%E5%8F%AA%E7%9C%8B%E5%88%B0%E5%BA%B7%E7%86%99%E5%90%88%E9%AB%94%E7%9A%84%E7%86%B1%E5%BA%A6%E4%BD%86%E5%A6%82%E6%9E%9C%E4%BD%A0%E7%BF%BB%E9%96%8B-2026-%E5%B9%B4-3-%E6%9C%88-19-%E6%97%A5%E9%80%99%E5%A0%B4%E5%B0%8F%E5%A7%90%E4%B8%8D%E7%86%99%E5%A8%A3%E7%9A%84%E9%8C%84%E5%BD%B1%E5%AF%A6%E9%8C%84%E6%9C%83%E7%99%BC%E7%8F%BE%E9%87%8D%E9%BB%9E%E5%85%B6%E5%AF%A6%E5%9C%A8/932172929513548/" target="_blank" class="news-card">

@@ -128,9 +128,40 @@ async function generateHTML() {
             padding: 4rem 2rem;
         }
         header {
+            position: relative;
             text-align: center;
             margin-bottom: 4rem;
+            padding: 6rem 2rem;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
             animation: fadeInDown 1s ease-out;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+        }
+        .header-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            /* 讀取 GitHub 雲端上的 banner 圖片作為背景 */
+            background-image: url('https://b0938723075-lab.github.io/Kevin-Tsai-project/banner.png');
+            background-size: cover;
+            background-position: center 20%;
+            z-index: 0;
+            opacity: 0.4;
+            transition: opacity 0.5s ease;
+        }
+        .header-bg:hover {
+            opacity: 0.5;
+        }
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0; height: 60%;
+            background: linear-gradient(to top, var(--bg-color), transparent);
+            z-index: 0;
+        }
+        .header-content {
+            position: relative;
+            z-index: 1;
         }
         h1 {
             font-size: 3.5rem;
@@ -308,9 +339,12 @@ async function generateHTML() {
 
 <div class="container">
     <header>
-        <div class="date-badge">DATE: ${dateStr}</div>
-        <h1>Kevin Tsai 聲量儀表板</h1>
-        <p style="color: var(--text-sub); margin-top: 1rem;">由 AI 自動搜集、分析與產生的每日輿情簡報，資料筆數：${reportData.source_data_count} 筆。</p>
+        <div class="header-bg"></div>
+        <div class="header-content">
+            <div class="date-badge">DATE: ${dateStr}</div>
+            <h1>Kevin Tsai 聲量儀表板</h1>
+            <p style="color: var(--text-sub); margin-top: 1rem;">由 AI 自動搜集、分析與產生的每日輿情簡報，資料筆數：${reportData.source_data_count} 筆。</p>
+        </div>
     </header>
 
     <div class="dashboard-grid">
