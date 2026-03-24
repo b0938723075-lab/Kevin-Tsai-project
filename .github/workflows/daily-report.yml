@@ -1,0 +1,55 @@
+name: Daily Kevin Tsai AI Report
+
+on:
+  schedule:
+    # 這是 UTC 時間，台灣時間 (UTC+8) 的早上 9:00 等於 UTC 的凌晨 1:00
+    - cron: '0 1 * * *'
+  # 允許你隨時在 Github 網站上手動點擊 "Run workflow" 啟動
+  workflow_dispatch:
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1️⃣ 取得最新程式碼 (Checkout Repo)
+        uses: actions/checkout@v4
+        with:
+          # 讓 Git 有權限把生出的分析結果再 Push 回來
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 2️⃣ 準備 Node.js 環境設定
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 3️⃣ 安裝所有需要的套件 (Install Dependencies)
+        run: npm install
+
+      - name: 4️⃣ 啟動 AI 輿情系統核心流程 (Run Pipeline)
+        env:
+          # 以下變數對應你 GitHub Secrets 中的設定
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          APIFY_API_TOKEN: ${{ secrets.APIFY_API_TOKEN }}
+        run: |
+          # 執行產出報告的主要腳本
+          npm run test
+          
+      - name: 5️⃣ 儲存 AI 產出的網頁與報告並更新到版面上
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # 將有變動的資料檔案 (如 data/ 與 web/ 目錄) 加到 git
+          git add .
+          
+          # 檢查是否有檔案變動，如果有就 Commit 並 Push
+          # || echo "No changes to commit" 是為了防止沒變動時報錯
+          git commit -m "🤖 自動排程更新：匯出新輿情分析報告" || echo "No changes to commit"
+          git push
