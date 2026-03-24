@@ -10,6 +10,8 @@ on:
 jobs:
   run-pipeline:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: 1️⃣ 取得最新程式碼 (Checkout Repo)
