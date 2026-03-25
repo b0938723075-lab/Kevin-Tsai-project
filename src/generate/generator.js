@@ -391,25 +391,32 @@ async function generateHTML() {
             </div>
         </div>
 
-        <!-- 正面評價卡片 -->
+        <!-- 社群動態卡片 -->
         <div class="glass-card" style="animation-delay: 0.2s;">
-            <div class="card-icon">🌱</div>
-            <h2 class="card-title">正面聲量與好評</h2>
-            <p class="card-text">${reportData.positive_summary}</p>
+            <div class="card-icon">💎</div>
+            <h2 class="card-title">個人社群動態</h2>
+            <p class="card-text">${reportData.social_updates}</p>
         </div>
 
-        <!-- 負面預警卡片 -->
-        <div class="glass-card" style="animation-delay: 0.3s; border-top: 2px solid rgba(209, 158, 152, 0.6);">
-            <div class="card-icon">🍂</div>
-            <h2 class="card-title">危機預警與爭議</h2>
-            <p class="card-text">${reportData.negative_summary}</p>
+        <!-- 書籍作品卡片 -->
+        <div class="glass-card" style="animation-delay: 0.3s; border-top: 2px solid rgba(224, 185, 133, 0.4);">
+            <div class="card-icon">📚</div>
+            <h2 class="card-title">書籍與作品分享</h2>
+            <p class="card-text">${reportData.books_and_works}</p>
         </div>
 
-        <!-- 趨勢風向卡片 -->
-        <div class="glass-card" style="animation-delay: 0.4s; grid-column: auto / span 2;">
-            <div class="card-icon">🧭</div>
-            <h2 class="card-title">全網趨勢與風向</h2>
-            <p class="card-text">${reportData.overall_trend}</p>
+        <!-- 主持節目卡片 -->
+        <div class="glass-card" style="animation-delay: 0.4s;">
+            <div class="card-icon">📺</div>
+            <h2 class="card-title">主持節目及錄影</h2>
+            <p class="card-text">${reportData.hosting_programs}</p>
+        </div>
+
+        <!-- 相關新聞卡片 -->
+        <div class="glass-card" style="animation-delay: 0.5s;">
+            <div class="card-icon">📰</div>
+            <h2 class="card-title">相關新聞與報導</h2>
+            <p class="card-text">${reportData.related_news}</p>
         </div>
     </div>
 

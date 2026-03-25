@@ -2,8 +2,9 @@ name: Daily Kevin Tsai AI Report
 
 on:
   schedule:
-    # 這是 UTC 時間，台灣時間 (UTC+8) 的早上 9:00 等於 UTC 的凌晨 1:00
-    - cron: '0 1 * * *'
+    # 為了確保「每天早上 9 點準時送到 LINE 和 Telegram」
+    # 設定 UTC 時間 0:45 (等於台灣早上 8:45)，提早 15 分鐘非整點起跑，避開塞車又能準時送達
+    - cron: '45 0 * * *'
   # 允許你隨時在 Github 網站上手動點擊 "Run workflow" 啟動
   workflow_dispatch:
 

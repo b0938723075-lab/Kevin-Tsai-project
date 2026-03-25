@@ -41,11 +41,12 @@ async function analyzeData() {
     console.log(`📂 [讀取] 準備對 ${testData.length} 筆資料進行情緒分析...`);
 
     // 2. 組合 LLM 大腦提問詞 (Prompt)
-    const prompt = `您是一位專業的公關與輿情分析師。請根據以下搜集到的關於「蔡康永」最新資料，進行深度分析，並「必須」只回傳 JSON 格式結果，欄位如下：
+    const prompt = `您是一位專業的公關與輿情分析師。本次任務只需針對「蔡康永/Kevin Tsai」自2026年2月以來的資料進行這四類整理，請「必須」只回傳 JSON 格式結果，欄位如下：
     {
-      "positive_summary": "正面評價與好評摘要",
-      "negative_summary": "負面輿論預警與爭議點",
-      "overall_trend": "整體趨勢與輿論風向",
+      "social_updates": "1. 蔡康永的個人社群動態：只包含他在個人社群網站上發出的動態還有他說過的金句（若無則回傳『近期無相關動態』）",
+      "books_and_works": "2. 書籍與作品分享：只針對他出版的書籍作品與相關書評，請嚴格排除維基百科等生平基本資料（若無則回傳『近期無相關動態』）",
+      "hosting_programs": "3. 主持節目及錄影：只呈現他還在主持的節目，或是新拍攝的影片消息（若無則回傳『近期無相關動態』）",
+      "related_news": "4. 相關新聞與報導：只需報導與他本人直接相關的新聞（若無則回傳『近期無相關動態』）",
       "score": <整數，由 -100(極差) 到 100(極佳) 的情緒分數>
     }
 
@@ -64,9 +65,10 @@ async function analyzeData() {
             const topTitles = testData.slice(0, 3).map(it => `・${it.title}`).join('\n');
             reportResult = {
                 date: dateStr,
-                positive_summary: `[2026.02 - 至今 精華]：\n${topTitles}\n(註：目前為輕量模擬分析，詳細長篇解讀需串接 OpenAI API)`,
-                negative_summary: "近一個月的網路討論中，主要集中於對其新書觀點的不同見解，以及康熙片段的回顧。",
-                overall_trend: `系統於 PTT, Dcard, FB 等平台篩選出近期 ${testData.length} 筆關鍵點評。`,
+                social_updates: `[模擬資料] 個人社群與金句：\n${topTitles}\n(註：詳細解讀需串接 OpenAI API)`,
+                books_and_works: "[模擬資料] 近期無相關書籍與作品資訊。",
+                hosting_programs: "[模擬資料] 近期無相關節目錄影資訊。",
+                related_news: `[模擬資料] 相關新聞共篩選出 ${testData.length} 筆新聞資訊。`,
                 score: 85,
                 source_data_count: testData.length
             };
@@ -102,8 +104,10 @@ async function analyzeData() {
     console.log(`\n✅ [完成] 專業分析報告已產出！檔案位於：data/reports/${dateStr}.json`);
     console.log("\n📊 --- 本日輿情分析快報 ---");
     console.log(`📈 情緒分數: ${reportResult.score} 分 (滿分100)`);
-    console.log(`👍 正面大意: ${reportResult.positive_summary}`);
-    console.log(`👎 負面警示: ${reportResult.negative_summary}`);
+    console.log(`💎 社群動態: ${reportResult.social_updates}`);
+    console.log(`📚 書籍作品: ${reportResult.books_and_works}`);
+    console.log(`📺 主持節目: ${reportResult.hosting_programs}`);
+    console.log(`📰 相關新聞: ${reportResult.related_news}`);
     console.log("-----------------------------\n");
     
     return reportResult;
