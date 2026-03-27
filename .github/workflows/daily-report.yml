@@ -4,8 +4,8 @@ on:
   schedule:
     # 為了確保「每天早上 9 點準時送到 LINE 和 Telegram」
     # 由於 GitHub Actions 常常會有 30~60 分鐘的排隊塞車延遲，
-    # 設定 UTC 時間 0:00 (等於台灣早上 8:00)，預留 1 小時的緩衝時間，確保能在 9 點前送達
-    - cron: '0 0 * * *'
+    # 設定為不規則分鐘數 (例如 0:17 等於台灣早上 8:17)，可以大幅降低排隊機率
+    - cron: '17 0 * * *'
   # 允許你隨時在 Github 網站上手動點擊 "Run workflow" 啟動
   workflow_dispatch:
 
