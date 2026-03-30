@@ -82,7 +82,7 @@ async function analyzeData() {
                 let llmResponse = {};
                 if (isGemini) {
                     const axios = require('axios');
-                    const response = await axios.post(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${finalApiKey}`, {
+                    const response = await axios.post(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${finalApiKey}`, {
                         contents: [{ role: "user", parts: [{ text: prompt }] }],
                         generationConfig: { responseMimeType: "application/json" }
                     });
