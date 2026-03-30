@@ -78,22 +78,29 @@ async function analyzeData() {
             };
         } else {
             console.log(`🤖 正在呼叫 ${isGemini ? 'Gemini' : 'OpenAI'} 引擎進行深度語意運算...`);
-            let config = { apiKey: finalApiKey };
+            let llmResponse = {};
             if (isGemini) {
-                config.baseURL = "https://generativelanguage.googleapis.com/v1beta/openai/";
+                const axios = require('axios');
+                const response = await axios.post(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${finalApiKey}`, {
+                    contents: [{ role: "user", parts: [{ text: prompt }] }],
+                    generationConfig: { responseMimeType: "application/json" }
+                });
+                const text = response.data.candidates[0].content.parts[0].text;
+                llmResponse = JSON.parse(text);
+            } else {
+                let config = { apiKey: finalApiKey };
+                const openai = new OpenAI(config);
+                const completion = await openai.chat.completions.create({
+                    messages: [
+                        { role: "system", content: "你是一個回傳純 JSON 格式的輿情分析專家。" },
+                        { role: "user", content: prompt }
+                    ],
+                    model: "gpt-3.5-turbo",
+                    response_format: { type: "json_object" }
+                });
+                llmResponse = JSON.parse(completion.choices[0].message.content);
             }
-            const openai = new OpenAI(config);
-            
-            // 呼叫大語言模型
-            const completion = await openai.chat.completions.create({
-                messages: [
-                    { role: "system", content: "你是一個回傳純 JSON 格式的輿情分析專家。" },
-                    { role: "user", content: prompt }
-                ],
-                model: isGemini ? "gemini-1.5-flash" : "gpt-3.5-turbo",
-                response_format: { type: "json_object" }
-            });
-            const llmResponse = JSON.parse(completion.choices[0].message.content);
+
             reportResult = {
                 date: dateStr,
                 ...llmResponse,
