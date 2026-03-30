@@ -111,6 +111,22 @@ async function generateHTML() {
         const url = (item.url || "").toLowerCase();
         const source = (item.source || "").toLowerCase();
 
+        // ==========================================
+        // 🚫 最高優先：百科全書 & 生平資料過濾 (memory.md 守則 #2)
+        // 不論後續是否符合其他分類條件，只要是百科就直接丟棄
+        // ==========================================
+        const isWiki = url.includes('wikipedia.org') || url.includes('wikiwand.com') || url.includes('scribd');
+        const hasBioContent = text.includes('出生于') || text.includes('出生於') || 
+                              text.includes('毕业于') || text.includes('畢業於') ||
+                              text.includes('中国台湾男主持人') || text.includes('自由的百科全書') ||
+                              text.includes('百度百科') || text.includes('維基百科');
+        // 微信讀書的作者頁面本質上就是百科式的生平資料列表
+        const isWereadAuthorPage = url.includes('weread.qq.com/web/search/books?author=');
+        
+        if (isWiki || hasBioContent || isWereadAuthorPage) {
+            return; // 直接丟棄，不進入任何分類
+        }
+
         // 1. 社群動態：必須是個人社群發文或相關的本人動態
         const isOfficialAccount = url.includes('kangyong');
         const isSocialPlatform = url.includes('facebook') || url.includes('instagram') || url.includes('threads') || url.includes('weibo');
@@ -134,10 +150,9 @@ async function generateHTML() {
             return;
         }
 
-        // 4. 新聞報導：過濾掉維基百科等雜訊，只留下明確的新聞媒體與新聞內容
-        const isWiki = url.includes('wikipedia.org') || url.includes('wikiwand.com') || url.includes('scribd');
+        // 4. 新聞報導
         const newsKeywords = ["新聞", "news", "報導", "記者", "yahoo", "tvbs", "ebc", "ettoday", "ltn", "udn", "setn", "chinatimes", "nownews", "鏡週刊", "三立", "東森", "自由", "中時", "壹蘋"];
-        if (!isWiki && newsKeywords.some(kw => source.includes(kw) || url.includes(kw) || text.includes(kw))) {
+        if (newsKeywords.some(kw => source.includes(kw) || url.includes(kw) || text.includes(kw))) {
             categories["📰 相關新聞與報導"].push(item);
             return;
         }
