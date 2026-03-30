@@ -75,11 +75,17 @@ async function notifyAll() {
 
 ${icon} 綜合情緒分數：${reportData.score}/100 ${statusText}
 ---------------------
-👍 正面聲量與好評：
-${reportData.positive_summary}
+📱 【社群動態】
+${reportData.social_updates}
 
-👎 危機預警與爭議：
-${reportData.negative_summary}
+📚 【書籍作品】
+${reportData.books_and_works}
+
+📺 【主持節目】
+${reportData.hosting_programs}
+
+📰 【相關新聞】
+${reportData.related_news}
 
 🔗 點擊查看華麗版深度分析網頁：
 ${reportURL}

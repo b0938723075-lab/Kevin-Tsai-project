@@ -53,30 +53,44 @@ async function analyzeData() {
     try {
         // 檢查有沒有填 Key
         const apiKey = process.env.OPENAI_API_KEY;
+        const geminiKey = process.env.GEMINI_API_KEY;
+        let finalApiKey = apiKey;
+        let isGemini = false;
+
         if (!apiKey || apiKey.includes("請填在這裡")) {
-            console.log("\n⚠️ [注意] 尚未偵測到有效的 OpenAI API Key，啟動【動態模擬分析模式】...");
-            // 如果沒填密碼，改為從搜集到的資料中抓出前幾筆標題顯示，讓使用者看到搜尋結果
+            if (geminiKey && !geminiKey.includes("請填在這裡")) {
+                finalApiKey = geminiKey;
+                isGemini = true;
+            }
+        }
+
+        if (!finalApiKey || finalApiKey.includes("請填在這裡")) {
+            console.log("\n⚠️ [注意] 尚未偵測到有效的 OpenAI 或 Gemini API Key，啟動【靜態模擬分析模式】...");
             const topTitles = testData.slice(0, 3).map(it => `・${it.title}`).join('\n');
             reportResult = {
                 date: dateStr,
-                social_updates: `[模擬資料] 個人社群與金句：\n${topTitles}\n(註：詳細解讀需串接 OpenAI API)`,
-                books_and_works: "[模擬資料] 近期無相關書籍與作品資訊。",
-                hosting_programs: "[模擬資料] 近期無相關節目錄影資訊。",
-                related_news: `[模擬資料] 相關新聞共篩選出 ${testData.length} 筆新聞資訊。`,
+                social_updates: `[模擬資料]\n${topTitles}\n(註：此為系統抓取的前 3 筆新聞標題，非正式 AI 分析)`,
+                books_and_works: `[模擬資料]\n・《說話之道》讀者熱烈迴響\n・近期暫無百科資料以外之實際出版動態`,
+                hosting_programs: `[模擬資料]\n・蔡康永全新專訪上修\n・傳聞將有新網路節目企劃`,
+                related_news: `[模擬資料]\n・網友熱烈討論蔡康永的高情商\n(相關新聞共篩選出 ${testData.length} 筆)`,
                 score: 85,
                 source_data_count: testData.length
             };
         } else {
-            console.log("🤖 正在呼叫 OpenAI GPT 引擎進行深度語意運算...");
-            const openai = new OpenAI({ apiKey: apiKey });
+            console.log(`🤖 正在呼叫 ${isGemini ? 'Gemini' : 'OpenAI'} 引擎進行深度語意運算...`);
+            let config = { apiKey: finalApiKey };
+            if (isGemini) {
+                config.baseURL = "https://generativelanguage.googleapis.com/v1beta/openai/";
+            }
+            const openai = new OpenAI(config);
             
-            // 呼叫 OpenAI 大語言模型
+            // 呼叫大語言模型
             const completion = await openai.chat.completions.create({
                 messages: [
                     { role: "system", content: "你是一個回傳純 JSON 格式的輿情分析專家。" },
                     { role: "user", content: prompt }
                 ],
-                model: "gpt-3.5-turbo",
+                model: isGemini ? "gemini-1.5-flash" : "gpt-3.5-turbo",
                 response_format: { type: "json_object" }
             });
             const llmResponse = JSON.parse(completion.choices[0].message.content);
