@@ -68,6 +68,41 @@ async function notifyAll() {
     // 生成雲端預估入口連結 (GitHub Pages 首頁)
     const reportURL = `https://b0938723075-lab.github.io/Kevin-Tsai-project/`;
 
+    // ==========================================
+    // 📊 計算一週摘要統整
+    // ==========================================
+    const reportsDir = path.join(__dirname, '../../data/reports');
+    let weeklySummaryText = '';
+    try {
+        const allReportFiles = fs.readdirSync(reportsDir)
+            .filter(f => f.endsWith('.json'))
+            .sort((a, b) => b.localeCompare(a))
+            .slice(0, 7);
+
+        if (allReportFiles.length > 0) {
+            const weeklyReports = allReportFiles.map(f => {
+                try { return JSON.parse(fs.readFileSync(path.join(reportsDir, f), 'utf8')); }
+                catch (e) { return null; }
+            }).filter(Boolean);
+
+            const avgScore = Math.round(weeklyReports.reduce((s, r) => s + (r.score || 0), 0) / weeklyReports.length);
+            let trend = '➡️ 持平';
+            if (weeklyReports.length >= 2) {
+                const diff = (weeklyReports[0].score || 0) - (weeklyReports[weeklyReports.length - 1].score || 0);
+                if (diff > 5) trend = '📈 上升';
+                else if (diff < -5) trend = '📉 下降';
+            }
+            const range = `${allReportFiles[allReportFiles.length - 1].replace('.json', '')} ~ ${allReportFiles[0].replace('.json', '')}`;
+            weeklySummaryText = `
+---------------------
+📊 【一週摘要統整】
+📆 區間：${range}
+📌 平均情緒分數：${avgScore}/100
+${trend}
+📄 本週報告天數：${weeklyReports.length} 天`;
+        }
+    } catch (e) { /* 無歷史報告時跳過 */ }
+
     // 排版要發送到手機的微縮板精華報告
     const msg = `
 【蔡康永 - 近期輿情精粹】
@@ -86,6 +121,7 @@ ${reportData.hosting_programs}
 
 📰 【相關新聞】
 ${reportData.related_news}
+${weeklySummaryText}
 
 🔗 點擊查看華麗版深度分析網頁：
 ${reportURL}

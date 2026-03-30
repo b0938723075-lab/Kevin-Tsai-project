@@ -1,6 +1,65 @@
 const fs = require('fs');
 const path = require('path');
 
+// ==========================================
+// 🗓️ 歷史報告索引：掃描所有已生成報告的日期
+// ==========================================
+function getHistoryDates() {
+    const articlesDir = path.join(__dirname, '../../data/articles');
+    if (!fs.existsSync(articlesDir)) return [];
+    return fs.readdirSync(articlesDir)
+        .filter(f => f.endsWith('.html'))
+        .map(f => f.replace('.html', ''))
+        .sort((a, b) => b.localeCompare(a)); // 新到舊排序
+}
+
+// ==========================================
+// 📊 一週摘要統整：讀取近七天報告並彙整
+// ==========================================
+function getWeeklySummary(currentDateStr) {
+    const reportsDir = path.join(__dirname, '../../data/reports');
+    if (!fs.existsSync(reportsDir)) return null;
+
+    const allFiles = fs.readdirSync(reportsDir)
+        .filter(f => f.endsWith('.json'))
+        .map(f => f.replace('.json', ''))
+        .sort((a, b) => b.localeCompare(a)); // 新到舊
+
+    // 取最近 7 天的報告
+    const recentFiles = allFiles.slice(0, 7);
+    if (recentFiles.length === 0) return null;
+
+    const reports = recentFiles.map(dateStr => {
+        try {
+            const data = JSON.parse(fs.readFileSync(path.join(reportsDir, `${dateStr}.json`), 'utf8'));
+            return { date: dateStr, ...data };
+        } catch (e) { return null; }
+    }).filter(Boolean);
+
+    if (reports.length === 0) return null;
+
+    const avgScore = Math.round(reports.reduce((sum, r) => sum + (r.score || 0), 0) / reports.length);
+    const dateRange = `${reports[reports.length - 1].date} ~ ${reports[0].date}`;
+
+    // 計算趨勢方向
+    let trend = '持平';
+    if (reports.length >= 2) {
+        const latest = reports[0].score || 0;
+        const oldest = reports[reports.length - 1].score || 0;
+        if (latest - oldest > 5) trend = '📈 上升';
+        else if (oldest - latest > 5) trend = '📉 下降';
+        else trend = '➡️ 持平';
+    }
+
+    return {
+        dateRange,
+        avgScore,
+        trend,
+        totalReports: reports.length,
+        dailyScores: reports.map(r => ({ date: r.date, score: r.score || 0 }))
+    };
+}
+
 async function generateHTML() {
     console.log("=====================================");
     console.log("  📝 開始寫文：生成華麗的分析網頁報告");
@@ -382,6 +441,41 @@ async function generateHTML() {
         </div>
     </header>
 
+    <!-- 📅 歷史紀錄日期選擇器 -->
+    ${(() => {
+        const historyDates = getHistoryDates();
+        if (historyDates.length <= 1) return '';
+        return `
+    <div class="glass-card" style="margin-bottom: 2rem; padding: 1.5rem 2rem; animation-delay: 0.05s;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 1.5rem;">📅</span>
+                <span style="font-weight: 600; font-size: 1.1rem;">歷史紀錄文章</span>
+                <span style="font-size: 0.85rem; color: var(--text-sub);">(共 ${historyDates.length} 篇報告)</span>
+            </div>
+            <select id="history-selector" onchange="if(this.value) window.location.href=this.value" style="
+                font-family: 'Outfit', 'Noto Sans TC', sans-serif;
+                font-size: 1rem;
+                padding: 0.6rem 2rem 0.6rem 1rem;
+                border-radius: 12px;
+                border: 1px solid rgba(255,255,255,0.8);
+                background: rgba(255,255,255,0.6);
+                color: var(--text-main);
+                cursor: pointer;
+                backdrop-filter: blur(8px);
+                appearance: auto;
+                min-width: 200px;
+            ">
+                ${historyDates.map(d => {
+                    const isToday = d === dateStr;
+                    const weekday = ['日','一','二','三','四','五','六'][new Date(d).getDay()];
+                    return `<option value="https://b0938723075-lab.github.io/Kevin-Tsai-project/data/articles/${d}.html" ${isToday ? 'selected' : ''}>${d} (週${weekday})${isToday ? ' ← 今日' : ''}</option>`;
+                }).join('')}
+            </select>
+        </div>
+    </div>`;
+    })()}
+
     <div class="dashboard-grid">
         <!-- 分數卡片 -->
         <div class="glass-card score-card" style="animation-delay: 0.1s;">
@@ -424,6 +518,49 @@ async function generateHTML() {
     <div class="news-section">
         ${newsHTML}
     </div>
+
+    <!-- 📊 一週摘要統整 -->
+    ${(() => {
+        const weekly = getWeeklySummary(dateStr);
+        if (!weekly) return '';
+        return `
+    <div class="glass-card" style="margin-top: 3rem; animation-delay: 0.6s; border-top: 3px solid rgba(102, 128, 77, 0.5);">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem;">
+            <span style="font-size: 2rem;">📊</span>
+            <h2 class="card-title" style="margin-bottom: 0;">一週摘要統整</h2>
+            <span style="font-size: 0.85rem; color: var(--text-sub); margin-left: auto;">${weekly.dateRange}</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+            <div style="text-align: center; padding: 1.2rem; background: rgba(255,255,255,0.5); border-radius: 16px;">
+                <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-main);">${weekly.avgScore}</div>
+                <div style="font-size: 0.85rem; color: var(--text-sub);">📌 本週平均情緒分數</div>
+            </div>
+            <div style="text-align: center; padding: 1.2rem; background: rgba(255,255,255,0.5); border-radius: 16px;">
+                <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-main);">${weekly.trend}</div>
+                <div style="font-size: 0.85rem; color: var(--text-sub);">📈 情緒趨勢方向</div>
+            </div>
+            <div style="text-align: center; padding: 1.2rem; background: rgba(255,255,255,0.5); border-radius: 16px;">
+                <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-main);">${weekly.totalReports}</div>
+                <div style="font-size: 0.85rem; color: var(--text-sub);">📄 本週報告天數</div>
+            </div>
+        </div>
+        <div style="background: rgba(255,255,255,0.4); border-radius: 12px; padding: 1rem 1.5rem;">
+            <div style="font-weight: 600; margin-bottom: 0.8rem; font-size: 0.95rem;">📆 每日情緒分數走勢</div>
+            <div style="display: flex; align-items: flex-end; gap: 8px; height: 80px;">
+                ${weekly.dailyScores.reverse().map(d => {
+                    const height = Math.max(10, d.score * 0.7);
+                    const barColor = d.score >= 70 ? 'rgba(102,128,77,0.7)' : d.score >= 40 ? 'rgba(224,185,133,0.8)' : 'rgba(189,115,87,0.7)';
+                    return `<div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                        <span style="font-size: 0.7rem; font-weight: 600; color: var(--text-main);">${d.score}</span>
+                        <div style="width: 100%; height: ${height}px; background: ${barColor}; border-radius: 6px 6px 2px 2px; transition: height 0.5s ease;"></div>
+                        <span style="font-size: 0.6rem; color: var(--text-sub); white-space: nowrap;">${d.date.slice(5)}</span>
+                    </div>`;
+                }).join('')}
+            </div>
+        </div>
+    </div>`;
+    })()}
+
 </div>
 
 </body>
