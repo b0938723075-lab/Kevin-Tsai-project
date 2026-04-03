@@ -65,6 +65,14 @@ async function generateHTML() {
     console.log("  📝 開始寫文：生成華麗的分析網頁報告");
     console.log("=====================================\n");
 
+    // 輔助函式：格式化卡片文字（處理「今日暫無最新動態」的特殊顯示）
+    function formatCardText(text) {
+        if (!text || text.includes('📭') || text.includes('今日暫無最新動態')) {
+            return '<span style="display: block; text-align: center; padding: 2rem 1rem; color: #999; font-size: 1.1rem; font-style: italic;">📭 今日暫無最新動態</span>';
+        }
+        return text;
+    }
+
     const dateStr = new Date().toISOString().split('T')[0];
     const reportPath = path.join(__dirname, `../../data/reports/${dateStr}.json`);
     const rawPath = path.join(__dirname, `../../data/raw/${dateStr}.json`);
@@ -508,28 +516,28 @@ async function generateHTML() {
         <div class="glass-card" style="animation-delay: 0.2s;">
             <div class="card-icon">💎</div>
             <h2 class="card-title">個人社群動態</h2>
-            <p class="card-text">${reportData.social_updates}</p>
+            <p class="card-text">${formatCardText(reportData.social_updates)}</p>
         </div>
 
         <!-- 書籍作品卡片 -->
         <div class="glass-card" style="animation-delay: 0.3s; border-top: 2px solid rgba(224, 185, 133, 0.4);">
             <div class="card-icon">📚</div>
             <h2 class="card-title">書籍與作品分享</h2>
-            <p class="card-text">${reportData.books_and_works}</p>
+            <p class="card-text">${formatCardText(reportData.books_and_works)}</p>
         </div>
 
         <!-- 主持節目卡片 -->
         <div class="glass-card" style="animation-delay: 0.4s;">
             <div class="card-icon">📺</div>
             <h2 class="card-title">主持節目及錄影</h2>
-            <p class="card-text">${reportData.hosting_programs}</p>
+            <p class="card-text">${formatCardText(reportData.hosting_programs)}</p>
         </div>
 
         <!-- 相關新聞卡片 -->
         <div class="glass-card" style="animation-delay: 0.5s;">
             <div class="card-icon">📰</div>
             <h2 class="card-title">相關新聞與報導</h2>
-            <p class="card-text">${reportData.related_news}</p>
+            <p class="card-text">${formatCardText(reportData.related_news)}</p>
         </div>
     </div>
 

@@ -28,26 +28,48 @@ async function analyzeData() {
 
     console.log(`📂 [讀取] 準備對 ${testData.length} 筆資料進行情緒分析...`);
 
-    // 2. 組合 LLM 大腦提問詞 (Prompt)
+    // 1.5 讀取「前一天」的報告，作為去重參照
+    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+    const yesterdayReportPath = path.join(reportDir, `${yesterday}.json`);
+    let yesterdayReport = null;
+    if (fs.existsSync(yesterdayReportPath)) {
+        yesterdayReport = JSON.parse(fs.readFileSync(yesterdayReportPath, 'utf8'));
+        console.log(`📋 [去重] 已載入昨日報告 (${yesterday}.json) 作為比對參照`);
+    } else {
+        console.log(`ℹ️ [去重] 未找到昨日報告，本日為首次產出，略過去重比對`);
+    }
+
+    // 2. 組合 LLM 大腦提問詞 (Prompt) — 含去重指令
+    const yesterdayContext = yesterdayReport ? `
+    【⚠️ 去重比對 — 以下是「昨天(${yesterday})」的報告內容，今天的報告不可以包含與以下相同或高度相似的資訊】：
+    - 昨日社群動態：${yesterdayReport.social_updates || '無'}
+    - 昨日書籍作品：${yesterdayReport.books_and_works || '無'}
+    - 昨日主持節目：${yesterdayReport.hosting_programs || '無'}
+    - 昨日相關新聞：${yesterdayReport.related_news || '無'}
+    ` : '';
+
     const prompt = `您是一位專業的公關與輿情分析師。本次任務需針對「蔡康永/Kevin Tsai」在 ${dateStr} 這一天（今天）的最新資料進行四類整理，請「必須」只回傳 JSON 格式結果。
 
     【重要規則】：
     1. 在所有類別中，請「嚴格排除」維基百科 (wikipedia.org)、Wikiwand (wikiwand.com)、百度百科等生平基本資料。書籍作品類別請專注於他實際創作的書籍作品、節目金句或書評。
-    2. 請在每一類別中，整理出「今日最新」的 3~5 則重點資訊。若今日資料不足，可參考近幾天的最新動態補充，但必須優先使用今日資料。若完全無相關動態，才回傳『近期無相關動態』。
+    2. 每一則資訊都必須是「今天才出現的全新動態」。
     3. 所有回傳的文字內容，每一則資訊之間請使用「,」(逗號) 分隔，方便前端處理。
+    4. 【最重要】如果某個類別今天確實沒有任何新資訊，或者找到的資訊全部都跟昨天的報告重複，該類別請直接回傳：「📭 今日暫無最新動態」。絕對不可以用舊的、重複的資料充數！寧可留空也不要重複！
+    ${yesterdayContext}
 
     回傳 JSON 欄位如下：
     {
-      "social_updates": "1. 蔡康永的個人社群動態：3~5 則他在個人社群網站上發出的動態還有他說過的金句",
-      "books_and_works": "2. 書籍與作品分享：3~5 則針對他出版的書籍作品與相關書評（嚴格排除維基百科與Wikiwand資料）",
-      "hosting_programs": "3. 主持節目及錄影：3~5 則他主持的節目或新拍攝影片消息",
-      "related_news": "4. 相關新聞與報導：3~5 則與他本人直接相關的最新新聞",
-      "score": <整數，由 -100(極差) 到 100(極佳) 的情緒分數>
+      "social_updates": "蔡康永的個人社群動態：只放今天新出現的動態（與昨天不同的），若無則回傳『📭 今日暫無最新動態』",
+      "books_and_works": "書籍與作品分享：只放今天新出現的書籍或書評討論（嚴格排除維基百科與Wikiwand），若無則回傳『📭 今日暫無最新動態』",
+      "hosting_programs": "主持節目及錄影：只放今天新出現的節目或影片消息，若無則回傳『📭 今日暫無最新動態』",
+      "related_news": "相關新聞與報導：只放今天新出現的新聞，若無則回傳『📭 今日暫無最新動態』",
+      "score": <整數，由 -100(極差) 到 100(極佳) 的情緒分數，若全部為暫無最新動態則給予 0>
     }
 
     待分析資料：
-    ${testData.length > 0 ? JSON.stringify(testData) : `今日（${dateStr}）搜集模組未抓到新資料，請盡量基於您所知道的最近幾天的公開動態，為各類別補充 3~5 則資訊。`}
+    ${testData.length > 0 ? JSON.stringify(testData) : `今日（${dateStr}）搜集模組未抓到新資料，所有分類請直接回傳「📭 今日暫無最新動態」。`}
     `;
+
 
     let reportResult = {};
 
