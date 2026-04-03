@@ -23,7 +23,11 @@ async function collectData() {
     keywords.push("蔡康永 site:threads.net");
     keywords.push("蔡康永 site:facebook.com");
     
-    const searchQuery = primaryKeywords.join(' ') + " after:2026-02-01";
+    // 動態計算「昨天」的日期，確保只抓取近 24 小時的最新資料
+    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+    const todayStr = new Date().toISOString().split('T')[0];
+    console.log(`📅 [時間範圍] 搜尋區間：${yesterday} ~ ${todayStr} (僅抓取當天資料)`);
+    const searchQuery = primaryKeywords.join(' ') + ` after:${yesterday}`;
     let results = [];
 
     // ==========================================
@@ -76,7 +80,7 @@ async function collectData() {
                     console.log(`  🔍 [Apify] 搜尋關鍵字: ${keyword}`);
                     try {
                         const run = await client.actor('apify/rag-web-browser').call({
-                            query: `${keyword} after:2026-02-01`,
+                            query: `${keyword} after:${yesterday}`,
                             maxResults: 3,
                             outputFormats: ['text'],
                             requestTimeoutSecs: 30

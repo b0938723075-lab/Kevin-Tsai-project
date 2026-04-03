@@ -115,7 +115,7 @@ async function generateHTML() {
         // 🚫 最高優先：百科全書 & 生平資料過濾 (memory.md 守則 #2)
         // 不論後續是否符合其他分類條件，只要是百科就直接丟棄
         // ==========================================
-        const isWiki = url.includes('wikipedia.org') || url.includes('wikiwand.com') || url.includes('scribd');
+        const isWiki = url.includes('wikipedia.org') || url.includes('wikiwand.com') || url.includes('scribd') || url.includes('wikiwand');
         const hasBioContent = text.includes('出生于') || text.includes('出生於') || 
                               text.includes('毕业于') || text.includes('畢業於') ||
                               text.includes('中国台湾男主持人') || text.includes('自由的百科全書') ||
@@ -191,6 +191,10 @@ async function generateHTML() {
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <!-- Build: ${new Date().toISOString()} -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kevin Tsai 蔡康永 - 每日聲量與輿情控制台</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -445,7 +449,7 @@ async function generateHTML() {
     <header>
         <div class="header-bg"></div>
         <div class="header-content">
-            <div class="date-badge">TREND REPORT: 2026.02 - 至今</div>
+            <div class="date-badge">DAILY REPORT: ${dateStr}</div>
             <h1>Kevin Tsai 輿情精粹</h1>
             <p style="color: var(--accent-blue); font-size: 1.1rem; margin-top: 1.5rem; font-weight: 500;">
                 重點收編：「書籍作品」、「主持節目」、「個人聲量」與「新聞評論」
