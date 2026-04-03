@@ -4,3 +4,5 @@ data/raw/
 logs/
 .DS_Store
 *.log
+.agents/skills/ui-ux-pro-max/
+.agent/skills/ui-ux-pro-max/
