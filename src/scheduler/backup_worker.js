@@ -70,4 +70,4 @@ async function runAllBackups() {
     console.log("\n✅ [守護完成] 雙重備份任務圓滿結案！");
 }
 
-module.exports = { runAllBackups };
+module.exports = { runAllBackups, syncToGitHub };

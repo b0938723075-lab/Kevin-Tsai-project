@@ -2,6 +2,7 @@ console.log("✨ 啟動全自動化流程總機 (Pipeline)...");
 const { collectData } = require('./collect/collector.js');
 const { analyzeData } = require('./analyze/analyzer.js');
 const { generateHTML } = require('./generate/generator.js');
+const { syncToGitHub } = require('./scheduler/backup_worker.js');
 const { notifyAll } = require('./notify/notifier.js');
 
 async function runPipeline() {
@@ -15,6 +16,8 @@ async function runPipeline() {
         await analyzeData();            // Step 2: AI 分析解讀
         console.log("\n⬇️ 進入下一關...\n");
         await generateHTML();           // Step 3: 設計與產出網頁
+        console.log("\n⬇️ 進入下一關...\n");
+        await syncToGitHub();           // Step 3.5: 立即同步到雲端 (非常重要，確保手機點過去有新網頁)
         console.log("\n⬇️ 進入下一關...\n");
         await notifyAll();              // Step 4: 通知當事人
 
